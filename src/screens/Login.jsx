@@ -21,7 +21,7 @@ import {
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
 
-export const Login = () => {
+export const Login = ({ navigation }) => {
   const [checked, setChecked] = useState(true);
 
   return (
@@ -84,6 +84,12 @@ export const Login = () => {
               title="Iniciar Sesión"
               color={theme.colors.primary}
               uppercase={false}
+              onPress={() =>
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "MainContainer" }],
+                })
+              }
             />
           </View>
         </Stack>
