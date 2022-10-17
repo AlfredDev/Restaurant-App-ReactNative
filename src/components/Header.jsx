@@ -16,13 +16,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
     // backgroundColor: "#009387",
     padding: 0,
+    justifyContent: "center",
+    alignItems: "center",
   },
   text_header: {
     fontWeight: "bold",
     letterSpacing: 1,
     fontSize: 30,
     textAlign: "center",
-    color: theme.colors.primary,
+    // color: theme.colors.primary,
+    color: 'black',
     marginTop: 15,
     // marginBottom:5
   },

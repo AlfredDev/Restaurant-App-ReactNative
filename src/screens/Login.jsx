@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   View,
   KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Header } from "../components/Header";
 import { Logo } from "../components/Logo";
@@ -38,61 +39,61 @@ export const Login = ({ navigation }) => {
         <Logo />
       </View>
       <Animatable.View animation="fadeInLeft" style={styles.form}>
-        <Stack spacing={20} style={[{ margin: 16 }, { marginTop: 25 }]}>
-          <TextInput
-            variant="standard"
-            label="Usuario"
-            style={{ margin: 16 }}
-            inputStyle={{ letterSpacing: 1 }}
-            leading={(props) => <Icon name="account" {...props} />}
-            color={theme.colors.primary}
-          />
-          <TextInput
-            label="Contraseña"
-            variant="standard"
-            style={{ margin: 16 }}
-            color={theme.colors.primary}
-            leading={(props) => (
-              <Icon name="form-textbox-password" {...props} />
-            )}
-            trailing={(props) => (
-              <IconButton
-                icon={(props) => <Icon name="eye" {...props} />}
-                {...props}
-              />
-            )}
-          />
-
-          <View style={styles.select_container}>
-            <View style={{ flexDirection: "row" }}>
-              <Switch
-                style={{ paddingLeft: 8 }}
-                value={checked}
-                onValueChange={() => setChecked(!checked)}
-              />
-              <Text style={styles.label}>Recordar</Text>
-            </View>
-
-            <TouchableOpacity>
-              <Text style={styles.link}>Olvide la contraseña</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
-            <Button
-              titleStyle={{ fontSize: 17 }}
-              contentContainerStyle={{ height: 45 }}
-              title="Iniciar Sesión"
+          <Stack spacing={20} style={[{ margin: 16 }, { marginTop: 25 }]}>
+            <TextInput
+              variant="standard"
+              label="Usuario"
+              style={{ margin: 16 }}
+              inputStyle={{ letterSpacing: 1 }}
+              leading={(props) => <Icon name="account" {...props} />}
               color={theme.colors.primary}
-              uppercase={false}
-              onPress={() =>
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "MainContainer" }],
-                })
-              }
             />
-          </View>
-        </Stack>
+            <TextInput
+              label="Contraseña"
+              variant="standard"
+              style={{ margin: 16 }}
+              color={theme.colors.primary}
+              leading={(props) => (
+                <Icon name="form-textbox-password" {...props} />
+              )}
+              trailing={(props) => (
+                <IconButton
+                  icon={(props) => <Icon name="eye" {...props} />}
+                  {...props}
+                />
+              )}
+            />
+
+            <View style={styles.select_container}>
+              <View style={{ flexDirection: "row" }}>
+                <Switch
+                  style={{ paddingLeft: 8 }}
+                  value={checked}
+                  onValueChange={() => setChecked(!checked)}
+                />
+                <Text style={styles.label}>Recordar</Text>
+              </View>
+
+              <TouchableOpacity>
+                <Text style={styles.link}>Olvide la contraseña</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
+              <Button
+                titleStyle={{ fontSize: 17 }}
+                contentContainerStyle={{ height: 45 }}
+                title="Iniciar Sesión"
+                color={theme.colors.primary}
+                uppercase={false}
+                onPress={() =>
+                  navigation.reset({
+                    index: 0,
+                    routes: [{ name: "MainContainer" }],
+                  })
+                }
+              />
+            </View>
+          </Stack>
       </Animatable.View>
       <View style={styles.footer}>
         <Image source={require("../assets/svg.png")} style={styles.image} />
@@ -105,12 +106,13 @@ export const Login = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
   },
   log: {
     flex: 1.1,
     alignItems: "center",
     width: "100%",
-    marginTop: 15,
+    marginTop: 20,
     // backgroundColor: theme.colors.primary,
     paddingBottom: 30,
   },

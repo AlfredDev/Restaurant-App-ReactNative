@@ -7,7 +7,7 @@ import { theme } from "../core/theme";
 
 const Tab = createBottomTabNavigator();
 
-export const MainContainer = () => {
+export const MainContainer = ({navigation }) => {
   return (
     <Tab.Navigator
       initialRouteName={"Mesas"}
@@ -18,10 +18,10 @@ export const MainContainer = () => {
 
           if (rn === "Mesas") {
             iconName = focused ? "home" : "home-outline";
-          } else if (rn === "User") {
-            iconName = focused ? "person" : "person-outline";
-          } else if (rn === "Account") {
+          } else if (rn === "Orden") {
             iconName = focused ? "ios-clipboard" : "ios-clipboard-outline";
+          } else if (rn === "Usuario") {
+            iconName = focused ? "person" : "person-outline";
           }
           // You can return any component that you like here!
           return (
@@ -33,15 +33,15 @@ export const MainContainer = () => {
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: "grey",
         tabBarLabelStyle: {
-          paddingBottom: 10,
+          paddingBottom: 20,
           fontSize: 12,
         },
-        tabBarStyle: [{ display: "flex" }, { height: 80 }],
+        tabBarStyle: [{ display: "flex" }, { height: 90 },{alignItems:'center'},{paddingTop:10} ],
       })}
     >
       <Tab.Screen name="Mesas" component={TablesScreen} />
-      <Tab.Screen name="Account" component={Account} />
-      <Tab.Screen name="User" component={UserSetting} />
+      <Tab.Screen name="Orden" component={Account} />
+      <Tab.Screen name="Usuario" component={UserSetting} />
     </Tab.Navigator>
   );
 };

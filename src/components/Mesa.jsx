@@ -4,9 +4,17 @@ import { View } from "react-native";
 import { Text } from "react-native-paper";
 import { theme } from "../core/theme";
 
-export const Mesa = ({ table }) => {
+export const Mesa = ({ table, navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+     onPress={() => {
+      navigation.navigate("MesaConfig",{
+        itemId: table.id,
+        description: table.description
+      })
+    }}
+     
+     >
       <View
         style={[
           styles.table,

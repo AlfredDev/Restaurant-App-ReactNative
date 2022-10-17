@@ -55,7 +55,7 @@ const initialTable = [
   },
 ];
 
-export const TablesScreen = () => {
+export const TablesScreen = ({navigation}) => {
   return (
     <View style={styles.mainContainer}>
       <StatusBar
@@ -68,7 +68,7 @@ export const TablesScreen = () => {
         <ScrollView stickyHeaderIndices={[1]}>
           <View style={styles.container_tables}>
             {initialTable.map((table) => (
-              <Mesa key={table.id} table={table} />
+              <Mesa key={table.id} table={table} navigation={navigation } />
             ))}
           </View>
         </ScrollView>
@@ -80,9 +80,10 @@ export const TablesScreen = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    // padding: 10,
+    // padding: 10, 
     paddingBottom: 0,
     paddingTop: 0,
+    marginTop:20
   },
   scroll: {
     flex: 5,
