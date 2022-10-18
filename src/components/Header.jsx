@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import {theme} from '../core/theme'
-export const Header = ({titulo}) => {
+import { theme } from "../core/theme";
+export const Header = ({ titulo }) => {
   return (
     <View style={styles.header}>
       <Text style={styles.text_header}>{titulo}</Text>
@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
     // paddingHorizontal: 20,
     alignItems: "center",
     // backgroundColor: "#009387",
-    padding: 0,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign: "center",
     // color: theme.colors.primary,
-    color: 'black',
+    color: "black",
     marginTop: 15,
     // marginBottom:5
   },

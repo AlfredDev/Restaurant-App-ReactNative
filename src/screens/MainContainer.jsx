@@ -36,7 +36,7 @@ export const MainContainer = ({navigation }) => {
           paddingBottom: 20,
           fontSize: 12,
         },
-        tabBarStyle: [{ display: "flex" }, { height: 90 },{alignItems:'center'},{paddingTop:10} ],
+        tabBarStyle: [{ display: "flex" }, { height: 100 },{alignItems:'center'},{paddingTop:10} ],
       })}
     >
       <Tab.Screen name="Mesas" component={TablesScreen} />
