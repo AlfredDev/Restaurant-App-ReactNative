@@ -13,7 +13,6 @@ import { theme } from "../core/theme";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
-import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import { Checkbox } from "react-native-paper";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -33,11 +32,12 @@ export const MesasConfig = ({ route, navigation }) => {
       />
 
       <View style={styles.header2}>
-        <View style={styles.back}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
+          <View style={styles.back}>
             <Ionicons name={"chevron-back"} size={40} />
-          </TouchableOpacity>
-        </View>
+          </View>
+        </TouchableOpacity>
+
         <Header titulo={description} />
         <Text
           style={{

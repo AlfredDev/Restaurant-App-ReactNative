@@ -2,19 +2,30 @@ import { TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
-import { theme } from "../core/theme";
 
 export const Mesa = ({ table, navigation }) => {
+  const presabble = () => {
+    table.libre
+      ? navigation.navigate("MesaConfig", {
+          itemId: table.id,
+          description: table.description,
+        })
+      : navigation.navigate("MesaCuenta", {
+          itemId: table.id,
+          description: table.description,
+        });
+  };
+
   return (
     <TouchableOpacity
-     onPress={() => {
-      navigation.navigate("MesaConfig",{
-        itemId: table.id,
-        description: table.description
-      })
-    }}
-     
-     >
+      // onPress={() => {
+      //   navigation.navigate("MesaConfig", {
+      //     itemId: table.id,
+      //     description: table.description,
+      //   });
+      // }}
+      onPress={presabble}
+    >
       <View
         style={[
           styles.table,
