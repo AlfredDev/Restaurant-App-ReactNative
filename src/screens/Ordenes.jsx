@@ -46,7 +46,7 @@ export const Ordenes = ({ navigation, route }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-                <OrdenItem folio={2210083001} id={ItemId}/>
+                <OrdenItem folio={2210083001} id={ItemId} />
               </Stack>
             </View>
             <View style={styles.botones}>
@@ -73,7 +73,38 @@ export const Ordenes = ({ navigation, route }) => {
             </View>
           </ScrollView>
         </View>
-        <View style={styles.butom}></View>
+        <View style={styles.butom}>
+          <Text style={{ textAlign: "right",marginRight:30,marginBottom:4, fontSize:16 }}>Total: $ 500.00</Text>
+          <Stack
+            spacing={10}
+            style={[
+              { margin: 16 },
+              { marginTop: 0 },
+              { justifyContent: "center" },
+              { alignItems: "center" },
+            ]}
+          >
+            <Button
+              titleStyle={{ fontSize: 17 }}
+              contentContainerStyle={{ height: 50 }}
+              title="Imprimir Cuenta"
+              width={347}
+              height={60}
+              color={theme.colors.primary}
+              uppercase={false}
+              borderRadius={10}
+            />
+            <Button
+              titleStyle={{ fontSize: 17 }}
+              contentContainerStyle={{ height: 50 }}
+              title="Despedir Mesa"
+              width={347}
+              height={60}
+              color={"#D8D2CB"}
+              uppercase={false}
+            />
+          </Stack>
+        </View>
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -95,7 +126,7 @@ const styles = StyleSheet.create({
   },
   opciones: {
     // backgroundColor: theme.colors.secondary,
-    flex: 4,
+    flex: 3,
   },
   botones: {
     backgroundColor: theme.colors.secondary,
@@ -106,8 +137,8 @@ const styles = StyleSheet.create({
     // backgroundColor: theme.colors.secondary,
   },
   butom: {
-    flex: 1,
+    flex: 1.3,
 
-    backgroundColor: theme.colors.secondary,
+    // backgroundColor: theme.colors.secondary,
   },
 });
