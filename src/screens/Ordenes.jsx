@@ -74,7 +74,16 @@ export const Ordenes = ({ navigation, route }) => {
           </ScrollView>
         </View>
         <View style={styles.butom}>
-          <Text style={{ textAlign: "right",marginRight:30,marginBottom:4, fontSize:16 }}>Total: $ 500.00</Text>
+          <Text
+            style={{
+              textAlign: "right",
+              marginRight: 30,
+              marginBottom: 4,
+              fontSize: 16,
+            }}
+          >
+            Total: $ 500.00
+          </Text>
           <Stack
             spacing={10}
             style={[
