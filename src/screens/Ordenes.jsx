@@ -1,7 +1,17 @@
-import { KeyboardAvoidingView, StatusBar, StyleSheet } from "react-native";
+import {
+  KeyboardAvoidingView,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
+import { Button, Stack } from "@react-native-material/core";
+import { CuentaRepre } from "../components/CuentaRepre";
+import { OrdenItem } from "../components/OrdenItem";
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, description, nombre } = route.params;
@@ -22,10 +32,49 @@ export const Ordenes = ({ navigation, route }) => {
         subtitle={nombre}
         navigation={navigation}
       />
-      <Animatable.View
-        animation="fadeInLeft"
-        style={styles.formContainer}
-      ></Animatable.View>
+      <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
+        <View style={styles.opciones}>
+          <Text
+            style={{
+              textAlign: "center",
+              justifyContent: "center",
+              fontSize: 20,
+            }}
+          >
+            Órdenes
+          </Text>
+          <ScrollView stickyHeaderIndices={[1]}>
+            <View style={styles.orderContainer}>
+              <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
+                <OrdenItem folio={2210083001} id={ItemId}/>
+              </Stack>
+            </View>
+            <View style={styles.botones}>
+              <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
+                <Button
+                  titleStyle={{ fontSize: 17 }}
+                  contentContainerStyle={{ height: 50 }}
+                  title="Renta"
+                  width={253}
+                  height={60}
+                  color={theme.colors.secondary}
+                  uppercase={false}
+                />
+                <Button
+                  titleStyle={{ fontSize: 17 }}
+                  contentContainerStyle={{ height: 50 }}
+                  title="+  Agregar Cuenta"
+                  width={253}
+                  height={60}
+                  color={theme.colors.primary}
+                  uppercase={false}
+                />
+              </Stack>
+            </View>
+          </ScrollView>
+        </View>
+        <View style={styles.butom}></View>
+      </Animatable.View>
     </KeyboardAvoidingView>
   );
 };
@@ -42,6 +91,23 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.text,
     borderTopEndRadius: 30,
     borderTopLeftRadius: 30,
-    // paddingTop: 5,
+    paddingTop: 10,
+  },
+  opciones: {
+    // backgroundColor: theme.colors.secondary,
+    flex: 4,
+  },
+  botones: {
+    backgroundColor: theme.colors.secondary,
+  },
+  botones: {
+    justifyContent: "center",
+    alignItems: "center",
+    // backgroundColor: theme.colors.secondary,
+  },
+  butom: {
+    flex: 1,
+
+    backgroundColor: theme.colors.secondary,
   },
 });
