@@ -6,6 +6,7 @@ import { Login } from "./src/screens/Login";
 import { MainContainer } from "./src/screens/MainContainer";
 import { MesaCuenta } from "./src/screens/MesaCuenta";
 import { MesasConfig } from "./src/screens/MesasConfig";
+import { Ordenes } from "./src/screens/Ordenes";
 import { TablesScreen } from "./src/screens/TablesScreen";
 
 const Stack = createNativeStackNavigator();
@@ -22,6 +23,7 @@ export default function App() {
         <Stack.Screen name="MesaConfig" component={MesasConfig} />
         <Stack.Screen name="MesaCuenta" component={MesaCuenta} />
         <Stack.Screen name="AddCuenta" component={AddAccount} />
+        <Stack.Screen name="Orden" component={Ordenes} />
       </Stack.Navigator>
     </NavigationContainer>
   );

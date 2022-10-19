@@ -2,9 +2,17 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../core/theme";
 
-export const CuentaRepre = () => {
+export const CuentaRepre = ({ id, description, nombre, navigation }) => {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity
+      onPress={() =>
+        navigation.navigate("Orden", {
+          itemId: id,
+          description: description,
+          nombre: nombre,
+        })
+      }
+    >
       <View style={styles.addcompont}>
         <Text
           style={{
@@ -15,7 +23,7 @@ export const CuentaRepre = () => {
             marginBottom: 10,
           }}
         >
-          Andres Manuel Lopez
+          {nombre}
         </Text>
       </View>
     </TouchableOpacity>
@@ -32,4 +40,5 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     margin: 5,
   },
+  
 });

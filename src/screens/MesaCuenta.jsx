@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
-import {  Button } from "@react-native-material/core";
+import { Button } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { HeaderBlue } from "../components/HeaderBlue";
 
@@ -37,8 +37,18 @@ export const MesaCuenta = ({ route, navigation }) => {
         <View style={styles.ordenes}>
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.scroll}>
-              <CuentaRepre />
-              <CuentaRepre />
+              <CuentaRepre
+                id={itemId}
+                description={description}
+                nombre={"Calamardo Tentaculos"}
+                navigation={navigation}
+              />
+              <CuentaRepre
+                id={itemId}
+                description={description}
+                nombre={"Calamarino Elegante"}
+                navigation={navigation}
+              />
             </View>
             <View style={styles.scroll}>
               <Button

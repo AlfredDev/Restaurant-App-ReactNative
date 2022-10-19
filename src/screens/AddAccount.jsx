@@ -12,7 +12,7 @@ import { Stack, TextInput, Button } from "@react-native-material/core";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const AddAccount = ({ navigation, route }) => {
-  const { Itemid, description } = route.params;
+  const { ItemId, description } = route.params;
 
   return (
     <KeyboardAvoidingView
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  buton:{
+  buton: {
     // marginTop: 200,
-  }
+  },
 });
