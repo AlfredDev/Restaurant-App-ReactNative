@@ -17,15 +17,7 @@ export const Mesa = ({ table, navigation }) => {
   };
 
   return (
-    <TouchableOpacity
-      // onPress={() => {
-      //   navigation.navigate("MesaConfig", {
-      //     itemId: table.id,
-      //     description: table.description,
-      //   });
-      // }}
-      onPress={presabble}
-    >
+    <TouchableOpacity onPress={presabble}>
       <View
         style={[
           styles.table,

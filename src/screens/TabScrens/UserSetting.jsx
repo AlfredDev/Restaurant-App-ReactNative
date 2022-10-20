@@ -4,7 +4,7 @@ import { theme } from "../../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 
-export const UserSetting = ({navigation}) => {
+export const UserSetting = ({ navigation }) => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}

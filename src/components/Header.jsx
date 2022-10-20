@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-import { theme } from "../core/theme";
 export const Header = ({ titulo }) => {
   return (
     <View style={styles.header}>

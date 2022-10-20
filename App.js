@@ -1,13 +1,11 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { Text, View } from "react-native";
 import { AddAccount } from "./src/screens/AddAccount";
 import { Login } from "./src/screens/Login";
 import { MainContainer } from "./src/screens/MainContainer";
 import { MesaCuenta } from "./src/screens/MesaCuenta";
 import { MesasConfig } from "./src/screens/MesasConfig";
 import { Ordenes } from "./src/screens/Ordenes";
-import { TablesScreen } from "./src/screens/TablesScreen";
 
 const Stack = createNativeStackNavigator();
 

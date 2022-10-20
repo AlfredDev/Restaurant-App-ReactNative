@@ -23,8 +23,9 @@ import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
 
 export const Login = ({ navigation }) => {
-  const [checked, setChecked] = useState(true);
 
+
+  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -39,61 +40,61 @@ export const Login = ({ navigation }) => {
         <Logo />
       </View>
       <Animatable.View animation="fadeInLeft" style={styles.form}>
-          <Stack spacing={20} style={[{ margin: 16 }, { marginTop: 25 }]}>
-            <TextInput
-              variant="standard"
-              label="Usuario"
-              style={{ margin: 16 }}
-              inputStyle={{ letterSpacing: 1 }}
-              leading={(props) => <Icon name="account" {...props} />}
-              color={theme.colors.primary}
-            />
-            <TextInput
-              label="Contraseña"
-              variant="standard"
-              style={{ margin: 16 }}
-              color={theme.colors.primary}
-              leading={(props) => (
-                <Icon name="form-textbox-password" {...props} />
-              )}
-              trailing={(props) => (
-                <IconButton
-                  icon={(props) => <Icon name="eye" {...props} />}
-                  {...props}
-                />
-              )}
-            />
+        <Stack spacing={20} style={[{ margin: 16 }, { marginTop: 25 }]}>
+          <TextInput
+            variant="standard"
+            label="Usuario"
+            style={{ margin: 16 }}
+            inputStyle={{ letterSpacing: 1 }}
+            leading={(props) => <Icon name="account" {...props} />}
+            color={theme.colors.primary}
+          />
+          <TextInput
+            label="Contraseña"
+            variant="standard"
+            style={{ margin: 16 }}
+            color={theme.colors.primary}
+            leading={(props) => (
+              <Icon name="form-textbox-password" {...props} />
+            )}
+            trailing={(props) => (
+              <IconButton
+                icon={(props) => <Icon name="eye" {...props} />}
+                {...props}
+              />
+            )}
+          />
 
-            <View style={styles.select_container}>
-              <View style={{ flexDirection: "row" }}>
+          <View style={styles.select_container}>
+            {/* <View style={{ flexDirection: "row" }}>
                 <Switch
                   style={{ paddingLeft: 8 }}
                   value={checked}
                   onValueChange={() => setChecked(!checked)}
                 />
                 <Text style={styles.label}>Recordar</Text>
-              </View>
+              </View> */}
 
-              <TouchableOpacity>
-                <Text style={styles.link}>Olvide la contraseña</Text>
-              </TouchableOpacity>
-            </View>
-            <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
-              <Button
-                titleStyle={{ fontSize: 17 }}
-                contentContainerStyle={{ height: 45 }}
-                title="Iniciar Sesión"
-                color={theme.colors.primary}
-                uppercase={false}
-                onPress={() =>
-                  navigation.reset({
-                    index: 0,
-                    routes: [{ name: "MainContainer" }],
-                  })
-                }
-              />
-            </View>
-          </Stack>
+            <TouchableOpacity>
+              <Text style={styles.link}>Olvide la contraseña</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
+            <Button
+              titleStyle={{ fontSize: 17 }}
+              contentContainerStyle={{ height: 45 }}
+              title="Iniciar Sesión"
+              color={theme.colors.primary}
+              uppercase={false}
+              onPress={() =>
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: "MainContainer" }],
+                })
+              }
+            />
+          </View>
+        </Stack>
       </Animatable.View>
       <View style={styles.footer}>
         <Image source={require("../assets/svg.png")} style={styles.image} />
@@ -132,10 +133,12 @@ const styles = StyleSheet.create({
     // textAlign: "right",
     fontSize: 15,
     paddingRight: 15,
+    textAlign: "right",
   },
   select_container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    // flexDirection: "row",
+    // justifyContent: "space-between",
+    marginTop: -10,
   },
   label: {
     margin: 8,
