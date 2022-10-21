@@ -21,11 +21,14 @@ import {
 } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 import React, { useState } from "react";
+import { useForm } from "../hooks/useForm";
 
 export const Login = ({ navigation }) => {
+  const { onInputChange, user, password } = useForm({
+    user: "",
+    password: "",
+  });
 
-
-  
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -48,12 +51,16 @@ export const Login = ({ navigation }) => {
             inputStyle={{ letterSpacing: 1 }}
             leading={(props) => <Icon name="account" {...props} />}
             color={theme.colors.primary}
+            value={user}
+            onChangeText={(value) => onInputChange("user", value)}
           />
           <TextInput
             label="Contraseña"
             variant="standard"
             style={{ margin: 16 }}
             color={theme.colors.primary}
+            onChangeText={(value) => onInputChange("password", value)}
+            value={password}
             leading={(props) => (
               <Icon name="form-textbox-password" {...props} />
             )}
