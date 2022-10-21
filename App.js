@@ -1,5 +1,6 @@
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { UserProvider } from "./src/hooks/UserProvider";
 import { AddAccount } from "./src/screens/AddAccount";
 import { Login } from "./src/screens/Login";
 import { MainContainer } from "./src/screens/MainContainer";
@@ -11,18 +12,20 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        initialRouteName="Login"
-        screenOptions={{ headerShown: false }}
-      >
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="MainContainer" component={MainContainer} />
-        <Stack.Screen name="MesaConfig" component={MesasConfig} />
-        <Stack.Screen name="MesaCuenta" component={MesaCuenta} />
-        <Stack.Screen name="AddCuenta" component={AddAccount} />
-        <Stack.Screen name="Orden" component={Ordenes} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <UserProvider>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="Login"
+          screenOptions={{ headerShown: false }}
+        >
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="MainContainer" component={MainContainer} />
+          <Stack.Screen name="MesaConfig" component={MesasConfig} />
+          <Stack.Screen name="MesaCuenta" component={MesaCuenta} />
+          <Stack.Screen name="AddCuenta" component={AddAccount} />
+          <Stack.Screen name="Orden" component={Ordenes} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
   );
 }

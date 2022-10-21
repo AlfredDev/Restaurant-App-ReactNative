@@ -18,24 +18,23 @@ import {
   Button,
 } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { useForm } from "../hooks/useForm";
 import { db } from "../../database/firebase";
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { UserContext } from "../hooks/UserContext";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
-    user: "",
-    password: "",
+    user: "chipule",
+    password: "admin",
   });
 
-  const [users, setUser] = useState();
+  // const [users, setUser] = useState();
+
+  // Implementando el userContext(hook), por la complejidad de pasar los datos a otros componenetes
+  //Analizar si es necesario implementar mas para las ventanas de ordenes
+  const { setUser } = useContext(UserContext);
 
   const getUser = async () => {
     const userRef = collection(db, "Trabajadores");
@@ -53,8 +52,13 @@ export const Login = ({ navigation }) => {
         setUser({
           nombre: doc.data().nombre,
           usuario: doc.data().usuario,
+          id: doc.data().id,
+          contraseña: doc.data().contraseña,
+          correo: doc.data().correo,
+          rol: doc.data().rol,
         });
       });
+
       navigation.reset({
         index: 0,
         routes: [{ name: "MainContainer" }],

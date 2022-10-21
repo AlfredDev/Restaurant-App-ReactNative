@@ -3,8 +3,12 @@ import { Header } from "../../components/Header";
 import { theme } from "../../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
+import { useContext } from "react";
+import { UserContext } from "../../hooks/UserContext";
 
 export const UserSetting = ({ navigation }) => {
+  const { usuario } = useContext(UserContext);
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -22,7 +26,7 @@ export const UserSetting = ({ navigation }) => {
               Nombre:{" "}
             </Text>
             <Text style={{ fontSize: 16, textAlign: "left", opacity: 0.7 }}>
-              Dr. Chipules
+              {usuario.nombre}
             </Text>
           </View>
 
@@ -31,7 +35,7 @@ export const UserSetting = ({ navigation }) => {
               Usuario:{" "}
             </Text>
             <Text style={{ fontSize: 16, textAlign: "left", opacity: 0.7 }}>
-              Chipules
+              {usuario.usuario}
             </Text>
           </View>
           <Button
