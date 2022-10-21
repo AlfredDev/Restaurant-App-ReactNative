@@ -10,7 +10,7 @@ export const useForm = (initilForm = {}) => {
       ...form,
       [name]: value,
     });
-    console.log(form);
+    // console.log(form);
   };
 
   const resetHandler = () => {

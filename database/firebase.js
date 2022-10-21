@@ -1,6 +1,5 @@
-import firebase from "firebase";
-import "firebase/firestore";
-// Your web app's Firebase configuration
+import { initializeApp } from "firebase/app"
+import { getFirestore } from "firebase/firestore"
 const firebaseConfig = {
   apiKey: "AIzaSyDtIemNlizlTuNxT2dUc9-OZUPRhTvaUaI",
   authDomain: "cascadasaguaazul.firebaseapp.com",
@@ -10,12 +9,7 @@ const firebaseConfig = {
   appId: "1:326823088100:web:269b25ce52466c602441f1",
 };
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-const db = firebase.firestore();
+export const db = getFirestore();
 
-export default {
-  firebase,
-  db,
-};

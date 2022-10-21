@@ -8,26 +8,61 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from "react-native";
-import { Header } from "../components/Header";
-import { Logo } from "../components/Logo";
+import { Header, Logo } from "../components/index";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import {
   Stack,
   TextInput,
   IconButton,
-  Switch,
   Button,
 } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "../hooks/useForm";
+import { db } from "../../database/firebase";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  onSnapshot,
+} from "firebase/firestore";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
     user: "",
     password: "",
   });
+
+  const [users, setUser] = useState();
+
+  const getUser = async () => {
+    const userRef = collection(db, "Trabajadores");
+    const q = query(
+      userRef,
+      where("usuario", "==", user),
+      where("contraseña", "==", password)
+    );
+
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        setUser({
+          nombre: doc.data().nombre,
+          usuario: doc.data().usuario,
+        });
+      });
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainContainer" }],
+      });
+    } else {
+      alert("Credenciales incorrectas");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -93,12 +128,7 @@ export const Login = ({ navigation }) => {
               title="Iniciar Sesión"
               color={theme.colors.primary}
               uppercase={false}
-              onPress={() =>
-                navigation.reset({
-                  index: 0,
-                  routes: [{ name: "MainContainer" }],
-                })
-              }
+              onPress={() => getUser()}
             />
           </View>
         </Stack>
