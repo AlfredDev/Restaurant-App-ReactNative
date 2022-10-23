@@ -14,11 +14,26 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 import { Checkbox } from "react-native-paper";
+import { db } from "../../database/firebase";
+import { doc, setDoc } from "firebase/firestore";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const MesasConfig = ({ route, navigation }) => {
-  const { itemId, description } = route.params;
-  const [checked, setChecked] = React.useState(false);
+  const { mesa } = route.params;
+  const [checked, setChecked] = React.useState(true);
+
+  const config = () => {
+    const docRef = doc(db, "Mesa", mesa.idDoc);
+    mesa.Libre = false;
+    mesa.Estatus = "Ocupada";
+    setDoc(docRef, mesa)
+      .then((docRef) => {
+        console.log("Entire Document has been updated successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <KeyboardAvoidingView
@@ -38,7 +53,7 @@ export const MesasConfig = ({ route, navigation }) => {
           </View>
         </TouchableOpacity>
 
-        <Header titulo={description} />
+        <Header titulo={mesa.Description} />
         <Text
           style={{
             textAlign: "center",
@@ -108,16 +123,16 @@ export const MesasConfig = ({ route, navigation }) => {
             <Checkbox
               status={checked ? "checked" : "unchecked"}
               onPress={() => {
-                setChecked(!checked);
+                setChecked(true);
               }}
             />
             <Text style={{ fontSize: 20, textAlign: "center" }}>Activar</Text>
           </View>
           <View style={styles.checkbox}>
             <Checkbox
-              status={!checked ? "checked" : "unchecked"}
+              status={checked ? "unchecked" : "checked"}
               onPress={() => {
-                setChecked(!checked);
+                setChecked(false);
               }}
             />
             <Text style={{ fontSize: 20, textAlign: "center" }}>Reservar</Text>
@@ -129,6 +144,7 @@ export const MesasConfig = ({ route, navigation }) => {
             title="Aplicar Configuración"
             color={theme.colors.primary}
             uppercase={false}
+            onPress={() => config()}
           />
         </Stack>
       </Animatable.View>

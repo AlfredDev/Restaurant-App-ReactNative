@@ -30,7 +30,7 @@ export const Login = ({ navigation }) => {
     password: "admin",
   });
 
-  // const [users, setUser] = useState();
+  const [secure, setSecure] = useState(true);
 
   // Implementando el userContext(hook), por la complejidad de pasar los datos a otros componenetes
   //Analizar si es necesario implementar mas para las ventanas de ordenes
@@ -100,11 +100,15 @@ export const Login = ({ navigation }) => {
             color={theme.colors.primary}
             onChangeText={(value) => onInputChange("password", value)}
             value={password}
+            secureTextEntry={secure}
             leading={(props) => (
               <Icon name="form-textbox-password" {...props} />
             )}
             trailing={(props) => (
               <IconButton
+                onPress={() => {
+                  secure ? setSecure(false) : setSecure(true);
+                }}
                 icon={(props) => <Icon name="eye" {...props} />}
                 {...props}
               />

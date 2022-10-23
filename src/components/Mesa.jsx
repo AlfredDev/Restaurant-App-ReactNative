@@ -5,14 +5,12 @@ import { Text } from "react-native-paper";
 
 export const Mesa = ({ table, navigation }) => {
   const presabble = () => {
-    table.libre
+    table.Libre
       ? navigation.navigate("MesaConfig", {
-          itemId: table.id,
-          description: table.description,
+          mesa: table,
         })
       : navigation.navigate("MesaCuenta", {
-          itemId: table.id,
-          description: table.description,
+          mesa: table,
         });
   };
 
@@ -21,7 +19,7 @@ export const Mesa = ({ table, navigation }) => {
       <View
         style={[
           styles.table,
-          table.libre ? styles.table_libre : styles.table_ocupada,
+          table.Libre ? styles.table_libre : styles.table_ocupada,
         ]}
       >
         <Text style={[styles.text_table, { fontSize: 17 }]}>

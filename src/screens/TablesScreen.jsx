@@ -4,7 +4,7 @@ import { Header } from "../components/Header";
 import { Mesa } from "../components/Mesa";
 import { theme } from "../core/theme";
 import { db } from "../../database/firebase";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { Stack, ActivityIndicator } from "@react-native-material/core";
 
 export const TablesScreen = ({ navigation }) => {
@@ -12,7 +12,7 @@ export const TablesScreen = ({ navigation }) => {
   const [loanding, setLoading] = useState(true);
 
   async function fetchData() {
-    const q = query(collection(db, "Mesa"));
+    const q = query(collection(db, "Mesa"), orderBy("id"));
     const querySnapshot = await getDocs(q);
     const mesas = [];
     querySnapshot.forEach((doc) => {
@@ -22,6 +22,7 @@ export const TablesScreen = ({ navigation }) => {
         Estatus: Estatus,
         Description: Description,
         Libre: Libre,
+        idDoc: doc.id,
       });
     });
     setMesas(mesas);
