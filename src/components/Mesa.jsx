@@ -36,7 +36,7 @@ export const Mesa = ({ table, navigation }) => {
 
 const styles = StyleSheet.create({
   table: {
-    width: 81,
+    width: 82,
     height: 80,
     margin: 4,
     borderRadius: 5,

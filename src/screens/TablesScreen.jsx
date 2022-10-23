@@ -50,7 +50,7 @@ export const TablesScreen = ({ navigation }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.container_tables}>
               {mesa.map((table) => (
-                <Mesa key={table.id} table={table} navigation={navigation} />
+                <Mesa key={table.idDoc} table={table} navigation={navigation} />
               ))}
             </View>
           </ScrollView>

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
+  BackHandler,
   KeyboardAvoidingView,
   Platform,
   StatusBar,
@@ -16,24 +17,83 @@ import { Stack, TextInput, Button } from "@react-native-material/core";
 import { Checkbox } from "react-native-paper";
 import { db } from "../../database/firebase";
 import { doc, setDoc } from "firebase/firestore";
+import { actualizarCampo, addDocumento } from "../helpers/Backed";
+import { useForm } from "../hooks/useForm";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const MesasConfig = ({ route, navigation }) => {
   const { mesa } = route.params;
   const [checked, setChecked] = React.useState(true);
 
-  const config = () => {
-    const docRef = doc(db, "Mesa", mesa.idDoc);
-    mesa.Libre = false;
-    mesa.Estatus = "Ocupada";
-    setDoc(docRef, mesa)
-      .then((docRef) => {
-        console.log("Entire Document has been updated successfully");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+  const {
+    onInputChange,
+    nombre,
+    adultos,
+    niños = 0,
+  } = useForm({
+    nombre: nombre,
+    adultos: adultos,
+    niños: niños,
+    mesa_id: mesa.id,
+  });
+
+  const cliente = {
+    nombre: nombre,
+    adultos: adultos,
+    niños: niños,
+    mesa_id: mesa.id,
   };
+
+  const table = {
+    Description: mesa.Description,
+    Libre: mesa.Libre,
+    Estatus: mesa.Estatus,
+    id: mesa.id,
+  };
+
+  const config = () => {
+    if (validar()) {
+      table.Libre = false;
+      table.Estatus = "Ocupada";
+      actualizarCampo(table, "Mesa", mesa.idDoc);
+      addDocumento("Cliente", cliente);
+      navigation.navigate("MesaCuenta", {
+        mesa: mesa,
+      });
+    }
+  };
+
+  function handleBackButtonClick() {
+    navigation.goBack();
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+    };
+  }, []);
+
+  function validar() {
+    if (!nombre) {
+      alert("El nombre no puede estar vacio");
+      return false;
+    }
+
+    if (parseInt(adultos) < 0 || parseInt(adultos) == 0 || !adultos) {
+      alert("El valor no puede ser 0");
+      return false;
+    }
+    if (parseInt(niños) < 0) {
+      alert("El valor no puede ser 0");
+      return false;
+    }
+    return true;
+  }
 
   return (
     <KeyboardAvoidingView
@@ -75,6 +135,8 @@ export const MesasConfig = ({ route, navigation }) => {
             style={{ margin: 16 }}
             inputStyle={{ letterSpacing: 1 }}
             color={theme.colors.primary}
+            value={nombre}
+            onChangeText={(value) => onInputChange("nombre", value)}
             leading={(props) => (
               <View style={styles.icon}>
                 <Ionicons
@@ -84,14 +146,18 @@ export const MesasConfig = ({ route, navigation }) => {
                 />
               </View>
             )}
+            maxLength={25} //setting limit of input
           />
 
           <TextInput
             variant="standard"
             label="Adultos"
+            keyboardType="numeric"
             style={{ margin: 16 }}
             inputStyle={{ letterSpacing: 1 }}
             color={theme.colors.primary}
+            value={adultos}
+            onChangeText={(value) => onInputChange("adultos", value)}
             leading={(props) => (
               <View style={styles.icon}>
                 <Ionicons
@@ -101,6 +167,7 @@ export const MesasConfig = ({ route, navigation }) => {
                 />
               </View>
             )}
+            maxLength={2} //setting limit of input
           />
           <TextInput
             variant="standard"
@@ -108,6 +175,8 @@ export const MesasConfig = ({ route, navigation }) => {
             style={{ margin: 16 }}
             inputStyle={{ letterSpacing: 1 }}
             color={theme.colors.primary}
+            value={niños}
+            onChangeText={(value) => onInputChange("niños", value)}
             leading={(props) => (
               <View style={styles.icon}>
                 <Ionicons
@@ -117,6 +186,8 @@ export const MesasConfig = ({ route, navigation }) => {
                 />
               </View>
             )}
+            keyboardType="numeric"
+            maxLength={2} //setting limit of input
           />
 
           <View style={styles.checkbox}>

@@ -1,4 +1,5 @@
 import {
+  BackHandler,
   KeyboardAvoidingView,
   SafeAreaView,
   ScrollView,
@@ -12,9 +13,31 @@ import * as Animatable from "react-native-animatable";
 import { Button } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { HeaderBlue } from "../components/HeaderBlue";
+import { useEffect } from "react";
 
 export const MesaCuenta = ({ route, navigation }) => {
-  const { itemId, description } = route.params;
+  const { mesa } = route.params;
+
+  const goHome = () => {
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MainContainer" }],
+    });
+  };
+  function handleBackButtonClick() {
+    goHome();
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+    };
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -28,9 +51,10 @@ export const MesaCuenta = ({ route, navigation }) => {
       />
 
       <HeaderBlue
-        description={description}
+        description={mesa.Description}
         subtitle={"Cuentas"}
         navigation={navigation}
+        goHome={goHome}
       />
 
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
@@ -38,15 +62,9 @@ export const MesaCuenta = ({ route, navigation }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.scroll}>
               <CuentaRepre
-                id={itemId}
-                description={description}
+                id={1}
+                description={mesa.Description}
                 nombre={"Calamardo Tentaculos"}
-                navigation={navigation}
-              />
-              <CuentaRepre
-                id={itemId}
-                description={description}
-                nombre={"Calamarino Elegante"}
                 navigation={navigation}
               />
             </View>

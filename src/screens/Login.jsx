@@ -56,6 +56,7 @@ export const Login = ({ navigation }) => {
           contraseña: doc.data().contraseña,
           correo: doc.data().correo,
           rol: doc.data().rol,
+          idDoc: doc.id,
         });
       });
 
