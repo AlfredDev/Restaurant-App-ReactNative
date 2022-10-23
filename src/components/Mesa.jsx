@@ -25,11 +25,11 @@ export const Mesa = ({ table, navigation }) => {
         ]}
       >
         <Text style={[styles.text_table, { fontSize: 17 }]}>
-          {table.description}
+          {table.Description}
         </Text>
         <View style={{ marginTop: 12 }}>
           <Text style={styles.text_table}>Estatus:</Text>
-          <Text style={styles.text_table}>{table.status}</Text>
+          <Text style={styles.text_table}>{table.Estatus}</Text>
         </View>
       </View>
     </TouchableOpacity>

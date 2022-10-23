@@ -1,61 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StatusBar, StyleSheet, Text, View } from "react-native";
 import { Header } from "../components/Header";
 import { Mesa } from "../components/Mesa";
 import { theme } from "../core/theme";
-
-const initialTable = [
-  {
-    id: 1,
-    status: "Libre",
-    description: "Mesa 1",
-    libre: true,
-  },
-  {
-    id: 2,
-    status: "Libre",
-    description: "Mesa 2",
-    libre: true,
-  },
-  {
-    id: 3,
-    status: "Libre",
-    description: "Mesa 3",
-    libre: true,
-  },
-  {
-    id: 4,
-    status: "Ocupada",
-    description: "Mesa 4",
-    libre: false,
-  },
-  {
-    id: 5,
-    status: "Libre",
-    description: "Mesa 5",
-    libre: true,
-  },
-  {
-    id: 6,
-    status: "Libre",
-    description: "Mesa 6",
-    libre: true,
-  },
-  {
-    id: 7,
-    status: "Ocupada",
-    description: "Mesa 7",
-    libre: false,
-  },
-  {
-    id: 8,
-    status: "Ocupada",
-    description: "Mesa 8",
-    libre: false,
-  },
-];
+import { db } from "../../database/firebase";
+import { collection, getDocs, query } from "firebase/firestore";
+import { Stack, ActivityIndicator } from "@react-native-material/core";
 
 export const TablesScreen = ({ navigation }) => {
+  const [mesa, setMesas] = useState([]);
+  const [loanding, setLoading] = useState(true);
+
+  async function fetchData() {
+    const q = query(collection(db, "Mesa"));
+    const querySnapshot = await getDocs(q);
+    const mesas = [];
+    querySnapshot.forEach((doc) => {
+      const { id, Estatus, Description, Libre } = doc.data();
+      mesas.push({
+        id: id,
+        Estatus: Estatus,
+        Description: Description,
+        Libre: Libre,
+      });
+    });
+    setMesas(mesas);
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <View style={styles.mainContainer}>
       <StatusBar
@@ -64,15 +40,21 @@ export const TablesScreen = ({ navigation }) => {
       />
       <Header titulo={"Mesas"} />
 
-      <View style={styles.scroll}>
-        <ScrollView stickyHeaderIndices={[1]}>
-          <View style={styles.container_tables}>
-            {initialTable.map((table) => (
-              <Mesa key={table.id} table={table} navigation={navigation} />
-            ))}
-          </View>
-        </ScrollView>
-      </View>
+      {loanding ? (
+        <Stack fill center spacing={4}>
+          <ActivityIndicator size="large" color={theme.colors.primary} />
+        </Stack>
+      ) : (
+        <View style={styles.scroll}>
+          <ScrollView stickyHeaderIndices={[1]}>
+            <View style={styles.container_tables}>
+              {mesa.map((table) => (
+                <Mesa key={table.id} table={table} navigation={navigation} />
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+      )}
     </View>
   );
 };
