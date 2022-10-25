@@ -15,8 +15,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 import { Checkbox } from "react-native-paper";
-import { db } from "../../database/firebase";
-import { doc, setDoc } from "firebase/firestore";
+
 import { actualizarCampo, addDocumento } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 // import Ionicons from "react-native-vector-icons/Ionicons";

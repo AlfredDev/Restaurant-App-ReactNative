@@ -1,4 +1,5 @@
 import {
+  BackHandler,
   KeyboardAvoidingView,
   ScrollView,
   StatusBar,
@@ -12,9 +13,25 @@ import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
+import { useEffect } from "react";
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, description, nombre } = route.params;
+
+  function handleBackButtonClick() {
+    navigation.goBack();
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+    };
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -31,6 +48,7 @@ export const Ordenes = ({ navigation, route }) => {
         description={description}
         subtitle={nombre}
         navigation={navigation}
+        goHome={navigation.goBack}
       />
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.opciones}>

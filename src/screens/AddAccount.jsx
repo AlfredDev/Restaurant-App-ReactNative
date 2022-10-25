@@ -1,18 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
   StyleSheet,
   View,
+  BackHandler,
 } from "react-native";
 import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import { useForm } from "../hooks/useForm";
+import { addDocumento, uid } from "../helpers/Backed";
 
 export const AddAccount = ({ navigation, route }) => {
-  const { ItemId, description } = route.params;
+  const { mesa } = route.params;
+  const { onInputChange, nombre } = useForm({
+    nombre: nombre,
+    mesa_id: mesa.id,
+  });
+
+  const model_cuenta = {
+    fk_mesa_id: mesa.id,
+    nombre: nombre,
+    id: uid(),
+  };
+
+  const addRepreCuneta = () => {
+    if (!nombre) {
+      return alert("Nombre vacio");
+    }
+    addDocumento("Cuenta_cliente", model_cuenta);
+    navigation.goBack();
+  };
+
+  function handleBackButtonClick() {
+    navigation.goBack();
+    return true;
+  }
+
+  useEffect(() => {
+    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
+    return () => {
+      BackHandler.removeEventListener(
+        "hardwareBackPress",
+        handleBackButtonClick
+      );
+    };
+  }, []);
 
   return (
     <KeyboardAvoidingView
@@ -26,9 +62,10 @@ export const AddAccount = ({ navigation, route }) => {
       />
 
       <HeaderBlue
-        description={description}
-        subtitle={"Agregar Cuneta"}
+        description={mesa.Description}
+        subtitle={"Agregar Cuenta"}
         navigation={navigation}
+        goHome={navigation.goBack}
       />
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <Stack spacing={50} style={[{ margin: 16 }, { marginTop: 50 }]}>
@@ -54,6 +91,8 @@ export const AddAccount = ({ navigation, route }) => {
               label="Nombre"
               style={{ margin: 16, width: 250 }}
               color={theme.colors.primary}
+              value={nombre}
+              onChangeText={(value) => onInputChange("nombre", value)}
             />
           </View>
           <View style={styles.buton}>
@@ -64,6 +103,7 @@ export const AddAccount = ({ navigation, route }) => {
               width={350}
               color={theme.colors.primary}
               uppercase={false}
+              onPress={addRepreCuneta}
             />
           </View>
         </Stack>

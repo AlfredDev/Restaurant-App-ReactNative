@@ -13,10 +13,14 @@ import * as Animatable from "react-native-animatable";
 import { Button } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { HeaderBlue } from "../components/HeaderBlue";
-import { useEffect } from "react";
-
+import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../database/firebase";
 export const MesaCuenta = ({ route, navigation }) => {
   const { mesa } = route.params;
+
+  const [cuenta, setCuenta] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const goHome = () => {
     navigation.reset({
@@ -29,7 +33,27 @@ export const MesaCuenta = ({ route, navigation }) => {
     return true;
   }
 
+  async function getCuentas() {
+    const objRef = collection(db, "Cuenta_cliente");
+    const q = query(objRef, where("fk_mesa_id", "==", mesa.id));
+    const querySnapshot = await getDocs(q);
+
+    const cuentas = [];
+
+    querySnapshot.forEach((doc) => {
+      const { id, fk_mesa_id, nombre } = doc.data();
+      cuentas.push({
+        id: id,
+        fk_mesa_id: fk_mesa_id,
+        nombre: nombre,
+      });
+    });
+    setCuenta(cuentas);
+    setLoading(true);
+  }
+
   useEffect(() => {
+    getCuentas();
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
     return () => {
       BackHandler.removeEventListener(
@@ -60,14 +84,17 @@ export const MesaCuenta = ({ route, navigation }) => {
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.ordenes}>
           <ScrollView stickyHeaderIndices={[1]}>
-            <View style={styles.scroll}>
-              <CuentaRepre
-                id={1}
-                description={mesa.Description}
-                nombre={"Calamardo Tentaculos"}
-                navigation={navigation}
-              />
-            </View>
+            {cuenta.map((cuenta) => (
+              <View style={styles.scroll} key={cuenta.id}>
+                <CuentaRepre
+                  id={id}
+                  description={mesa.Description}
+                  nombre={cuenta.nombre}
+                  fk_mesa_id = {cuenta.fk_mesa_id}
+                  navigation={navigation}
+                />
+              </View>
+            ))}
             <View style={styles.scroll}>
               <Button
                 titleStyle={{ fontSize: 17 }}
@@ -78,8 +105,7 @@ export const MesaCuenta = ({ route, navigation }) => {
                 uppercase={false}
                 onPress={() =>
                   navigation.navigate("AddCuenta", {
-                    itemId: itemId,
-                    description: description,
+                    mesa: mesa,
                   })
                 }
               />
