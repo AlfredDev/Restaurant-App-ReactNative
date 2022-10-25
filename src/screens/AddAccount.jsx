@@ -32,7 +32,11 @@ export const AddAccount = ({ navigation, route }) => {
       return alert("Nombre vacio");
     }
     addDocumento("Cuenta_cliente", model_cuenta);
-    navigation.goBack();
+    // navigation.goBack();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MesaCuenta", params: { mesa } }],
+    });
   };
 
   function handleBackButtonClick() {

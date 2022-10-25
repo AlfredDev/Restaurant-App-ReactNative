@@ -90,7 +90,7 @@ export const MesaCuenta = ({ route, navigation }) => {
                   id={id}
                   description={mesa.Description}
                   nombre={cuenta.nombre}
-                  fk_mesa_id = {cuenta.fk_mesa_id}
+                  fk_mesa_id={cuenta.fk_mesa_id}
                   navigation={navigation}
                 />
               </View>
