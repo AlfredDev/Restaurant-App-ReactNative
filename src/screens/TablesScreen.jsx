@@ -16,13 +16,14 @@ export const TablesScreen = ({ navigation }) => {
     const querySnapshot = await getDocs(q);
     const mesas = [];
     querySnapshot.forEach((doc) => {
-      const { id, Estatus, Description, Libre } = doc.data();
+      const { id, Estatus, Description, Libre ,reservada} = doc.data();
       mesas.push({
         id: id,
         Estatus: Estatus,
         Description: Description,
         Libre: Libre,
         idDoc: doc.id,
+        reservada:reservada
       });
     });
     setMesas(mesas);

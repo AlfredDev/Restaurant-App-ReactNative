@@ -5,7 +5,14 @@ import { Text } from "react-native-paper";
 
 export const Mesa = ({ table, navigation }) => {
   const presabble = () => {
-    table.Libre
+    if (table.reservada) {
+      navigation.navigate("Reservada", {
+        mesa: table,
+      });
+      return;
+    }
+
+    table.Libre && !table.reservada
       ? navigation.navigate("MesaConfig", {
           mesa: table,
         })

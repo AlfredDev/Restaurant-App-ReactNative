@@ -16,7 +16,7 @@ import * as Animatable from "react-native-animatable";
 import { Stack, TextInput, Button } from "@react-native-material/core";
 import { Checkbox } from "react-native-paper";
 
-import { actualizarCampo, addDocumento } from "../helpers/Backed";
+import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
@@ -48,17 +48,35 @@ export const MesasConfig = ({ route, navigation }) => {
     Libre: mesa.Libre,
     Estatus: mesa.Estatus,
     id: mesa.id,
+    reservada: mesa.reservada,
   };
 
   const config = () => {
     if (validar()) {
-      table.Libre = false;
-      table.Estatus = "Ocupada";
-      actualizarCampo(table, "Mesa", mesa.idDoc);
-      addDocumento("Cliente", cliente);
-      navigation.navigate("MesaCuenta", {
-        mesa: mesa,
-      });
+      if (checked) {
+        table.Libre = false;
+        table.Estatus = "Ocupada";
+        table.reservada = false;
+        actualizarCampo(table, "Mesa", mesa.idDoc);
+        addDocumento("Cliente", cliente);
+        addDocumento("Cuenta_cliente", {
+          fk_mesa_id: mesa.id,
+          id: uid(),
+          nombre: nombre,
+        });
+        navigation.navigate("MesaCuenta", {
+          mesa: mesa,
+        });
+      } else {
+        table.Libre = false;
+        table.Estatus = "Reservada";
+        table.reservada = true;
+        actualizarCampo(table, "Mesa", mesa.idDoc);
+        addDocumento("Cliente", cliente);
+        navigation.navigate("Reservada", {
+          mesa: mesa,
+        });
+      }
     }
   };
 
