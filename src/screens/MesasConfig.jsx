@@ -64,19 +64,21 @@ export const MesasConfig = ({ route, navigation }) => {
           id: uid(),
           nombre: nombre,
         });
-        navigation.navigate("MesaCuenta", {
-          mesa: mesa,
-        });
       } else {
         table.Libre = false;
         table.Estatus = "Reservada";
         table.reservada = true;
         actualizarCampo(table, "Mesa", mesa.idDoc);
         addDocumento("Cliente", cliente);
-        navigation.navigate("Reservada", {
-          mesa: mesa,
+        addDocumento("Cuenta_cliente", {
+          fk_mesa_id: mesa.id,
+          id: uid(),
+          nombre: nombre,
         });
       }
+      navigation.navigate("MesaCuenta", {
+        mesa: mesa,
+      });
     }
   };
 

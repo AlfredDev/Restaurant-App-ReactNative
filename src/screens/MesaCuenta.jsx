@@ -41,19 +41,26 @@ export const MesaCuenta = ({ route, navigation }) => {
     const cuentas = [];
 
     querySnapshot.forEach((doc) => {
-      const { id, fk_mesa_id, nombre } = doc.data();
-      cuentas.push({
+      const { fk_mesa_id, id, nombre } = doc.data();
+
+      let cuenta = {
         id: id,
         fk_mesa_id: fk_mesa_id,
         nombre: nombre,
-      });
+      };
+
+      cuentas.push(cuenta);
     });
-    setCuenta(cuentas);
+
     setLoading(true);
+    setCuenta(cuentas);
   }
 
   useEffect(() => {
     getCuentas();
+  }, []);
+
+  useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
     return () => {
       BackHandler.removeEventListener(
@@ -87,7 +94,7 @@ export const MesaCuenta = ({ route, navigation }) => {
             {cuenta.map((cuenta) => (
               <View style={styles.scroll} key={cuenta.id}>
                 <CuentaRepre
-                  id={id}
+                  id={cuenta.id}
                   description={mesa.Description}
                   nombre={cuenta.nombre}
                   fk_mesa_id={cuenta.fk_mesa_id}
