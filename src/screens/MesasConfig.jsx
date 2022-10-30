@@ -51,6 +51,28 @@ export const MesasConfig = ({ route, navigation }) => {
     reservada: mesa.reservada,
   };
 
+  const activar = () => {
+    table.reservada = false;
+    table.Estatus = "Ocupada";
+    table.Libre = false;
+    actualizarCampo(table, "Mesa", mesa.idDoc);
+
+    navigation.navigate("MesaCuenta", {
+      mesa: mesa,
+    });
+  };
+
+  const cancelar = () => {
+    table.reservada = false;
+    table.Estatus = "Libre";
+    table.Libre = true;
+    actualizarCampo(table, "Mesa", mesa.idDoc);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MainContainer" }],
+    });
+  };
+
   const config = () => {
     if (validar()) {
       if (checked) {
@@ -64,6 +86,9 @@ export const MesasConfig = ({ route, navigation }) => {
           id: uid(),
           nombre: nombre,
         });
+        navigation.navigate("MesaCuenta", {
+          mesa: mesa,
+        });
       } else {
         table.Libre = false;
         table.Estatus = "Reservada";
@@ -75,10 +100,11 @@ export const MesasConfig = ({ route, navigation }) => {
           id: uid(),
           nombre: nombre,
         });
+        navigation.reset({
+          index: 0,
+          routes: [{ name: "MainContainer" }],
+        });
       }
-      navigation.navigate("MesaCuenta", {
-        mesa: mesa,
-      });
     }
   };
 
@@ -86,6 +112,8 @@ export const MesasConfig = ({ route, navigation }) => {
     navigation.goBack();
     return true;
   }
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
@@ -142,7 +170,7 @@ export const MesasConfig = ({ route, navigation }) => {
             marginBottom: 10,
           }}
         >
-          Disponible
+          {mesa.Estatus}
         </Text>
       </View>
 
@@ -209,33 +237,66 @@ export const MesasConfig = ({ route, navigation }) => {
             maxLength={2} //setting limit of input
           />
 
-          <View style={styles.checkbox}>
-            <Checkbox
-              status={checked ? "checked" : "unchecked"}
-              onPress={() => {
-                setChecked(true);
-              }}
-            />
-            <Text style={{ fontSize: 20, textAlign: "center" }}>Activar</Text>
-          </View>
-          <View style={styles.checkbox}>
-            <Checkbox
-              status={checked ? "unchecked" : "checked"}
-              onPress={() => {
-                setChecked(false);
-              }}
-            />
-            <Text style={{ fontSize: 20, textAlign: "center" }}>Reservar</Text>
-          </View>
+          {!mesa.reservada ? (
+            <Stack
+              spacing={10}
+              style={[{ margin: 5 }, { marginTop: 5 }, { marginRight: 5 }]}
+            >
+              <View style={styles.checkbox}>
+                <Checkbox
+                  status={checked ? "checked" : "unchecked"}
+                  onPress={() => {
+                    setChecked(true);
+                  }}
+                />
+                <Text style={{ fontSize: 20, textAlign: "center" }}>
+                  Activar
+                </Text>
+              </View>
+              <View style={styles.checkbox}>
+                <Checkbox
+                  status={checked ? "unchecked" : "checked"}
+                  onPress={() => {
+                    setChecked(false);
+                  }}
+                />
+                <Text style={{ fontSize: 20, textAlign: "center" }}>
+                  Reservar
+                </Text>
+              </View>
 
-          <Button
-            titleStyle={{ fontSize: 17 }}
-            contentContainerStyle={{ height: 50 }}
-            title="Aplicar Configuración"
-            color={theme.colors.primary}
-            uppercase={false}
-            onPress={() => config()}
-          />
+              <Button
+                titleStyle={{ fontSize: 17 }}
+                contentContainerStyle={{ height: 50 }}
+                title="Aplicar Configuración"
+                color={theme.colors.primary}
+                uppercase={false}
+                onPress={() => config()}
+              />
+            </Stack>
+          ) : (
+            <Stack
+              spacing={20}
+              style={[{ margin: 5 }, { marginTop: 10 }, { marginRight: 5 }]}
+            >
+              <Button
+                titleStyle={{ fontSize: 17 }}
+                contentContainerStyle={{ height: 60 }}
+                title="Activar"
+                color={theme.colors.primary}
+                uppercase={false}
+                onPress={() => activar()}
+              />
+              <Button
+                titleStyle={{ fontSize: 17 }}
+                contentContainerStyle={{ height: 60 }}
+                title="Cancelar Reservacion"
+                color={"#D8D2CB"}
+                uppercase={false}
+                onPress={() => cancelar()}
+              />
+            </Stack>
+          )}
         </Stack>
       </Animatable.View>
     </KeyboardAvoidingView>
