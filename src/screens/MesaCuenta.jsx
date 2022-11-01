@@ -99,6 +99,8 @@ export const MesaCuenta = ({ route, navigation }) => {
                   nombre={cuenta.nombre}
                   fk_mesa_id={cuenta.fk_mesa_id}
                   navigation={navigation}
+                  mesa={mesa}
+                  cuenta={cuenta}
                 />
               </View>
             ))}

@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../core/theme";
 
-export const CuentaRepre = ({ id, description, nombre, navigation }) => {
+export const CuentaRepre = ({ id, description, nombre, navigation ,mesa,cuenta}) => {
   return (
     <TouchableOpacity
       onPress={() =>
@@ -10,6 +10,8 @@ export const CuentaRepre = ({ id, description, nombre, navigation }) => {
           itemId: id,
           description: description,
           nombre: nombre,
+          mesa:mesa,
+          cuenta: cuenta,
         })
       }
     >

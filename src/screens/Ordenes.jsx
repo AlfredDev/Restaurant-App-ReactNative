@@ -16,7 +16,7 @@ import { OrdenItem } from "../components/OrdenItem";
 import { useEffect } from "react";
 
 export const Ordenes = ({ navigation, route }) => {
-  const { ItemId, description, nombre } = route.params;
+  const { ItemId, description, nombre, mesa, cuenta } = route.params;
 
   function handleBackButtonClick() {
     navigation.goBack();
@@ -45,8 +45,8 @@ export const Ordenes = ({ navigation, route }) => {
       />
 
       <HeaderBlue
-        description={description}
-        subtitle={nombre}
+        description={mesa.Description}
+        subtitle={cuenta.nombre}
         navigation={navigation}
         goHome={navigation.goBack}
       />
@@ -81,11 +81,17 @@ export const Ordenes = ({ navigation, route }) => {
                 <Button
                   titleStyle={{ fontSize: 17 }}
                   contentContainerStyle={{ height: 50 }}
-                  title="+  Agregar Cuenta"
+                  title="+  Agregar Orden"
                   width={253}
                   height={60}
                   color={theme.colors.primary}
                   uppercase={false}
+                  onPress={() =>
+                    navigation.navigate("AddOrden", {
+                      mesa: mesa,
+                      cuenta: cuenta,
+                    })
+                  }
                 />
               </Stack>
             </View>
