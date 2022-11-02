@@ -77,6 +77,7 @@ export const Ordenes = ({ navigation, route }) => {
                   height={60}
                   color={theme.colors.secondary}
                   uppercase={false}
+                  disabled
                 />
                 <Button
                   titleStyle={{ fontSize: 17 }}

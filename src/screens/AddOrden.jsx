@@ -21,6 +21,9 @@ export const AddOrden = ({ navigation, route }) => {
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [value, onChangeText] = useState("");
   const [count, setCount] = useState(1);
+
+  const categorias = ["Cocteles", "Bebidas", "Pollo"];
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -45,6 +48,7 @@ export const AddOrden = ({ navigation, route }) => {
             <PIckerCum
               selected={selectedLanguage}
               setSelected={setSelectedLanguage}
+              opciones={categorias}
             />
           </View>
           <View style={styles.pickerContainer}>

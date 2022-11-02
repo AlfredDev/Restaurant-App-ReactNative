@@ -29,15 +29,15 @@ const styles = StyleSheet.create({
     // borderColor: "#D8D2CB",
     padding: 2,
     width: "90%",
-    marginTop:2,
-    borderBottomWidth:1,
-    marginBottom:5,
+    marginTop: 2,
+    borderBottomWidth: 1,
+    marginBottom: 5,
   },
   des: {
     width: 70,
     justifyContent: "center",
     alignItems: "center",
     overflow: "scroll",
-    padding:3
+    padding: 3,
   },
 });

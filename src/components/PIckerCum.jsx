@@ -2,13 +2,16 @@ import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { StyleSheet } from "react-native";
 
-export const PIckerCum = ({ selected, setSelected }) => {
+export const PIckerCum = ({ selected, setSelected, opciones = [] }) => {
   return (
     <Picker
       selectedValue={selected}
       onValueChange={(itemValue, itemIndex) => setSelected(itemValue)}
       style={styles.picker}
     >
+      {opciones.map((op) => (
+        <Picker.Item label={op} value={op} />
+      ))}
       <Picker.Item label="Java" value="java" />
       <Picker.Item label="JavaScript" value="js" />
     </Picker>
