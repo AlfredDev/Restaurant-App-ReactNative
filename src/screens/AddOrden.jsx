@@ -14,11 +14,13 @@ import { Picker } from "@react-native-picker/picker";
 import { PIckerCum } from "../components/PIckerCum";
 import { Button } from "@react-native-material/core";
 import { OrderLIst } from "../components/OrderLIst";
+import { BtnIncrement } from "../components/BtnIncrement";
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
   const [selectedLanguage, setSelectedLanguage] = useState();
   const [value, onChangeText] = useState("");
+  const [count, setCount] = useState(1);
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -61,6 +63,7 @@ export const AddOrden = ({ navigation, route }) => {
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Cantidad:</Text>
+            <BtnIncrement count={count} setCount={setCount} />
           </View>
           <Text style={styles.text}>Descripcion</Text>
           <View
@@ -92,7 +95,7 @@ export const AddOrden = ({ navigation, route }) => {
               title="+  Agregar Orden"
               width={250}
               height={50}
-              color={'#002B5B'}
+              color={"#002B5B"}
               uppercase={false}
             />
           </View>
