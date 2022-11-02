@@ -15,14 +15,13 @@ import { PIckerCum } from "../components/PIckerCum";
 import { Button } from "@react-native-material/core";
 import { OrderLIst } from "../components/OrderLIst";
 import { BtnIncrement } from "../components/BtnIncrement";
+import { categorias } from "../helpers/Categorias";
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
-  const [selectedLanguage, setSelectedLanguage] = useState();
+  const [categoria, setCategoria] = useState();
   const [value, onChangeText] = useState("");
   const [count, setCount] = useState(1);
-
-  const categorias = ["Cocteles", "Bebidas", "Pollo"];
 
   return (
     <KeyboardAvoidingView
@@ -46,24 +45,18 @@ export const AddOrden = ({ navigation, route }) => {
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Categoria:</Text>
             <PIckerCum
-              selected={selectedLanguage}
-              setSelected={setSelectedLanguage}
+              selected={categoria}
+              setSelected={setCategoria}
               opciones={categorias}
             />
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Producto:</Text>
-            <PIckerCum
-              selected={selectedLanguage}
-              setSelected={setSelectedLanguage}
-            />
+            <PIckerCum selected={categoria} setSelected={setCategoria} />
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Tamaño:</Text>
-            <PIckerCum
-              selected={selectedLanguage}
-              setSelected={setSelectedLanguage}
-            />
+            <PIckerCum selected={categoria} setSelected={setCategoria} />
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Cantidad:</Text>
