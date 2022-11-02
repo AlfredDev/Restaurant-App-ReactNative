@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { PedidoItem } from "./PedidoItem";
 
 export const OrderLIst = () => {
   const tableHead = ["Producto,Tamaño,Cantidad,Descripcion"];
@@ -20,7 +21,11 @@ export const OrderLIst = () => {
           <Text style={styles.txt}>Descripcion</Text>
         </View>
       </View>
-      <ScrollView></ScrollView>
+      <ScrollView>
+        <View style={styles.com}>
+          <PedidoItem />
+        </View>
+      </ScrollView>
     </>
   );
 };
@@ -49,5 +54,9 @@ const styles = StyleSheet.create({
   txt: {
     textAlign: "center",
     marginLeft: 9,
+  },
+  com: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });

@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: "#EEEEEE",
-    height: 20,
-    width: 25,
+    height: 23,
+    width: 23,
     borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
