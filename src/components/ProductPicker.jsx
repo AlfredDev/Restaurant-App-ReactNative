@@ -1,16 +1,27 @@
 import { Picker } from "@react-native-picker/picker";
-import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 
-export const PIckerCum = ({ selected, setSelected, opciones = [] }) => {
+export const ProductPicker = ({
+  selected,
+  setSelected,
+  opciones,
+  categoria,
+}) => {
+  function handleChangeOption(val) {
+    if (val !== 0) {
+      setSelected(val);
+    }
+  }
   return (
     <Picker
       selectedValue={selected}
-      onValueChange={(itemValue) => setSelected(itemValue)}
+      onValueChange={handleChangeOption}
       style={styles.picker}
     >
+      <Picker.Item label="Porfavor selecciona una opcion..." value="0" />
+
       {opciones.map((op) => (
-        <Picker.Item label={op} value={op} key={op} />
+        <Picker.Item label={op.nombre} value={op.nombre} key={op.nombre} />
       ))}
     </Picker>
   );

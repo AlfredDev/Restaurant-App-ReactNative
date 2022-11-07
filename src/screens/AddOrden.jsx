@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   KeyboardAvoidingView,
   StatusBar,
@@ -16,12 +16,107 @@ import { Button } from "@react-native-material/core";
 import { OrderLIst } from "../components/OrderLIst";
 import { BtnIncrement } from "../components/BtnIncrement";
 import { categorias } from "../helpers/Categorias";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../database/firebase";
+import { async } from "@firebase/util";
+import { ProductPicker } from "../components/ProductPicker";
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
-  const [categoria, setCategoria] = useState();
+  const [categoria, setCategoria] = useState("Cocteles");
+  const [plato, setPlato] = useState("");
+
   const [value, onChangeText] = useState("");
   const [count, setCount] = useState(1);
+  const [platillo, setPlatillo] = useState([]);
+  const [tamaño, setTamaño] = useState("chico");
+  const tamaños = ["chico", "mediano", "grande", "orden"];
+
+  const [objeto, setObjeto] = useState();
+  const [filter, setFilter] = useState([]);
+
+  useEffect(() => {
+    getCategorias();
+    // console.log(platillo);
+    getProducto();
+  }, [categoria]);
+
+  useEffect(() => {
+    const f = platillo.filter((p) => p.categoria === categoria);
+    setFilter(f);
+  }, [platillo]);
+
+  const getProducto = async () => {
+    const objRef = collection(db, "Platillos");
+    const q = query(
+      objRef,
+      where("nombre", "==", plato),
+      where("categoria", "==", categoria)
+    );
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      const { categoria, nombre, precio, tamaño } = doc.data();
+
+      let plailloss = {
+        categoria: categoria,
+        nombre: nombre,
+        precio: precio,
+        tamaño: tamaño,
+      };
+      setObjeto(plailloss);
+    });
+  };
+  const agregarOrdern = () => {
+    const orden = {
+      producto: plato,
+      tamaño: tamaño,
+      cantidad: count,
+      descripcion: value,
+      categoria: categoria,
+    };
+    console.log(orden);
+  };
+
+  const getPrecio = () => {
+    const { chico, mediano, grande } = objeto.precio;
+
+    if (tamaño === "chico") {
+      return chico;
+    }
+
+    if (tamaño === "mediano") {
+      return mediano;
+    }
+
+    if (tamaño === "grande") {
+      return grande;
+    }
+    return 0;
+  };
+
+  async function getCategorias() {
+    const q = collection(db, "Platillos");
+    const querySnapshot = await getDocs(q);
+
+    const platillos = [];
+    // const producto = [];
+
+    querySnapshot.forEach((doc) => {
+      const { categoria, nombre, precio, tamaño } = doc.data();
+
+      let plailloss = {
+        categoria: categoria,
+        nombre: nombre,
+        precio: precio,
+        tamaño: tamaño,
+      };
+
+      platillos.push(plailloss);
+    });
+
+    setPlatillo(platillos);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -52,11 +147,20 @@ export const AddOrden = ({ navigation, route }) => {
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Producto:</Text>
-            <PIckerCum selected={categoria} setSelected={setCategoria} />
+            <ProductPicker
+              selected={plato}
+              setSelected={setPlato}
+              opciones={filter}
+              categoria={categoria}
+            />
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Tamaño:</Text>
-            <PIckerCum selected={categoria} setSelected={setCategoria} />
+            <PIckerCum
+              opciones={tamaños}
+              setSelected={setTamaño}
+              selected={tamaño}
+            />
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Cantidad:</Text>
@@ -94,6 +198,7 @@ export const AddOrden = ({ navigation, route }) => {
               height={50}
               color={"#002B5B"}
               uppercase={false}
+              onPress={agregarOrdern}
             />
           </View>
         </View>
