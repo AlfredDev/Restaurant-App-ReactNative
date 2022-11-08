@@ -2,8 +2,8 @@ import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
 import { PedidoItem } from "./PedidoItem";
 
-export const OrderLIst = () => {
-  const tableHead = ["Producto,Tamaño,Cantidad,Descripcion"];
+export const OrderLIst = ({ ordenes }) => {
+  // const tableHead = ["Producto,Tamaño,Cantidad,Descripcion"];
 
   return (
     <>
@@ -23,7 +23,15 @@ export const OrderLIst = () => {
       </View>
       <ScrollView>
         <View style={styles.com}>
-          <PedidoItem />
+          {ordenes.map((o) => (
+            <PedidoItem
+              producto={o.producto}
+              tamaño={o.tamaño}
+              cantidad={o.cantidad}
+              descripcion={o.descripcion}
+              key={o.nombre}
+            />
+          ))}
         </View>
       </ScrollView>
     </>

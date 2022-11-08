@@ -35,10 +35,11 @@ export const AddOrden = ({ navigation, route }) => {
   const [objeto, setObjeto] = useState();
   const [filter, setFilter] = useState([]);
 
+  const [ordenes, setOrdenes] = useState([]);
+
   useEffect(() => {
     getCategorias();
     // console.log(platillo);
-    getProducto();
   }, [categoria]);
 
   useEffect(() => {
@@ -46,51 +47,42 @@ export const AddOrden = ({ navigation, route }) => {
     setFilter(f);
   }, [platillo]);
 
-  const getProducto = async () => {
-    const objRef = collection(db, "Platillos");
-    const q = query(
-      objRef,
-      where("nombre", "==", plato),
-      where("categoria", "==", categoria)
-    );
-    const querySnapshot = await getDocs(q);
-
-    querySnapshot.forEach((doc) => {
-      const { categoria, nombre, precio, tamaño } = doc.data();
-
-      let plailloss = {
-        categoria: categoria,
-        nombre: nombre,
-        precio: precio,
-        tamaño: tamaño,
-      };
-      setObjeto(plailloss);
-    });
-  };
   const agregarOrdern = () => {
+    const precio = platillo.filter((p) => p.nombre === plato);
+    // console.log(precio[0]);
     const orden = {
       producto: plato,
       tamaño: tamaño,
       cantidad: count,
       descripcion: value,
       categoria: categoria,
+      precio: 0,
     };
-    console.log(orden);
+    // console.log(orden);
+    if (!orden.producto) {
+      alert("Ingrese una producto");
+      return;
+    }
+
+    orden.precio = getPrecio(precio[0]) * count;
+    setOrdenes([orden, ...ordenes]); //Ingresando la orden que quiera
+    console.log(ordenes);
   };
 
-  const getPrecio = () => {
-    const { chico, mediano, grande } = objeto.precio;
+  const getPrecio = (precios) => {
+    const { precio } = precios;
+    // console.log(precio);
 
     if (tamaño === "chico") {
-      return chico;
+      return precio.chico;
     }
 
     if (tamaño === "mediano") {
-      return mediano;
+      return precio.mediano;
     }
 
     if (tamaño === "grande") {
-      return grande;
+      return precio.grande;
     }
     return 0;
   };
@@ -202,7 +194,7 @@ export const AddOrden = ({ navigation, route }) => {
             />
           </View>
         </View>
-        <OrderLIst />
+        <OrderLIst ordenes={ordenes} />
         <Button
           titleStyle={{ fontSize: 17 }}
           contentContainerStyle={{ height: 50 }}

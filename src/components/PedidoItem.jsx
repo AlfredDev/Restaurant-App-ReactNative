@@ -1,20 +1,20 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const PedidoItem = () => {
+export const PedidoItem = ({ producto, tamaño, cantidad, descripcion }) => {
   return (
     <View style={styles.head}>
       <View style={styles.des}>
-        <Text>Limonada</Text>
+        <Text>{producto}</Text>
       </View>
       <View style={styles.des}>
-        <Text>Jarra</Text>
+        <Text>{tamaño}</Text>
       </View>
       <View style={styles.des}>
-        <Text>1</Text>
+        <Text>{cantidad}</Text>
       </View>
       <View style={styles.des}>
-        <Text>Sin limon y sin agua</Text>
+        <Text>{descripcion}</Text>
       </View>
     </View>
   );
@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    height: 35,
+    height: "auto",
     // borderColor: "#D8D2CB",
     padding: 2,
     width: "90%",
