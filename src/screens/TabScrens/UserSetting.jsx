@@ -95,6 +95,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     // paddingTop: 5,
     marginTop: 30,
+    alignItems: "center",
+    // justifyContent:'space-between'
   },
   input: {
     flexDirection: "row",

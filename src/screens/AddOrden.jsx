@@ -20,6 +20,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
 import { ProductPicker } from "../components/ProductPicker";
+import { addDocumento, generateUUID, uid } from "../helpers/Backed";
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
@@ -65,8 +66,10 @@ export const AddOrden = ({ navigation, route }) => {
     }
 
     orden.precio = getPrecio(precio[0]) * count;
+    // console.log(orden);
+
     setOrdenes([orden, ...ordenes]); //Ingresando la orden que quiera
-    console.log(ordenes);
+    // console.log(ordenes);
   };
 
   const getPrecio = (precios) => {
@@ -84,6 +87,10 @@ export const AddOrden = ({ navigation, route }) => {
     if (tamaño === "grande") {
       return precio.grande;
     }////////tsssssssss
+    if (tamaño === "orden") {
+      return precio.orden;
+    }
+
     if (tamaño === "orden") {
       return precio.orden;
     }
@@ -112,6 +119,25 @@ export const AddOrden = ({ navigation, route }) => {
 
     setPlatillo(platillos);
   }
+
+  const GeneraOrden = () => {
+    if (ordenes.length) {
+      const pedido = {
+        fk_cuenta_id: cuenta.id,
+        fk_mesa_id: mesa.id,
+        pedidos: ordenes,
+        folio: generateUUID(),
+      };
+
+      addDocumento("Orden", pedido);
+      navigation.navigate("Orden", {
+        mesa: mesa,
+        cuenta: cuenta,
+      });
+    } else {
+      alert("Agrege una orden primero");
+    }
+  };
 
   return (
     <KeyboardAvoidingView
@@ -206,6 +232,7 @@ export const AddOrden = ({ navigation, route }) => {
           height={55}
           color={theme.colors.primary}
           uppercase={false}
+          onPress={GeneraOrden}
         />
       </Animatable.View>
     </KeyboardAvoidingView>
