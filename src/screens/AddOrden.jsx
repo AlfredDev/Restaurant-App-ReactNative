@@ -31,7 +31,7 @@ export const AddOrden = ({ navigation, route }) => {
   const [count, setCount] = useState(1);
   const [platillo, setPlatillo] = useState([]);
   const [tamaño, setTamaño] = useState("chico");
-  const tamaños = ["chico", "mediano", "grande", "orden"];
+  const tamaños = ["Chico", "Mediano", "Grande", "Orden"];
 
   const [objeto, setObjeto] = useState();
   const [filter, setFilter] = useState([]);
