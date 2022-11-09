@@ -19,27 +19,61 @@ export const UserSetting = ({ navigation }) => {
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <Stack
           spacing={50}
-          style={[{ margin: 16 }, { marginTop: 50 }, { alignItems: "center" }]}
+          style={[
+            { margin: 16 },
+            { marginTop: 50 },
+            { alignItems: "flex-start" },
+          ]}
         >
           <View style={styles.input}>
-            <Text style={{ fontSize: 17, textAlign: "left", marginRight: 20 }}>
-              Nombre:{" "}
+            <Text
+              style={{
+                fontSize: 17,
+                textAlign: "left",
+                marginRight: 20,
+                fontWeight: "600",
+                letterSpacing: 2,
+              }}
+            >
+              Nombre:
             </Text>
-            <Text style={{ fontSize: 16, textAlign: "left", opacity: 0.7 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "left",
+                opacity: 0.7,
+                letterSpacing: 1.5,
+              }}
+            >
               {usuario.nombre}
             </Text>
           </View>
 
           <View style={styles.input}>
-            <Text style={{ fontSize: 17, textAlign: "left", marginRight: 20 }}>
+            <Text
+              style={{
+                fontSize: 17,
+                textAlign: "right",
+                marginRight: 20,
+                fontWeight: "600",
+                letterSpacing: 2,
+              }}
+            >
               Usuario:{" "}
             </Text>
-            <Text style={{ fontSize: 16, textAlign: "left", opacity: 0.7 }}>
+            <Text
+              style={{
+                fontSize: 16,
+                textAlign: "right",
+                opacity: 0.7,
+                letterSpacing: 2,
+              }}
+            >
               {usuario.usuario}
             </Text>
           </View>
           <Button
-            titleStyle={{ fontSize: 17 }}
+            titleStyle={{ fontSize: 17, fontWeight: "700", letterSpacing: 2 }}
             contentContainerStyle={{ height: 50 }}
             title="Cerrar Sesión"
             width={345}
@@ -73,11 +107,14 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 30,
     // paddingTop: 5,
     marginTop: 30,
+    alignItems: "center",
+    // justifyContent:'space-between'
   },
   input: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "flex-start",
-    marginRight: 150,
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    // marginRight: 150,
   },
 });

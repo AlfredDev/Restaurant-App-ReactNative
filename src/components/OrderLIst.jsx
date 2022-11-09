@@ -1,5 +1,6 @@
 import React from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
+import { generateUUID } from "../helpers/Backed";
 import { PedidoItem } from "./PedidoItem";
 
 export const OrderLIst = ({ ordenes }) => {
@@ -29,7 +30,7 @@ export const OrderLIst = ({ ordenes }) => {
               tamaño={o.tamaño}
               cantidad={o.cantidad}
               descripcion={o.descripcion}
-              key={o.nombre}
+              key={generateUUID()}
             />
           ))}
         </View>

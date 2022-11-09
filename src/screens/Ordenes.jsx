@@ -13,15 +13,24 @@ import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../database/firebase";
 
 export const Ordenes = ({ navigation, route }) => {
-  const { ItemId, description, nombre, mesa, cuenta } = route.params;
-
+  const { ItemId, mesa, cuenta } = route.params;
+  const [ordenes, setOrdenes] = useState([]);
+  const [total, setTotal] = useState(0);
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
   }
+
+  useEffect(() => {
+    fecthOrdenes();
+    // console.log(ordenes);
+    // console.log(total);
+  }, [ordenes]);
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
@@ -32,6 +41,55 @@ export const Ordenes = ({ navigation, route }) => {
       );
     };
   }, []);
+
+  const fecthOrdenes = async () => {
+    const objRef = collection(db, "Orden");
+    const q = query(
+      objRef,
+      where("fk_mesa_id", "==", mesa.id),
+      where("fk_cuenta_id", "==", cuenta.id)
+    );
+    const querySnapshot = await getDocs(q);
+
+    const cuentas = [];
+
+    querySnapshot.forEach((doc) => {
+      const { fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
+
+      let cuenta = {
+        fk_cuenta_id: fk_cuenta_id,
+        fk_mesa_id: fk_mesa_id,
+        folio: folio,
+        pedidos: pedidos,
+      };
+
+      cuentas.push(cuenta);
+    });
+    setOrdenes(cuentas);
+
+    let total = 0;
+    ordenes.forEach((o) => {
+      o.pedidos.forEach((to) => {
+        total += to.precio;
+      });
+    });
+    setTotal(total);
+  };
+
+  // useEffect(() => {
+  //   getTotal();
+  //   console.log(total);
+  // }, []);
+
+  // const getTotal = () => {
+  //   let total = 0;
+  //   ordenes.forEach((o) => {
+  //     o.pedidos.forEach((to) => {
+  //       total += to.precio;
+  //     });
+  //   });
+  //   setTotal(total);
+  // };
 
   return (
     <KeyboardAvoidingView
@@ -64,7 +122,13 @@ export const Ordenes = ({ navigation, route }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-                <OrdenItem folio={2210083001} id={ItemId} />
+                {ordenes.map((op) => (
+                  <OrdenItem
+                    folio={op.folio}
+                    id={op.fk_mesa_id}
+                    key={op.folio}
+                  />
+                ))}
               </Stack>
             </View>
             <View style={styles.botones}>
@@ -107,7 +171,7 @@ export const Ordenes = ({ navigation, route }) => {
               fontSize: 16,
             }}
           >
-            Total: $ 500.00
+            Total: $ {total}
           </Text>
           <Stack
             spacing={10}

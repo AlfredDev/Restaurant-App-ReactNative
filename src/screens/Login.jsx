@@ -26,8 +26,8 @@ import { UserContext } from "../hooks/UserContext";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
-    user: "chipule",
-    password: "admin",
+    user: "",
+    password: "",
   });
 
   const [secure, setSecure] = useState(true);
@@ -127,7 +127,7 @@ export const Login = ({ navigation }) => {
               </View> */}
 
             <TouchableOpacity>
-              <Text style={styles.link}>Olvide la contraseña</Text>
+              <Text style={styles.link}>Olvidé la contraseña</Text>
             </TouchableOpacity>
           </View>
           <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
