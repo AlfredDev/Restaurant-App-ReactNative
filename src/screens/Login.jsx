@@ -127,7 +127,7 @@ export const Login = ({ navigation }) => {
               </View> */}
 
             <TouchableOpacity>
-              <Text style={styles.link}>Olvide la contraseña</Text>
+              <Text style={styles.link}>¿Olvidaste tu contraseña?</Text>
             </TouchableOpacity>
           </View>
           <View style={[{ paddingLeft: 15 }, { paddingRight: 15 }]}>
