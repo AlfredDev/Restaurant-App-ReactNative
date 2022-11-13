@@ -16,6 +16,9 @@ import { OrdenItem } from "../components/OrdenItem";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
+import {cancelar} from "../screens/MesasConfig"
+
+
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta } = route.params;
@@ -200,6 +203,8 @@ export const Ordenes = ({ navigation, route }) => {
               height={60}
               color={"#D8D2CB"}
               uppercase={false}
+              //onPress={() => navigation.navigate("")}
+              
             />
           </Stack>
         </View>

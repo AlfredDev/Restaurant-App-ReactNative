@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-export const PedidoItem = ({ producto, tamaño, cantidad, descripcion }) => {
+export const PedidoItem = ({ producto, tamaño, cantidad, descripción }) => {
   return (
     <View style={styles.head}>
       <View style={styles.des}>
@@ -14,7 +14,7 @@ export const PedidoItem = ({ producto, tamaño, cantidad, descripcion }) => {
         <Text>{cantidad}</Text>
       </View>
       <View style={styles.des}>
-        <Text>{descripcion}</Text>
+        <Text>{descripción}</Text>
       </View>
     </View>
   );

@@ -18,7 +18,7 @@ export const ProductPicker = ({
       onValueChange={handleChangeOption}
       style={styles.picker}
     >
-      <Picker.Item label="Porfavor selecciona una opcion..." value="0" />
+      <Picker.Item label="Por favor selecciona una opción..." value="0" />
 
       {opciones.map((op) => (
         <Picker.Item label={op.nombre} value={op.nombre} key={op.nombre} />

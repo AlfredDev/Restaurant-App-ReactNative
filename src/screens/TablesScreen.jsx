@@ -41,6 +41,26 @@ export const TablesScreen = ({ navigation }) => {
         barStyle="light-content"
       />
       <Header titulo={"Mesas"} />
+      <Stack style={styles.indicador}>
+        <View style={[styles.box,{backgroundColor:"skyblue"}]}>  
+        <View>
+          <Text style={styles.text_table}>Libre</Text>
+        </View>
+        </View>
+        
+        <View style={[styles.box,{backgroundColor:"#2196f3"}]}>
+        <View>
+          <Text style={styles.text_table}>Ocupada</Text>
+        </View>
+        </View>
+        
+        <View style={[styles.box,{backgroundColor:"#398AB9"}]}>
+        <View>
+          <Text style={styles.text_table}>Reservada</Text>
+        </View>
+        </View>
+        
+      </Stack>
 
       {loanding ? (
         <Stack fill center spacing={4}>
@@ -85,6 +105,25 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection: "row",
     flexWrap: "wrap",
-    marginTop: 5,
+    marginTop: 10,
+    
   },
+  indicador:{
+    marginTop: 10,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    marginBottom: 10, 
+
+  },
+  box:{
+    height: 20,
+    width: "25%",
+    alignItems: "center",
+  },
+  text_table: {
+    color: "#FFFFFF",
+    
+  },
+ 
 });

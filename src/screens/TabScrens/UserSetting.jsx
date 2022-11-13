@@ -58,14 +58,17 @@ export const UserSetting = ({ navigation }) => {
             </Text>
           </View>
           //boton cerrar sesion
-          <Button 
+          
+        </Stack>
+        <Button 
+            
             titleStyle={{ fontSize: 17 }}
             contentContainerStyle={{ height: 50 }}
             title="Cerrar Sesión"
             justifyContent = "center"
-            width="98%"
+            width="95%"
             //alignItems= 'center'
-            height= "15%" //20
+            height= "10%" //20
             color={"#D8D2CB"}
             uppercase={false}
             onPress={() =>
@@ -75,7 +78,6 @@ export const UserSetting = ({ navigation }) => {
               })
             }
           />
-        </Stack>
       </Animatable.View>
     </KeyboardAvoidingView>
   );
