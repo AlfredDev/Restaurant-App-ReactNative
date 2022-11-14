@@ -66,6 +66,7 @@ export const AddAccount = ({ navigation, route }) => {
       />
 
       <HeaderBlue
+        
         description={mesa.Description}
         subtitle={"Agregar Cuenta"}
         navigation={navigation}
@@ -104,7 +105,7 @@ export const AddAccount = ({ navigation, route }) => {
               titleStyle={{ fontSize: 17 }}
               contentContainerStyle={{ height: 58 }}
               title="Agregar Cuenta"
-              width={350}
+              width="98%"
               color={theme.colors.primary}
               uppercase={false}
               onPress={addRepreCuneta}
@@ -138,5 +139,8 @@ const styles = StyleSheet.create({
   },
   buton: {
     // marginTop: 200,
+  },
+  titulo: {
+    color: 'write'
   },
 });
