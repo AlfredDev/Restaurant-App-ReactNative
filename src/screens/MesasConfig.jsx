@@ -18,6 +18,7 @@ import { Checkbox } from "react-native-paper";
 
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
+import { HeaderBlue } from "../components/HeaderBlue";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const MesasConfig = ({ route, navigation }) => {
@@ -113,7 +114,7 @@ export const MesasConfig = ({ route, navigation }) => {
     return true;
   }
 
-  useEffect(() => {}, []);
+  useEffect(() => { }, []);
 
   useEffect(() => {
     BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
@@ -160,7 +161,18 @@ export const MesasConfig = ({ route, navigation }) => {
           </View>
         </TouchableOpacity>
 
-        <Header titulo={mesa.Description} />
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: 30,
+            color: '#fff',
+            marginTop: 10,
+            marginBottom: 10,
+            fontWeight: 'bold'
+          }}
+        >
+          {mesa.Description}
+        </Text>
         <Text
           style={{
             textAlign: "center",
@@ -170,6 +182,7 @@ export const MesasConfig = ({ route, navigation }) => {
             marginBottom: 10,
           }}
         >
+
           {mesa.Estatus}
         </Text>
       </View>

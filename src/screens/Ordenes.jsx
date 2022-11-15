@@ -14,20 +14,49 @@ import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, deleteDoc, getDocs, query, where, doc } from "firebase/firestore";
 import { db } from "../../database/firebase";
-import {cancelar} from "../screens/MesasConfig"
+//import {cancelar} from "../screens/MesasConfig"
+import { Checkbox } from "react-native-paper";
 
+import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
+import { async } from "@firebase/util";
 
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
+  const [lista, setLista] = useState([])
+  //const { mesa } = route.params;
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
   }
+
+  // const [checked, setChecked] = React.useState(true);
+  
+ 
+   const table = {
+     Description: mesa.Description,
+     Libre: mesa.Libre,
+     Estatus: mesa.Estatus,
+     id: mesa.id,
+     reservada: mesa.reservada,
+   };
+    
+
+   const cancelar = () => {
+     table.reservada = false;
+     table.Estatus = "Libre";
+     table.Libre = true;
+     actualizarCampo(table, "Mesa", mesa.idDoc);
+     
+     navigation.reset({
+       index: 0,
+       routes: [{ name: "MainContainer" }],
+     });
+   };
 
   useEffect(() => {
     fecthOrdenes();
@@ -203,7 +232,7 @@ export const Ordenes = ({ navigation, route }) => {
               height={60}
               color={"#D8D2CB"}
               uppercase={false}
-              //onPress={() => navigation.navigate("")}
+              onPress={() => cancelar() }
               
             />
           </Stack>

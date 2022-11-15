@@ -16,6 +16,7 @@ const styles = StyleSheet.create({
     // backgroundColor: "#009387",
     justifyContent: "center",
     alignItems: "center",
+    
   },
   text_header: {
     fontWeight: "bold",

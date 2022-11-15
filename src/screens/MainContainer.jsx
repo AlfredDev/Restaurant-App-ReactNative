@@ -47,6 +47,7 @@ export const MainContainer = ({ navigation }) => {
       <Tab.Screen name="Mesas" component={TablesScreen} />
       <Tab.Screen name="Orden" component={Account} />
       <Tab.Screen name="Usuario" component={UserSetting} />
+     
     </Tab.Navigator>
   );
 };
