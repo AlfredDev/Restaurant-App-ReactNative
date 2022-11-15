@@ -4,10 +4,15 @@ import { UserSetting } from "./TabScrens/UserSetting";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Account } from "./TabScrens/Account";
 import { theme } from "../core/theme";
+import { Graficas } from "./TabScrens/Graficas";
+import { useContext } from "react";
+import { UserContext } from "../hooks/UserContext";
 
 const Tab = createBottomTabNavigator();
 
 export const MainContainer = ({ navigation }) => {
+  const { usuario } = useContext(UserContext);
+
   return (
     <Tab.Navigator
       initialRouteName={"Mesas"}

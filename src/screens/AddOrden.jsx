@@ -31,7 +31,7 @@ export const AddOrden = ({ navigation, route }) => {
   const [count, setCount] = useState(1);
   const [platillo, setPlatillo] = useState([]);
   const [tamaño, setTamaño] = useState("chico");
-  const tamaños = ["chico", "mediano", "grande", "orden"];
+  const tamaños = ["Chico", "Mediano", "Grande", "Orden"];
 
   const [objeto, setObjeto] = useState();
   const [filter, setFilter] = useState([]);
@@ -86,6 +86,9 @@ export const AddOrden = ({ navigation, route }) => {
 
     if (tamaño === "grande") {
       return precio.grande;
+    } ////////tsssssssss
+    if (tamaño === "orden") {
+      return precio.orden;
     }
 
     if (tamaño === "orden") {
@@ -184,7 +187,7 @@ export const AddOrden = ({ navigation, route }) => {
             <Text style={styles.text}>Cantidad:</Text>
             <BtnIncrement count={count} setCount={setCount} />
           </View>
-          <Text style={styles.text}>Descripcion</Text>
+          <Text style={styles.text}>Descripción:</Text>
           <View
             style={{
               borderColor: "#000000",
@@ -255,10 +258,11 @@ const styles = StyleSheet.create({
   },
   pickerContainer: {
     flexDirection: "row",
-    flexWrap: "wrap",
+    //flexWrap: "wrap",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 10,
+    marginBottom: 15,
+    marginLeft: 10,
   },
 
   text: {

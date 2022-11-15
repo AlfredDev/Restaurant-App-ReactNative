@@ -46,6 +46,7 @@ export const Login = ({ navigation }) => {
 
     const querySnapshot = await getDocs(q);
 
+
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
         // console.log(doc.data());

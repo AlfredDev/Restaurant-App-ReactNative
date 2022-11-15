@@ -121,6 +121,9 @@ export const MesaCuenta = ({ route, navigation }) => {
             </View>
           </ScrollView>
         </View>
+
+      
+
         <View style={styles.button_section}>
           <Text style={styles.text}>Consumo Minimo: $650.00</Text>
           <Text style={styles.text}>Total:</Text>

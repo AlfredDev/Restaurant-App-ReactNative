@@ -25,69 +25,57 @@ export const UserSetting = ({ navigation }) => {
             { alignItems: "flex-start" },
           ]}
         >
+          //Nombre del trabajador
           <View style={styles.input}>
-            <Text
-              style={{
+            <Text  style={{
                 fontSize: 17,
                 textAlign: "left",
                 marginRight: 20,
                 fontWeight: "600",
                 letterSpacing: 2,
-              }}
-            >
-              Nombre:
-            </Text>
-            <Text
-              style={{
+              }}>Nombre: </Text>
+            <Text  style={{
                 fontSize: 16,
                 textAlign: "left",
                 opacity: 0.7,
                 letterSpacing: 1.5,
-              }}
-            >
-              {usuario.nombre}
-            </Text>
+              }}>{usuario.nombre}</Text>
           </View>
-
+          //Nombre de usuario
           <View style={styles.input}>
-            <Text
-              style={{
-                fontSize: 17,
-                textAlign: "right",
-                marginRight: 20,
-                fontWeight: "600",
-                letterSpacing: 2,
-              }}
-            >
-              Usuario:{" "}
-            </Text>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: "right",
-                opacity: 0.7,
-                letterSpacing: 2,
-              }}
-            >
+            <Text style={{ fontSize: 17 }}>Usuario: </Text>
+            <Text style={{ fontSize: 16, opacity: 0.7 }}>
               {usuario.usuario}
             </Text>
           </View>
-          <Button
-            titleStyle={{ fontSize: 17, fontWeight: "700", letterSpacing: 2 }}
-            contentContainerStyle={{ height: 50 }}
-            title="Cerrar Sesión"
-            width={345}
-            height={60}
-            color={"#D8D2CB"}
-            uppercase={false}
-            onPress={() =>
-              navigation.reset({
-                index: 0,
-                routes: [{ name: "Login" }],
-              })
-            }
-          />
+          //Correo electronico
+          <View style={styles.input}>
+            <Text style={{ fontSize: 17 }}>Correo: </Text>
+            <Text style={{ fontSize: 16, opacity: 0.7 }}>{usuario.correo}</Text>
+          </View>
+          <View style={styles.input}>
+            <Text style={{ fontSize: 17 }}>Rol: </Text>
+            <Text style={{ fontSize: 16, opacity: 0.7 }}>{usuario.rol}</Text>
+          </View>
+          //boton cerrar sesion
         </Stack>
+        <Button
+          titleStyle={{ fontSize: 17 }}
+          contentContainerStyle={{ height: 50 }}
+          title="Cerrar Sesión"
+          justifyContent="center"
+          width="95%"
+          //alignItems= 'center'
+          height="10%" //20
+          color={"#D8D2CB"}
+          uppercase={false}
+          onPress={() =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            })
+          }
+        />
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -101,7 +89,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   formContainer: {
-    flex: 4,
+    flex: 5,
     backgroundColor: theme.colors.text,
     borderTopEndRadius: 30,
     borderTopLeftRadius: 30,
@@ -112,9 +100,7 @@ const styles = StyleSheet.create({
   },
   input: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
-    flexWrap: "wrap",
-    // marginRight: 150,
+    justifyContent: "flex-start",
+    marginLeft: 20,
   },
 });

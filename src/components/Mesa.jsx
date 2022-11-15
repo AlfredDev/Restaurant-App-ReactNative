@@ -26,16 +26,16 @@ export const Mesa = ({ table, navigation }) => {
       <View
         style={[
           styles.table,
-          table.Libre ? styles.table_libre : styles.table_ocupada,
+          table.Estatus == "Reservada"
+            ? styles.table_reservada
+            : table.Estatus == "Ocupada"
+            ? styles.table_ocupada
+            : styles.table_libre,
         ]}
       >
-        <Text style={[styles.text_table, { fontSize: 17 }]}>
+        <Text style={[styles.text_table, { fontSize: 16 }]}>
           {table.Description}
         </Text>
-        <View style={{ marginTop: 12 }}>
-          <Text style={styles.text_table}>Estatus:</Text>
-          <Text style={styles.text_table}>{table.Estatus}</Text>
-        </View>
       </View>
     </TouchableOpacity>
   );
@@ -49,6 +49,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 4,
     shadowColor: "#000",
+    alignItems: "center",
+
     shadowOffset: {
       width: 0,
       height: 6,
@@ -60,13 +62,18 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   table_libre: {
-    backgroundColor: "#1C658C",
+    backgroundColor: "skyblue",
     opacity: 0.7,
   },
   table_ocupada: {
+    backgroundColor: "#2196f3",
+  },
+  table_reservada: {
     backgroundColor: "#398AB9",
   },
   text_table: {
     color: "#FFFFFF",
+    fontWeight: "bold",
+    letterSpacing: 1,
   },
 });

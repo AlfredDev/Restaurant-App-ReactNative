@@ -13,14 +13,25 @@ import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
+import { cancelar } from "../screens/MesasConfig";
+import { UserContext } from "../hooks/UserContext";
+import {
+  addDocumento,
+  deleteDocument,
+  deleteDocWhere,
+  generateUUID,
+} from "../helpers/Backed";
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
+
+  const { usuario } = useContext(UserContext);
+
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
@@ -42,6 +53,8 @@ export const Ordenes = ({ navigation, route }) => {
     };
   }, []);
 
+  // const [pedidos, setPedidos] = useState();
+
   const fecthOrdenes = async () => {
     const objRef = collection(db, "Orden");
     const q = query(
@@ -52,6 +65,7 @@ export const Ordenes = ({ navigation, route }) => {
     const querySnapshot = await getDocs(q);
 
     const cuentas = [];
+    // const pedido = [];
 
     querySnapshot.forEach((doc) => {
       const { fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
@@ -63,10 +77,10 @@ export const Ordenes = ({ navigation, route }) => {
         pedidos: pedidos,
       };
 
+      // pedido.push(pedidos);
       cuentas.push(cuenta);
     });
     setOrdenes(cuentas);
-
     let total = 0;
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
@@ -90,6 +104,21 @@ export const Ordenes = ({ navigation, route }) => {
   //   });
   //   setTotal(total);
   // };
+
+  const despideMesa = () => {
+    const tiket = {
+      fecha: new Date(),
+      mesa: mesa.Description,
+      total: total,
+      cliente: cuenta.nombre,
+      mesero: usuario.nombre,
+      id: generateUUID(),
+    };
+
+    // addDocumento('Venta',tiket);
+    // console.log(cuenta.id);
+    deleteDocWhere("Orden", "lahsvj3htuyliga0ey");
+  };
 
   return (
     <KeyboardAvoidingView
@@ -200,6 +229,7 @@ export const Ordenes = ({ navigation, route }) => {
               height={60}
               color={"#D8D2CB"}
               uppercase={false}
+              onPress={despideMesa}
             />
           </Stack>
         </View>
