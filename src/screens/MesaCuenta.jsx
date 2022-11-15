@@ -16,11 +16,38 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
+import { deleteDocWhere,actualizarCampo } from "../helpers/Backed";
 export const MesaCuenta = ({ route, navigation }) => {
   const { mesa } = route.params;
 
   const [cuenta, setCuenta] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const table = {
+    Description: mesa.Description,
+    Libre: mesa.Libre,
+    Estatus: mesa.Estatus,
+    id: mesa.id,
+    reservada: mesa.reservada,
+  };
+   
+
+  const cancelar = () => {
+    table.reservada = false;
+    table.Estatus = "Libre";
+    table.Libre = true;
+    //console.log(mesa.idDoc);
+    //console.log(mesa.id);
+    actualizarCampo(table, "Mesa", mesa.idDoc);
+    deleteDocWhere("Cliente","mesa_id",mesa.id);
+    deleteDocWhere("Cuenta_cliente","fk_mesa_id",mesa.id);
+   
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MainContainer" }],
+    });
+  };
+
 
   const goHome = () => {
     navigation.reset({
@@ -118,14 +145,31 @@ export const MesaCuenta = ({ route, navigation }) => {
                   })
                 }
               />
+              
+            </View>
+            <View style={styles.scroll}>
+              <Button
+                titleStyle={{ fontSize: 17 }}
+                contentContainerStyle={{ height: 50 }}
+                title="Despedir Mesa"
+                width={250}
+                color={"#D8D2CB"}
+                uppercase={false}
+                onPress={() => cancelar() }
+              />
+              
             </View>
           </ScrollView>
         </View>
+
+      
+
         <View style={styles.button_section}>
           <Text style={styles.text}>Consumo Minimo: $650.00</Text>
           <Text style={styles.text}>Total:</Text>
           <Text style={styles.text}>Diferencia:</Text>
         </View>
+        
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -140,6 +184,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
+    
   },
   container: {
     flex: 1,

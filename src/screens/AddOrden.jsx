@@ -86,7 +86,7 @@ export const AddOrden = ({ navigation, route }) => {
 
     if (tamaño === "grande") {
       return precio.grande;
-    }////////tsssssssss
+    } ////////tsssssssss
     if (tamaño === "orden") {
       return precio.orden;
     }
@@ -168,7 +168,7 @@ export const AddOrden = ({ navigation, route }) => {
           </View>
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Producto:</Text>
-            <ProductPicker               
+            <ProductPicker
               selected={plato}
               setSelected={setPlato}
               opciones={filter}
@@ -262,8 +262,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     marginBottom: 15,
-    marginLeft:10
-    
+    marginLeft: 10,
   },
 
   text: {

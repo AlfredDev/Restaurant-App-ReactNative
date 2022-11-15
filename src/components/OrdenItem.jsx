@@ -2,10 +2,11 @@ import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../core/theme";
 
-export const OrdenItem = ({ id, folio, navigation }) => {
+export const OrdenItem = ({ id, folio,fk_mesa_id, navigation }) => {
   return (
     <TouchableOpacity>
       <View style={styles.addcompont}>
+        
         <Text
           style={{
             textAlign: "center",
@@ -14,7 +15,8 @@ export const OrdenItem = ({ id, folio, navigation }) => {
             // marginTop: 10,
             marginBottom: 10,
           }}
-        >
+        > 
+         
           {folio}
         </Text>
       </View>

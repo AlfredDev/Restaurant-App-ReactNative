@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
     padding: 4,
     shadowColor: "#000",
     alignItems: "center",
-    
+
     shadowOffset: {
       width: 0,
       height: 6,
@@ -72,6 +72,7 @@ const styles = StyleSheet.create({
   },
   text_table: {
     color: "#FFFFFF",
-    
+    fontWeight: "bold",
+    letterSpacing: 1,
   },
 });

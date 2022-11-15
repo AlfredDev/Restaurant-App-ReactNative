@@ -13,20 +13,24 @@ import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
-import { useEffect, useState } from "react";
-import { collection, deleteDoc, getDocs, query, where, doc } from "firebase/firestore";
+import { useEffect, useState, useContext } from "react";
+import { collection, deleteDoc, getDocs, query, where, doc, orderBy } from "firebase/firestore";
 import { db } from "../../database/firebase";
-//import {cancelar} from "../screens/MesasConfig"
-import { Checkbox } from "react-native-paper";
-
+import { UserContext } from "../hooks/UserContext";
+import {
+  deleteDocument,
+  deleteDocWhere,
+  generateUUID,} from "../helpers/Backed";
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { async } from "@firebase/util";
-
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
+
+  const { usuario } = useContext(UserContext);
+
   const [lista, setLista] = useState([])
   //const { mesa } = route.params;
   function handleBackButtonClick() {
@@ -74,6 +78,8 @@ export const Ordenes = ({ navigation, route }) => {
     };
   }, []);
 
+  // const [pedidos, setPedidos] = useState();
+
   const fecthOrdenes = async () => {
     const objRef = collection(db, "Orden");
     const q = query(
@@ -84,6 +90,7 @@ export const Ordenes = ({ navigation, route }) => {
     const querySnapshot = await getDocs(q);
 
     const cuentas = [];
+    // const pedido = [];
 
     querySnapshot.forEach((doc) => {
       const { fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
@@ -95,14 +102,15 @@ export const Ordenes = ({ navigation, route }) => {
         pedidos: pedidos,
       };
 
+      // pedido.push(pedidos);
       cuentas.push(cuenta);
     });
     setOrdenes(cuentas);
-
     let total = 0;
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
         total += to.precio;
+        
       });
     });
     setTotal(total);
@@ -122,6 +130,24 @@ export const Ordenes = ({ navigation, route }) => {
   //   });
   //   setTotal(total);
   // };
+
+  const despideMesa = () => {
+    const tiket = {
+      fecha: new Date(),
+      mesa: mesa.Description,
+      total: total,
+      cliente: cuenta.nombre,
+      mesero: usuario.nombre,
+      id: generateUUID(),
+    };
+
+    // addDocumento('Venta',tiket);
+    // console.log(cuenta.id);
+    deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
+    navigation.navigate("MesaCuenta", {
+      mesa: table,
+    })
+  };
 
   return (
     <KeyboardAvoidingView
@@ -227,12 +253,13 @@ export const Ordenes = ({ navigation, route }) => {
             <Button
               titleStyle={{ fontSize: 17 }}
               contentContainerStyle={{ height: 50 }}
-              title="Despedir Mesa"
+              title="Pagar cuenta"
               width={347}
               height={60}
               color={"#D8D2CB"}
               uppercase={false}
-              onPress={() => cancelar() }
+              onPress={() => despideMesa() }
+              
               
             />
           </Stack>
