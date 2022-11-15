@@ -127,6 +127,7 @@ export const AddOrden = ({ navigation, route }) => {
         fk_mesa_id: mesa.id,
         pedidos: ordenes,
         folio: generateUUID(),
+        estatus: false,
       };
 
       addDocumento("Orden", pedido);

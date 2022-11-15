@@ -6,25 +6,33 @@ import { Button, Stack } from "@react-native-material/core";
 import { collection, deleteDoc, getDocs, query, where, doc,orderBy } from "firebase/firestore";
 import { db } from "../../../database/firebase";
 import { OrdenesListas } from "../../components/OrdenesListas";
+import { Checkbox } from "react-native-paper";
 
+import { UserContext } from "../../hooks/UserContext";
 
-export const Account = () => {
-  const [ordenes, setOrdenes] = useState([]);
+export const Account = ({navigation}) => {
+ // const [checked, setChecked] = React.useState(false);
+  const [orden, setOrdenes] = useState([]);
+  const { ordenes } = useContext(UserContext);
+
   useEffect(() => {}, []);
 
   async function fetchData() {
     const q = query(collection(db, "Orden"),orderBy("fk_mesa_id"));
     const querySnapshot = await getDocs(q);
-    const orden = [];
+    const ordenes = [];
     querySnapshot.forEach((doc) => {
-      const { fk_mesa_id,folio } = doc.data();
-      orden.push({
+      const { fk_mesa_id,folio,estatus,id } = doc.data();
+      ordenes.push({
+        id: id,
+        idDoc:doc.id,
+        estatus: estatus,
         folio: folio,
         fk_mesa_id: fk_mesa_id,
         //idDoc: doc.id,
       });
     });
-    setOrdenes(orden);
+    setOrdenes(ordenes);
     //setLoading(false);
   }
   useEffect(() => {
@@ -37,12 +45,16 @@ export const Account = () => {
       <ScrollView stickyHeaderIndices={[1]}>
       <View style={styles.container}>
       <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-                {ordenes.map((op) => (
+                {orden.map((op) => (
                   <OrdenesListas
                     folio={op.folio}
                     fk_mesa_id={op.fk_mesa_id}
+                    estatus={op.estatus}
+                    
                   />
+                 
                 ))}
+                
               </Stack>
               </View>
       </ScrollView>
