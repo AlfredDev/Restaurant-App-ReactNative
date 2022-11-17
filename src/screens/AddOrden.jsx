@@ -30,8 +30,9 @@ export const AddOrden = ({ navigation, route }) => {
   const [value, onChangeText] = useState("");
   const [count, setCount] = useState(1);
   const [platillo, setPlatillo] = useState([]);
-  const [tamaño, setTamaño] = useState("chico");
-  const tamaños = ["Chico", "Mediano", "Grande", "Orden"];
+  const [tamaño, setTamaño] = useState("Chico");
+  const tamaños =  ["Chico", "Mediano", "Grande","Orden"];
+  const size = ["Orden"];
 
   const [objeto, setObjeto] = useState();
   const [filter, setFilter] = useState([]);
@@ -59,14 +60,14 @@ export const AddOrden = ({ navigation, route }) => {
       categoria: categoria,
       precio: 0,
     };
-    // console.log(orden);
+    //console.log(orden);
     if (!orden.producto) {
       alert("Ingrese una producto");
       return;
     }
 
     orden.precio = getPrecio(precio[0]) * count;
-    // console.log(orden);
+    console.log(orden);
 
     setOrdenes([orden, ...ordenes]); //Ingresando la orden que quiera
     // console.log(ordenes);
@@ -75,19 +76,21 @@ export const AddOrden = ({ navigation, route }) => {
   const getPrecio = (precios) => {
     const { precio } = precios;
     // console.log(precio);
+    console.log(tamaño);
 
-    if (tamaño === "chico") {
+
+    if (tamaño === "Chico") {
       return precio.chico;
     }
 
-    if (tamaño === "mediano") {
+    if (tamaño === "Mediano") {
       return precio.mediano;
     }
 
-    if (tamaño === "grande") {
+    if (tamaño === "Grande") {
       return precio.grande;
     } ////////tsssssssss
-    if (tamaño === "orden") {
+    if (tamaño === "Orden") {
       return precio.orden;
     }
 
@@ -179,9 +182,11 @@ export const AddOrden = ({ navigation, route }) => {
           <View style={styles.pickerContainer}>
             <Text style={styles.text}>Tamaño:</Text>
             <PIckerCum
+              //opciones={categoria === "Cócteles" || categoria === "Cocteles" ? tamaños : size}
               opciones={tamaños}
-              setSelected={setTamaño}
               selected={tamaño}
+              setSelected={setTamaño}
+              
             />
           </View>
           <View style={styles.pickerContainer}>

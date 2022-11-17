@@ -20,7 +20,8 @@ import { UserContext } from "../hooks/UserContext";
 import {
   deleteDocument,
   deleteDocWhere,
-  generateUUID,} from "../helpers/Backed";
+  generateUUID,
+} from "../helpers/Backed";
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { async } from "@firebase/util";
 
@@ -39,28 +40,28 @@ export const Ordenes = ({ navigation, route }) => {
   }
 
   // const [checked, setChecked] = React.useState(true);
-  
- 
-   const table = {
-     Description: mesa.Description,
-     Libre: mesa.Libre,
-     Estatus: mesa.Estatus,
-     id: mesa.id,
-     reservada: mesa.reservada,
-   };
-    
 
-   const cancelar = () => {
-     table.reservada = false;
-     table.Estatus = "Libre";
-     table.Libre = true;
-     actualizarCampo(table, "Mesa", mesa.idDoc);
-     
-     navigation.reset({
-       index: 0,
-       routes: [{ name: "MainContainer" }],
-     });
-   };
+
+  const table = {
+    Description: mesa.Description,
+    Libre: mesa.Libre,
+    Estatus: mesa.Estatus,
+    id: mesa.id,
+    reservada: mesa.reservada,
+  };
+
+
+  const cancelar = () => {
+    table.reservada = false;
+    table.Estatus = "Libre";
+    table.Libre = true;
+    actualizarCampo(table, "Mesa", mesa.idDoc);
+
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "MainContainer" }],
+    });
+  };
 
   useEffect(() => {
     fecthOrdenes();
@@ -93,14 +94,14 @@ export const Ordenes = ({ navigation, route }) => {
     // const pedido = [];
 
     querySnapshot.forEach((doc) => {
-      const { estatus,fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
+      const { estatus, fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
 
       let cuenta = {
         fk_cuenta_id: fk_cuenta_id,
         fk_mesa_id: fk_mesa_id,
         folio: folio,
         pedidos: pedidos,
-       // estatus:estatus,
+        // estatus:estatus,
       };
 
       // pedido.push(pedidos);
@@ -111,7 +112,7 @@ export const Ordenes = ({ navigation, route }) => {
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
         total += to.precio;
-        
+
       });
     });
     setTotal(total);
@@ -251,6 +252,11 @@ export const Ordenes = ({ navigation, route }) => {
               color={theme.colors.primary}
               uppercase={false}
               borderRadius={10}
+              onPress={() =>
+                navigation.navigate("ImpCuenta", {
+                  mesa: mesa,
+                  cuenta: cuenta,
+                })}
             />
             <Button
               titleStyle={{ fontSize: 17 }}
@@ -260,9 +266,9 @@ export const Ordenes = ({ navigation, route }) => {
               height={60}
               color={"#D8D2CB"}
               uppercase={false}
-              onPress={() => despideMesa() }
-              
-              
+              onPress={() => despideMesa()}
+
+
             />
           </Stack>
         </View>
