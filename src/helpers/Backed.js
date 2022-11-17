@@ -7,6 +7,8 @@ import {
   getDocs,
   query,
   setDoc,
+  updateDoc,
+  updateDocs,
   where,
 } from "firebase/firestore";
 import { db } from "../../database/firebase";
@@ -21,6 +23,17 @@ export const actualizarCampo = (objeto, tabla, idDoc) => {
     .catch((error) => {
       console.log(error);
     });
+};
+export const changeStatusOrder = async (tabla, cluausula1,cluausula2) => {
+  const docRef = query(
+    collection(db, tabla),
+    where(cluausula1, "==", cluausula2)
+  );
+  const q = await getDocs(docRef);
+  q.forEach((doc) => {
+    updateDoc(doc.ref,{estatus:true});
+  });
+  
 };
 
 export const addDocumento = (tabla, objeto) => {

@@ -25,7 +25,7 @@ import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { async } from "@firebase/util";
 
 export const Ordenes = ({ navigation, route }) => {
-  const { ItemId, mesa, cuenta } = route.params;
+  const { ItemId, mesa, cuenta, orden } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
 
@@ -93,13 +93,14 @@ export const Ordenes = ({ navigation, route }) => {
     // const pedido = [];
 
     querySnapshot.forEach((doc) => {
-      const { fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
+      const { estatus,fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
 
       let cuenta = {
         fk_cuenta_id: fk_cuenta_id,
         fk_mesa_id: fk_mesa_id,
         folio: folio,
         pedidos: pedidos,
+       // estatus:estatus,
       };
 
       // pedido.push(pedidos);
@@ -142,7 +143,8 @@ export const Ordenes = ({ navigation, route }) => {
     };
 
     // addDocumento('Venta',tiket);
-    // console.log(cuenta.id);
+    //console.log(cuenta.id);
+    //console.log(ordenes.estatus)
     deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
     navigation.navigate("MesaCuenta", {
       mesa: table,

@@ -15,20 +15,19 @@ export const Account = ({navigation}) => {
   const [orden, setOrdenes] = useState([]);
   const { ordenes } = useContext(UserContext);
 
-  useEffect(() => {}, []);
-
   async function fetchData() {
     const q = query(collection(db, "Orden"),orderBy("fk_mesa_id"));
     const querySnapshot = await getDocs(q);
     const ordenes = [];
     querySnapshot.forEach((doc) => {
-      const { fk_mesa_id,folio,estatus,id } = doc.data();
+      const { fk_mesa_id,folio,estatus,fk_cuenta_id} = doc.data();
       ordenes.push({
-        id: id,
+        //id: id,
         idDoc:doc.id,
         estatus: estatus,
         folio: folio,
         fk_mesa_id: fk_mesa_id,
+        fk_cuenta_id: fk_cuenta_id,
         //idDoc: doc.id,
       });
     });
@@ -47,9 +46,14 @@ export const Account = ({navigation}) => {
       <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
                 {orden.map((op) => (
                   <OrdenesListas
+                    key= {op.idDoc}
                     folio={op.folio}
                     fk_mesa_id={op.fk_mesa_id}
+                    fk_cuenta_id={op.fk_cuenta_id}
                     estatus={op.estatus}
+                    navigation = {navigation}
+                    op={op}
+                    //estatus={op.estatus}
                     
                   />
                  
