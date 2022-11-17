@@ -253,10 +253,11 @@ export const MesasConfig = ({ route, navigation }) => {
           {!mesa.reservada ? (
             <Stack
               spacing={10}
-              style={[{ margin: 5 }, { marginTop: 5 }, { marginRight: 5 }]}
+              style={[{ margin: 5 }, { marginTop: 5 }, { marginRight: 5 },]}
             >
               <View style={styles.checkbox}>
                 <Checkbox
+                  //style={{ width: "98%"  }}
                   status={checked ? "checked" : "unchecked"}
                   onPress={() => {
                     setChecked(true);
@@ -290,7 +291,7 @@ export const MesasConfig = ({ route, navigation }) => {
           ) : (
             <Stack
               spacing={20}
-              style={[{ margin: 5 }, { marginTop: 10 }, { marginRight: 5 }]}
+              style={[{ margin: 5 }, { marginTop: 10 }, { marginRight: 5 },{alignItems: "center"}]}
             >
               <Button
                 titleStyle={{ fontSize: 17 }}
@@ -319,8 +320,8 @@ export const MesasConfig = ({ route, navigation }) => {
 const styles = StyleSheet.create({
   checkbox: {
     backgroundColor: "#D8D2CB",
-    width: 340,
-    marginLeft: 10,
+    width: "100%",
+    //marginLeft: 10,
     height: 60,
     borderRadius: 10,
     opacity: 0.6,
