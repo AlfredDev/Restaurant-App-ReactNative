@@ -8,7 +8,6 @@ import { MainContainer } from "./src/screens/MainContainer";
 import { MesaCuenta } from "./src/screens/MesaCuenta";
 import { MesasConfig } from "./src/screens/MesasConfig";
 import { Ordenes } from "./src/screens/Ordenes";
-import { Reservada } from "./src/screens/Reservada";
 
 const Stack = createNativeStackNavigator();
 
@@ -26,7 +25,6 @@ export default function App() {
           <Stack.Screen name="MesaCuenta" component={MesaCuenta} />
           <Stack.Screen name="AddCuenta" component={AddAccount} />
           <Stack.Screen name="Orden" component={Ordenes} />
-          <Stack.Screen name="Reservada" component={Reservada} />
           <Stack.Screen name="AddOrden" component={AddOrden} />
 
         </Stack.Navigator>

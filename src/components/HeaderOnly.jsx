@@ -1,14 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { theme } from "../core/theme";
-
-import { BackBtn } from "./BackBtn";
-
-export const HeaderBlue = ({ description, subtitle, navigation, goHome }) => {
+export const HeaderOnly = ({ descripcion, subtitle }) => {
   return (
     <View style={styles.header2}>
-      <BackBtn navigation={navigation} goHome={goHome} />
-
       <Text
         style={{
           textAlign: "center",
@@ -19,7 +14,7 @@ export const HeaderBlue = ({ description, subtitle, navigation, goHome }) => {
           fontWeight: "bold",
         }}
       >
-        {description}
+        {descripcion}
       </Text>
 
       <Text
@@ -42,10 +37,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: theme.colors.secondary,
     color: "#fff",
-    marginTop: 24,
+    marginTop: 15,
     // position: 'relative',
     height: 500,
     // top: 5,
     color: "write",
+    marginBottom: 15,
   },
 });
