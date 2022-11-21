@@ -142,8 +142,8 @@ export const Ordenes = ({ navigation, route }) => {
       mesero: usuario.nombre,
       id: generateUUID(),
     };
-
-    // addDocumento('Venta',tiket);
+    console.log(tiket);
+    addDocumento('Venta',tiket); 
     //console.log(cuenta.id);
     //console.log(ordenes.estatus)
     deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
@@ -256,7 +256,8 @@ export const Ordenes = ({ navigation, route }) => {
                 navigation.navigate("ImpCuenta", {
                   mesa: mesa,
                   cuenta: cuenta,
-                })}
+                })
+              }
             />
             <Button
               titleStyle={{ fontSize: 17 }}

@@ -19,7 +19,7 @@ export const OrderLIst = ({ ordenes }) => {
           <Text style={styles.txt}>Cantidad</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.txt}>Desgcripción</Text>
+          <Text style={styles.txt}>Descripción</Text>
         </View>
       </View>
       <ScrollView>

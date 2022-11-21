@@ -1,6 +1,7 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { TablesScreen } from "./TablesScreen";
 import { UserSetting } from "./TabScrens/UserSetting";
+
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { Account } from "./TabScrens/Account";
 import { theme } from "../core/theme";
@@ -52,7 +53,7 @@ export const MainContainer = ({ navigation }) => {
       <Tab.Screen name="Mesas" component={TablesScreen} />
       <Tab.Screen name="Orden" component={Account} />
       <Tab.Screen name="Usuario" component={UserSetting} />
-     
+      
     </Tab.Navigator>
   );
 };

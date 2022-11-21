@@ -5,11 +5,12 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import { Header } from "./Header";
 import { BackBtn } from "./BackBtn";
 
-export const HeaderBlue = ({ description, subtitle, navigation, goHome }) => {
+export const HeaderBlue = ({ Texto, description, subtitle, navigation, goHome }) => {
   return (
     <View style={styles.header2}>
       <BackBtn navigation={navigation} goHome={goHome} />
 
+      
       <Text
         style={{
           textAlign: "center",
@@ -20,8 +21,7 @@ export const HeaderBlue = ({ description, subtitle, navigation, goHome }) => {
           fontWeight: 'bold'
         }}
       >
-       
-        {description}
+        {Texto}{description}
       </Text>
        
       <Text
