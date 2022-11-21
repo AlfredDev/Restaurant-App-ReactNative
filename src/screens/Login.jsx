@@ -26,8 +26,8 @@ import { UserContext } from "../hooks/UserContext";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
-    user: "",
-    password: "",
+    user: "pablito",
+    password: "admin",
   });
 
   const [secure, setSecure] = useState(true);
@@ -45,7 +45,6 @@ export const Login = ({ navigation }) => {
     );
 
     const querySnapshot = await getDocs(q);
-
 
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
