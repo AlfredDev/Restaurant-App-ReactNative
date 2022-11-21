@@ -7,13 +7,14 @@ import {
   View,
   ScrollView,
   Alert,
+  RefreshControl,
 } from "react-native";
 import { HeaderBlue } from "../../components/HeaderBlue";
 import { theme } from "../../core/theme";
 import * as Animatable from "react-native-animatable";
 import { HeaderOnly } from "../../components/HeaderOnly";
 import { Search } from "../../components/Search";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { UserItem } from "../../components/UserItem";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../database/firebase";
@@ -24,10 +25,17 @@ export const Usuarios = ({ navigation }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [tabla, setTabla] = useState([]);
   const [visible, setVisible] = useState(false);
+  const [refreshing, setRefreshing] = React.useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    fetchData();
+    setRefreshing(false);
+  });
 
   async function fetchData() {
     const q = query(collection(db, "Trabajadores"), orderBy("idEmpleado"));
@@ -42,6 +50,7 @@ export const Usuarios = ({ navigation }) => {
         numCelular,
         rol,
         usuario,
+        idDoc,
       } = doc.data();
       users.push({
         id: idEmpleado,
@@ -51,6 +60,7 @@ export const Usuarios = ({ navigation }) => {
         numCelular: numCelular,
         rol: rol,
         usuario: usuario,
+        idDoc: doc.id,
       });
     });
     setUsuarios(users);
@@ -86,7 +96,12 @@ export const Usuarios = ({ navigation }) => {
       <HeaderOnly descripcion={"Usuarios"} subtitle={"Administra usuarios"} />
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.search}>
-          <Search users={usuarios} setUsuarios={setUsuarios} tabla={tabla} />
+          <Search
+            users={usuarios}
+            setUsuarios={setUsuarios}
+            tabla={tabla}
+            navigation={navigation}
+          />
         </View>
         <View style={styles.list}>
           <View style={styles.header}>
@@ -128,9 +143,19 @@ export const Usuarios = ({ navigation }) => {
             </View>
           </View>
 
-          <ScrollView>
+          <ScrollView
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+          >
             {usuarios.map((user) => (
-              <UserItem nombre={user.nombre} rol={user.rol} key={user.id} />
+              <UserItem
+                nombre={user.nombre}
+                rol={user.rol}
+                key={user.idDoc}
+                usuario={user}
+                navigation={navigation}
+              />
             ))}
           </ScrollView>
         </View>

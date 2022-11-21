@@ -1,9 +1,15 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const UserItem = ({ navigation, nombre, rol }) => {
+export const UserItem = ({ navigation, nombre, rol, usuario }) => {
+  const modificaUsuario = () => {
+    navigation.navigate("modificaUsuario", {
+      usuario: usuario,
+    });
+  };
+
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={modificaUsuario}>
       <View style={styles.item}>
         <View style={styles.nombre}>
           <Text>{nombre}</Text>
@@ -38,6 +44,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderLeftWidth: 1,
-
   },
 });

@@ -11,7 +11,7 @@ import { Usuarios } from "../screens/TabScrens/Usuarios";
 
 const Tab = createBottomTabNavigator();
 
-export const EncargadoNavigation = () => {
+export const EncargadoNavigation = ({navigation}) => {
   return (
     <Tab.Navigator
       initialRouteName={"Mesas"}
