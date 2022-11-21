@@ -6,6 +6,7 @@ import {
   Text,
   View,
   ScrollView,
+  Alert,
 } from "react-native";
 import { HeaderBlue } from "../../components/HeaderBlue";
 import { theme } from "../../core/theme";
@@ -16,10 +17,13 @@ import { useEffect, useState } from "react";
 import { UserItem } from "../../components/UserItem";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../database/firebase";
+import Icon from "@expo/vector-icons/MaterialCommunityIcons";
+import { IconButton } from "@react-native-material/core";
 
 export const Usuarios = ({ navigation }) => {
   const [usuarios, setUsuarios] = useState([]);
   const [tabla, setTabla] = useState([]);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -53,6 +57,25 @@ export const Usuarios = ({ navigation }) => {
     setTabla(users);
     // console.log(usuarios);
   }
+
+  const cerrarSesion = () => {
+    Alert.alert(
+      "Cerrar Sesión",
+      "Estas seguro de cerrar Sesion ?",
+      [
+        { text: "No", onPress: () => console.log("ok") },
+        {
+          text: "Si",
+          onPress: () =>
+            navigation.reset({
+              index: 0,
+              routes: [{ name: "Login" }],
+            }),
+        },
+      ],
+      { cancelable: false }
+    );
+  };
 
   return (
     <KeyboardAvoidingView
@@ -111,7 +134,21 @@ export const Usuarios = ({ navigation }) => {
             ))}
           </ScrollView>
         </View>
-        <View style={styles.botones}></View>
+        <View style={styles.botones}>
+          <IconButton
+            contentContainerStyle={{ backgroundColor: "red" }}
+            style={{ width: 55, height: 55 }}
+            icon={(props) => (
+              <Icon name="exit-to-app" {...props} color={"white"} />
+            )}
+            onPress={cerrarSesion}
+          />
+          <IconButton
+            contentContainerStyle={{ backgroundColor: theme.colors.primary }}
+            style={{ width: 55, height: 55 }}
+            icon={(props) => <Icon name="plus" {...props} color={"white"} />}
+          />
+        </View>
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -140,7 +177,8 @@ const styles = StyleSheet.create({
   },
   botones: {
     flex: 1,
-    backgroundColor: theme.colors.primary,
+    flexDirection: "row",
+    justifyContent: "space-around",
   },
   header: {
     backgroundColor: "#D8D2CB",
