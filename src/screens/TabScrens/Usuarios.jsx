@@ -13,9 +13,46 @@ import * as Animatable from "react-native-animatable";
 import { HeaderOnly } from "../../components/HeaderOnly";
 import { Search } from "../../components/Search";
 import { useEffect, useState } from "react";
+import { UserItem } from "../../components/UserItem";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import { db } from "../../../database/firebase";
 
 export const Usuarios = ({ navigation }) => {
-  const [search, setSearch] = useState("");
+  const [usuarios, setUsuarios] = useState([]);
+  const [tabla, setTabla] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  async function fetchData() {
+    const q = query(collection(db, "Trabajadores"), orderBy("idEmpleado"));
+    const querySnapshot = await getDocs(q);
+    const users = [];
+    querySnapshot.forEach((doc) => {
+      const {
+        idEmpleado,
+        contraseña,
+        correo,
+        nombre,
+        numCelular,
+        rol,
+        usuario,
+      } = doc.data();
+      users.push({
+        id: idEmpleado,
+        contraseña: contraseña,
+        correo: correo,
+        nombre: nombre,
+        numCelular: numCelular,
+        rol: rol,
+        usuario: usuario,
+      });
+    });
+    setUsuarios(users);
+    setTabla(users);
+    // console.log(usuarios);
+  }
 
   return (
     <KeyboardAvoidingView
@@ -26,24 +63,53 @@ export const Usuarios = ({ navigation }) => {
       <HeaderOnly descripcion={"Usuarios"} subtitle={"Administra usuarios"} />
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.search}>
-          <Search />
+          <Search users={usuarios} setUsuarios={setUsuarios} tabla={tabla} />
         </View>
         <View style={styles.list}>
           <View style={styles.header}>
-            <View>
-              <Text style={{ padding: 4 }}>Nombre</Text>
+            <View
+              style={{
+                width: "70%",
+                height: 29,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{
+                  padding: 4,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  fontWeight: "bold",
+                  letterSpacing: 1,
+                }}
+              >
+                Nombre
+              </Text>
             </View>
             <View
               style={{
+                width: "30%",
+
                 borderLeftWidth: 1,
                 height: 29,
+                justifyContent: "center",
+                alignItems: "center",
               }}
             >
-              <Text style={{ padding: 4 }}> Rol</Text>
+              <Text
+                style={{ padding: 4, fontWeight: "bold", letterSpacing: 1 }}
+              >
+                Rol
+              </Text>
             </View>
           </View>
 
-          <ScrollView></ScrollView>
+          <ScrollView>
+            {usuarios.map((user) => (
+              <UserItem nombre={user.nombre} rol={user.rol} key={user.id} />
+            ))}
+          </ScrollView>
         </View>
         <View style={styles.botones}></View>
       </Animatable.View>
@@ -81,7 +147,7 @@ const styles = StyleSheet.create({
     width: "95%",
     height: 30,
     marginLeft: 10,
-    marginTop: 10,
+    marginTop: 15,
     borderWidth: 1,
     flexDirection: "row",
     justifyContent: "space-around",
