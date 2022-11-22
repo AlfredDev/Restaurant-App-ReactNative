@@ -1,7 +1,15 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { useForm } from "../hooks/useForm";
 
 export const UserItem = ({ navigation, nombre, rol, usuario }) => {
+
+    const {onInputChange,Nusuario,contraseña} = useForm({
+      usuario:Nusuario,
+      contraseña:contraseña
+    })
+
+
   const modificaUsuario = () => {
     navigation.navigate("modificaUsuario", {
       usuario: usuario,

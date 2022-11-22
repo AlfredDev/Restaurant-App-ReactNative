@@ -13,10 +13,16 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, TextInput, Stack } from "@react-native-material/core";
-import { deleteDocument } from "../helpers/Backed";
+import { actualizarCampo, deleteDocument } from "../helpers/Backed";
+import { useForm } from "../hooks/useForm";
 
 export const ModificaUsuario = ({ navigation, route }) => {
   const { usuario } = route.params;
+
+  const { onInputChange, Nusuario, contraseña } = useForm({
+    Nusuario: Nusuario,
+    contraseña: contraseña,
+  });
 
   const goBack = () => {
     navigation.goBack();
@@ -42,6 +48,25 @@ export const ModificaUsuario = ({ navigation, route }) => {
       goBack();
     } else {
       alert("NO PUDES ELIMINAR USUARIOS CON PRIVELEGIOS");
+    }
+  };
+
+  const changedUsuario = () => {
+    const user = {
+      idEmpleado: usuario.id,
+      contraseña: contraseña,
+      correo: usuario.correo,
+      nombre: usuario.nombre,
+      numCelular: usuario.numCelular,
+      rol: usuario.rol,
+      usuario: Nusuario,
+    };
+
+    if (!Nusuario || !contraseña) {
+      alert("Campos vacios");
+    } else {
+      actualizarCampo(user, "Trabajadores", usuario.idDoc);
+      alert("Usuario actualizado");
     }
   };
 
@@ -97,6 +122,8 @@ export const ModificaUsuario = ({ navigation, route }) => {
             <TextInput
               variant="standard"
               color={theme.colors.primary}
+              value={Nusuario}
+              onChangeText={(value) => onInputChange("Nusuario", value)}
               style={{
                 width: "70%",
                 marginLeft: 10,
@@ -115,6 +142,8 @@ export const ModificaUsuario = ({ navigation, route }) => {
             <TextInput
               variant="standard"
               color={theme.colors.primary}
+              value={contraseña}
+              onChangeText={(value) => onInputChange("contraseña", value)}
               style={{
                 width: "60%",
                 marginLeft: 10,
@@ -140,6 +169,7 @@ export const ModificaUsuario = ({ navigation, route }) => {
               title="Guardar Cambios"
               color={theme.colors.primary}
               uppercase={false}
+              onPress={changedUsuario}
             />
             <Button
               titleStyle={{ fontSize: 17 }}
@@ -177,7 +207,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   botones: {
-    flex: 2,
+    flex: 1.5,
   },
   content: {
     flexDirection: "row",
