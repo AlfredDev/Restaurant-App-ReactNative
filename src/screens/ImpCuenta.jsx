@@ -17,6 +17,7 @@ import { OrderLIst } from "../components/OrderLIst";
 import { useEffect, useState, useContext } from "react";
 import { collection, deleteDoc, getDocs, query, where, doc, orderBy } from "firebase/firestore";
 import { db } from "../../database/firebase";
+import { PedidoItem } from "../components/PedidoItem";
 import { UserContext } from "../hooks/UserContext";
 import {
   deleteDocument,
@@ -30,32 +31,19 @@ export const ImpCuenta = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta, orden } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
+  const [pedid, setPedi] = useState([]);
 
-  const { usuario } = useContext(UserContext);
-
-  const [lista, setLista] = useState([])
   //const { mesa } = route.params;
   function handleBackButtonClick() {
     navigation.goBack();
     return true;
   }
 
-  // const [checked, setChecked] = React.useState(true);
-
-
-  const table = {
-    Description: mesa.Description,
-    Libre: mesa.Libre,
-    Estatus: mesa.Estatus,
-    id: mesa.id,
-    reservada: mesa.reservada,
-  };
-
-
   useEffect(() => {
     fecthOrdenes();
-    // console.log(ordenes);
-    // console.log(total);
+    
+    //console.log(ordenes);
+    //onsole.log(total);
   }, [ordenes]);
 
   useEffect(() => {
@@ -80,11 +68,13 @@ export const ImpCuenta = ({ navigation, route }) => {
     const querySnapshot = await getDocs(q);
 
     const cuentas = [];
-    // const pedido = [];
+    const si = [];
 
     querySnapshot.forEach((doc) => {
       const { estatus, fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
-
+      const pedi={
+        pedidos:pedidos,
+      };
       let cuenta = {
         fk_cuenta_id: fk_cuenta_id,
         fk_mesa_id: fk_mesa_id,
@@ -92,54 +82,28 @@ export const ImpCuenta = ({ navigation, route }) => {
         pedidos: pedidos,
         // estatus:estatus,
       };
-
+      si  == pedi;
       // pedido.push(pedidos);
       cuentas.push(cuenta);
+      //console.log(cuenta);
+      //console.log(pedi);
+      
     });
+    
+    setPedi(si);
     setOrdenes(cuentas);
     let total = 0;
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
+        
         total += to.precio;
 
       });
     });
-    setTotal(total);
+    setTotal(total);  
+    //console.log(pedidos.producto);
   };
-
-  // useEffect(() => {
-  //   getTotal();
-  //   console.log(total);
-  // }, []);
-
-  // const getTotal = () => {
-  //   let total = 0;
-  //   ordenes.forEach((o) => {
-  //     o.pedidos.forEach((to) => {
-  //       total += to.precio;
-  //     });
-  //   });
-  //   setTotal(total);
-  // };
-
-  const despideMesa = () => {
-    const tiket = {
-      fecha: new Date(),
-      mesa: mesa.Description,
-      total: total,
-      cliente: cuenta.nombre,
-      mesero: usuario.nombre,
-      id: generateUUID(),
-    };
-    console.log(tiket);
-    addDocumento('Venta',tiket); 
-    //console.log(cuenta.id);
-    //console.log(ordenes.estatus)
-    deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
-    navigation.navigate("MesaCuenta", {
-      mesa: table,
-    })
-  };
+  
 
   return (
     <KeyboardAvoidingView
@@ -173,30 +137,30 @@ export const ImpCuenta = ({ navigation, route }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-                {ordenes.map((op) => (
-                  <OrderLIst
-                    folio={op.folio}
-                    id={op.fk_mesa_id}
-                    key={op.folio}
-                  />
-                ))}
+              <OrderLIst ordenes={pedid} />
               </Stack>
+              
             </View>
+            
             <View style={styles.botones}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-                
-               
+
+
               </Stack>
             </View>
+            
           </ScrollView>
         </View>
         <View style={styles.butom}>
           <Text
             style={{
-              textAlign: "right",
+              textAlign: "center",
               marginRight: 30,
               marginBottom: 4,
-              fontSize: 16,
+              fontSize: 25,
+              fontWeight: "bold",
+              opacity: 0.7,
+
             }}
           >
             Total: $ {total}
@@ -226,9 +190,10 @@ export const ImpCuenta = ({ navigation, route }) => {
                 })
               }
             />
-            
+
           </Stack>
         </View>
+        
       </Animatable.View>
     </KeyboardAvoidingView>
   );

@@ -1,0 +1,55 @@
+import React from "react";
+import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
+
+export const InsumoItem = ({ id,nombre,cantidad}) => {
+  
+  return (
+    <TouchableOpacity >
+      <View style={styles.item}>
+        <View style={styles.id}>
+          <Text>{id}</Text>
+        </View>
+        <View style={styles.producto}>
+          <Text>{nombre}</Text>
+        </View>
+        <View style={styles.cantidad}>
+          <Text>{cantidad}</Text>
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+};
+
+const styles = StyleSheet.create({
+  item: {
+    width: "95%",
+    height: 30,
+    marginLeft: 10,
+    marginTop: 2,
+    borderWidth: 1,
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
+  id: {
+    width: "25%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    
+  },
+  producto: {
+    width: "50%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+  },
+  cantidad: {
+    width: "25%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+  },
+  
+});
