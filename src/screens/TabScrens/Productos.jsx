@@ -167,21 +167,15 @@ export const Productos = ({ navigation }) => {
           <Button
              titleStyle={{ fontSize: 17 }}
              contentContainerStyle={{ height: 50 }}
-             title="Agregar"
-             width="40%"
+             title="Agregar Producto"
+             width="90%"
              height={50}
              color={theme.colors.primary}
              uppercase={false}
+             onPress={() => navigation.navigate("AddProducto")}
+
           />
-          <Button
-             titleStyle={{ fontSize: 17 }}
-             contentContainerStyle={{ height: 50 }}
-             title="Ingresar"
-             width="40%"
-             height={50}
-             color={theme.colors.primary}
-             uppercase={false}
-          />
+          
         </View>
       </Animatable.View>
     </KeyboardAvoidingView>

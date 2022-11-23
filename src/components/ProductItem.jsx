@@ -17,7 +17,7 @@ export const ProductItem = ({ id,producto,cantidad,precio }) => {
           <Text>{cantidad}</Text>
         </View>
         <View style={styles.precio}>
-          <Text>{precio}</Text>
+          <Text>$ {precio}.00</Text>
         </View>
       </View>
     </TouchableOpacity>

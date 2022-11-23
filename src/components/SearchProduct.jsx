@@ -41,7 +41,7 @@ export const SearchProduct = ({ products, setProductos, table }) => {
             fontSize: 18,
             backgroundColor: "#EEEEEE",
           }}
-          placeholder={"Buscar por id o cantidad"}
+          placeholder={"Buscar por id o nombre"}
           leading={(props) => (
             <View style={styles.icon}>
               <Ionicons

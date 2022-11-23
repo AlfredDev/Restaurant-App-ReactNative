@@ -151,21 +151,15 @@ export const Insumos = ({ navigation }) => {
           <Button
              titleStyle={{ fontSize: 17 }}
              contentContainerStyle={{ height: 50 }}
-             title="Agregar"
-             width="40%"
+             title="Agregar Insumo"
+             width="90%"
              height={50}
              color={theme.colors.primary}
              uppercase={false}
+             onPress={() => navigation.navigate("AddInsumo")}
+
           />
-          <Button
-             titleStyle={{ fontSize: 17 }}
-             contentContainerStyle={{ height: 50 }}
-             title="Ingresar"
-             width="40%"
-             height={50}
-             color={theme.colors.primary}
-             uppercase={false}
-          />
+          
         </View>
       </Animatable.View>
     </KeyboardAvoidingView>
