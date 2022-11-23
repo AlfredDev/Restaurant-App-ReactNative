@@ -2,16 +2,14 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { theme } from "../core/theme";
 import { TablesScreen } from "../screens/TablesScreen";
-import { Account } from "../screens/TabScrens/Account";
-import { Graficas } from "../screens/TabScrens/Graficas";
-import { Configuracion } from "../screens/TabScrens/Configuracion";
 import { Productos } from "../screens/TabScrens/Productos";
 import { Insumos } from "../screens/TabScrens/Insumos";
 import { Usuarios } from "../screens/TabScrens/Usuarios";
+import { Platillos } from "../screens/TabScrens/Platillos";
 
 const Tab = createBottomTabNavigator();
 
-export const EncargadoNavigation = ({navigation}) => {
+export const EncargadoNavigation = ({ navigation }) => {
   return (
     <Tab.Navigator
       initialRouteName={"Mesas"}
@@ -28,6 +26,8 @@ export const EncargadoNavigation = ({navigation}) => {
             iconName = focused ? "fast-food" : "fast-food-outline";
           } else if (rn === "Usuarios") {
             iconName = focused ? "ios-people-sharp" : "ios-people-outline";
+          } else if (rn === "Platillos") {
+            iconName = focused ? "restaurant" : "restaurant-outline";
           }
           // You can return any component that you like here!
           return (
@@ -53,6 +53,7 @@ export const EncargadoNavigation = ({navigation}) => {
       <Tab.Screen name="Mesas" component={TablesScreen} />
       <Tab.Screen name="Productos" component={Productos} />
       <Tab.Screen name="Insumos" component={Insumos} />
+      <Tab.Screen name="Platillos" component={Platillos} />
       <Tab.Screen name="Usuarios" component={Usuarios} />
     </Tab.Navigator>
   );

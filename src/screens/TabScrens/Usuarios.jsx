@@ -172,6 +172,7 @@ export const Usuarios = ({ navigation }) => {
             contentContainerStyle={{ backgroundColor: theme.colors.primary }}
             style={{ width: 55, height: 55 }}
             icon={(props) => <Icon name="plus" {...props} color={"white"} />}
+            onPress = {() => navigation.navigate('AgregarUsuario')}
           />
         </View>
       </Animatable.View>

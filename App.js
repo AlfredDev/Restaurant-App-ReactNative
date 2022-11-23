@@ -10,6 +10,7 @@ import { MesasConfig } from "./src/screens/MesasConfig";
 import { ModificaUsuario } from "./src/screens/ModificaUsuario";
 import { Ordenes } from "./src/screens/Ordenes";
 import { ImpCuenta } from "./src/screens/ImpCuenta";
+import { AgregarUsuario } from "./src/screens/AgregarUsuario";
 
 const Stack = createNativeStackNavigator();
 
@@ -30,6 +31,8 @@ export default function App() {
           <Stack.Screen name="AddOrden" component={AddOrden} />
           <Stack.Screen name="ImpCuenta" component={ImpCuenta} />
           <Stack.Screen name="modificaUsuario" component={ModificaUsuario} />
+          <Stack.Screen name="AgregarUsuario" component={AgregarUsuario} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>
