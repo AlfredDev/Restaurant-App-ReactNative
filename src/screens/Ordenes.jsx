@@ -144,7 +144,7 @@ export const Ordenes = ({ navigation, route }) => {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-    return (newdate = year + "/" + month + "/" + day);
+    return  year + "/" + month + "/" + day;
   };
 
   const despideMesa = () => {

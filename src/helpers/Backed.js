@@ -24,16 +24,15 @@ export const actualizarCampo = (objeto, tabla, idDoc) => {
       console.log(error);
     });
 };
-export const changeStatusOrder = async (tabla, cluausula1,cluausula2) => {
+export const changeStatusOrder = async (tabla, cluausula1, cluausula2) => {
   const docRef = query(
     collection(db, tabla),
     where(cluausula1, "==", cluausula2)
   );
   const q = await getDocs(docRef);
   q.forEach((doc) => {
-    updateDoc(doc.ref,{estatus:true});
+    updateDoc(doc.ref, { estatus: true });
   });
-  
 };
 
 export const addDocumento = (tabla, objeto) => {
@@ -62,7 +61,7 @@ export async function deleteDocument(tabla, id) {
     });
 }
 
-export const deleteDocWhere = async (tabla, cluausula1,cluausula2) => {
+export const deleteDocWhere = async (tabla, cluausula1, cluausula2) => {
   const docRef = query(
     collection(db, tabla),
     where(cluausula1, "==", cluausula2)
@@ -87,6 +86,15 @@ export function generateUUID() {
   });
   return uuid;
 }
+
+export const getFecha = () => {
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+
+  return year + "/" + month + "/" + day;
+};
 
 // export async function getAllById({ id, tabla }) {
 //   const objRef = collection(db, tabla);
