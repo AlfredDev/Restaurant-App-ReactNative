@@ -66,6 +66,7 @@ export const ModificaUsuario = ({ navigation, route }) => {
       alert("Campos vacios");
     } else {
       actualizarCampo(user, "Trabajadores", usuario.idDoc);
+      
       alert("Usuario actualizado");
     }
   };

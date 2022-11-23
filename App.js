@@ -12,6 +12,8 @@ import { Ordenes } from "./src/screens/Ordenes";
 import { ImpCuenta } from "./src/screens/ImpCuenta";
 import { AddProducto } from "./src/screens/AddProducto";
 import { AddInsumo } from "./src/screens/AddInsumo";
+import { AgregarUsuario } from "./src/screens/AgregarUsuario";
+
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +36,8 @@ export default function App() {
           <Stack.Screen name="modificaUsuario" component={ModificaUsuario} />
           <Stack.Screen name="AddProducto" component={AddProducto} />
           <Stack.Screen name="AddInsumo" component={AddInsumo} />
+          <Stack.Screen name="AgregarUsuario" component={AgregarUsuario} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

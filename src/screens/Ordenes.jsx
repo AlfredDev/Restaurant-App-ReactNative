@@ -14,7 +14,15 @@ import { Button, Stack } from "@react-native-material/core";
 import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
 import { useEffect, useState, useContext } from "react";
-import { collection, deleteDoc, getDocs, query, where, doc, orderBy } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  getDocs,
+  query,
+  where,
+  doc,
+  orderBy,
+} from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { UserContext } from "../hooks/UserContext";
 import {
@@ -32,7 +40,7 @@ export const Ordenes = ({ navigation, route }) => {
 
   const { usuario } = useContext(UserContext);
 
-  const [lista, setLista] = useState([])
+  const [lista, setLista] = useState([]);
   //const { mesa } = route.params;
   function handleBackButtonClick() {
     navigation.goBack();
@@ -41,7 +49,6 @@ export const Ordenes = ({ navigation, route }) => {
 
   // const [checked, setChecked] = React.useState(true);
 
-
   const table = {
     Description: mesa.Description,
     Libre: mesa.Libre,
@@ -49,7 +56,6 @@ export const Ordenes = ({ navigation, route }) => {
     id: mesa.id,
     reservada: mesa.reservada,
   };
-
 
   const cancelar = () => {
     table.reservada = false;
@@ -112,7 +118,6 @@ export const Ordenes = ({ navigation, route }) => {
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
         total += to.precio;
-
       });
     });
     setTotal(total);
@@ -133,9 +138,18 @@ export const Ordenes = ({ navigation, route }) => {
   //   setTotal(total);
   // };
 
+  const getFecha = () => {
+    var dateObj = new Date();
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    return  year + "/" + month + "/" + day;
+  };
+
   const despideMesa = () => {
     const tiket = {
-      fecha: new Date(),
+      fecha: getFecha(),
       mesa: mesa.Description,
       total: total,
       cliente: cuenta.nombre,
@@ -143,13 +157,13 @@ export const Ordenes = ({ navigation, route }) => {
       id: generateUUID(),
     };
     console.log(tiket);
-    addDocumento('Venta',tiket); 
+    addDocumento("Venta", tiket);
     //console.log(cuenta.id);
     //console.log(ordenes.estatus)
     deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
     navigation.navigate("MesaCuenta", {
       mesa: table,
-    })
+    });
   };
 
   return (
@@ -268,8 +282,6 @@ export const Ordenes = ({ navigation, route }) => {
               color={"#D8D2CB"}
               uppercase={false}
               onPress={() => despideMesa()}
-
-
             />
           </Stack>
         </View>
