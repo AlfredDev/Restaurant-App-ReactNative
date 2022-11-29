@@ -15,6 +15,7 @@ import * as Animatable from "react-native-animatable";
 import { Button, TextInput, Stack } from "@react-native-material/core";
 import { actualizarCampo, deleteDocument } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
+import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre } from "../helpers/Validaciones";
 
 export const ModificaUsuario = ({ navigation, route }) => {
   const { usuario } = route.params;
@@ -65,9 +66,13 @@ export const ModificaUsuario = ({ navigation, route }) => {
     if (!Nusuario || !contraseña) {
       alert("Campos vacios");
     } else {
-      actualizarCampo(user, "Trabajadores", usuario.idDoc);
-      
-      alert("Usuario actualizado");
+      if (
+        validarUsuario(Nusuario) &&
+        validarContraseña(contraseña)
+      ) {
+        actualizarCampo(user, "Trabajadores", usuario.idDoc);
+        alert("Usuario actualizado");
+      }
     }
   };
 
