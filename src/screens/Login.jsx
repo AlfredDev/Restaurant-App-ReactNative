@@ -26,8 +26,8 @@ import { UserContext } from "../hooks/UserContext";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
-    user: "chipule",
-    password: "admin",
+    user: "",
+    password: "",
   });
 
   const [secure, setSecure] = useState(true);
