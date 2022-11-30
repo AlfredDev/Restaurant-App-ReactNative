@@ -1,11 +1,16 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const ProductItem = ({ id,producto,cantidad,precio }) => {
-  
+export const ProductItem = ({ navigation, product, id, producto, cantidad, precio }) => {
+
+  const modificaProducto = () => {
+    navigation.navigate("ModificarProductos", {
+      product: product,
+    });
+  };
 
   return (
-    <TouchableOpacity >
+    <TouchableOpacity onPress={modificaProducto}>
       <View style={styles.item}>
         <View style={styles.id}>
           <Text>{id}</Text>
@@ -17,7 +22,7 @@ export const ProductItem = ({ id,producto,cantidad,precio }) => {
           <Text>{cantidad}</Text>
         </View>
         <View style={styles.precio}>
-          <Text>$ {precio}.00</Text>
+          <Text>$ {precio}</Text>
         </View>
       </View>
     </TouchableOpacity>

@@ -158,7 +158,8 @@ export const Productos = ({ navigation }) => {
                 cantidad={pro.cantidad}
                 precio={pro.precio}
                 key={pro.idDoc}
-                
+                product={pro}
+                navigation={navigation}
               />
             ))}
           </ScrollView>

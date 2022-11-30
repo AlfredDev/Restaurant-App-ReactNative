@@ -52,3 +52,28 @@ export const validarNombre = (nombre) => {
     }
     alert("Nombre invalido.");
 };
+
+export const validarCantidad = (num) => {
+    let isValid = false;
+    if (num.length < 5) {
+        var pattern = new RegExp(/^[0-9]+$/i);
+        if (pattern.test(num)) {
+            isValid = true;
+            return isValid;
+        }
+    }
+    alert("Cantidad invalida.");
+};
+
+
+
+export const validarPrecio = (num) => {
+    let isValid = false;
+
+    var pattern = new RegExp(/(\d{1})[.](\d{2})/i);
+    if (pattern.test(num)) {
+        isValid = true;
+        return isValid;
+    }
+    alert("Precio invalido.");
+};

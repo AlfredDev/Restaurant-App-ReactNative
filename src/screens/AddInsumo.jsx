@@ -15,34 +15,38 @@ import { Button } from "@react-native-material/core";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
-import { addDocumento, generateUUID, uid } from "../helpers/Backed";
+import { addDocumento, generateUUID, uid, unicoId } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
+import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarCantidad } from "../helpers/Validaciones";
 
 export const AddInsumo = ({ navigation, route }) => {
-    const { onInputChange, Id,Nombre,Cantidad} = useForm({
+    const { onInputChange, Id, Nombre, Cantidad } = useForm({
         Id: Id,
         Nombre: Nombre,
         Cantidad: Cantidad,
-        
-      });
-    
-      const agregarInsumo = () => {
+
+    });
+
+    const agregarInsumo = () => {
         const insum = {
-          Id: Id,
-        Nombre: Nombre,
-        Cantidad: Cantidad,
-        
+            Id: unicoId("I"),
+            Nombre: Nombre,
+            Cantidad: Cantidad,
         };
-        if (!Id || !Nombre || !Cantidad) {
-          alert("Campos vacios");
+        if (!Nombre || !Cantidad) {
+            alert("Campos vacios");
         } else {
-          addDocumento("Insumos", insum);
-          alert("Insumo añadido");
+            if(validarCantidad(Cantidad)){
+                addDocumento("Insumos", insum);
+                alert("Insumo añadido");
+                navigation.navigate("Insumos");
+            }
+            
         }
-        navigation.navigate("Insumos");
-    
         
-      };
+
+
+    };
 
     return (
         <KeyboardAvoidingView
@@ -64,16 +68,7 @@ export const AddInsumo = ({ navigation, route }) => {
             <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
                 <Stack>
                     <View style={{ paddingTop: 10, spacing: 20 }}>
-                        <View style={styles.pickerContainer}>
-                            <Text style={styles.text}>ID:</Text>
-                            <TextInput style={styles.inputs}
-                                variant="standard"
-                                color={theme.colors.primary}
-                                borderColor="black"
-                                value={Id}
-                                onChangeText={(value) => onInputChange("Id", value)}
-                            />
-                        </View>
+
 
                         <View style={styles.pickerContainer}>
                             <Text style={styles.text}>Nombre:</Text>
@@ -111,7 +106,7 @@ export const AddInsumo = ({ navigation, route }) => {
                             width={330}
                             color={theme.colors.primary}
                             uppercase={false}
-                            onPress = {agregarInsumo}
+                            onPress={agregarInsumo}
                         />
                     </View>
                     <View>

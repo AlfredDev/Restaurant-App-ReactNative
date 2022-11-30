@@ -143,6 +143,8 @@ export const Insumos = ({ navigation }) => {
                 nombre={pro.nombre}
                 cantidad={pro.cantidad}
                 key={pro.idDoc}
+                insu={pro}
+                navigation={navigation}
               />
             ))}
           </ScrollView>

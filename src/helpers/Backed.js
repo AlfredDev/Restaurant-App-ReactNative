@@ -109,3 +109,13 @@ export const getFecha = () => {
 //     return querySnapshot;
 //   // }
 // }
+
+export function unicoId(prefix) {
+  var id = + Math.floor(Math.random() * 1000000 ) + Math.floor(Math.random() * 500);
+  return prefix ? prefix + id : id;
+};
+
+export function unicosId(prefix) {
+  var id = + Math.floor(Math.random() * 1000 );
+  return prefix ? prefix + id : id;
+};

@@ -1,10 +1,15 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const InsumoItem = ({ id,nombre,cantidad}) => {
-  
+export const InsumoItem = ({ navigation, insu, id,nombre,cantidad}) => {
+  const modificaInsumo = () => {
+    navigation.navigate("ModificarInsumos", {
+      insu: insu,
+    });
+  };
+
   return (
-    <TouchableOpacity >
+    <TouchableOpacity onPress={modificaInsumo}>
       <View style={styles.item}>
         <View style={styles.id}>
           <Text>{id}</Text>

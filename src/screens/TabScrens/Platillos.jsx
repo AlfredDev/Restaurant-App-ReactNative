@@ -136,15 +136,12 @@ export const Platillos = ({ navigation }) => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            {plats.map((pro) => (
-              <PlatilloItem
-                id={pro.id}
-                nombre={pro.nombre}
-                precio={pro.precio}
-                key={pro.idDoc}
-                
-              />
-            ))}
+            
+
+
+
+
+
           </ScrollView>
         </View>
         <View style={styles.botones}>
@@ -156,7 +153,7 @@ export const Platillos = ({ navigation }) => {
              height={50}
              color={theme.colors.primary}
              uppercase={false}
-             onPress={() => navigation.navigate("AddProducto")}
+             //onPress={() => navigation.navigate("AddProducto")}
 
           />
           
