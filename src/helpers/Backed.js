@@ -96,6 +96,17 @@ export const getFecha = () => {
   return year + "/" + month + "/" + day;
 };
 
+
+export const getDate = () => {
+  var dateObj = new Date();
+  var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  var day = dateObj.getUTCDate();
+  var year = dateObj.getUTCFullYear();
+
+  return new Date(year, month, day);
+};
+
+
 // export async function getAllById({ id, tabla }) {
 //   const objRef = collection(db, tabla);
 //   const q = query(objRef, where("fk_mesa_id", "==", id));

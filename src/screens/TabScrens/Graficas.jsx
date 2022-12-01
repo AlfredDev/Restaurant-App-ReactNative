@@ -1,8 +1,11 @@
+import RNDateTimePicker from "@react-native-community/datetimepicker";
 import { Button, Stack } from "@react-native-material/core";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import {
+  DatePickerIOSBase,
   RefreshControl,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,22 +14,26 @@ import {
 import { db } from "../../../database/firebase";
 import { HeaderOnly } from "../../components/HeaderOnly";
 import { theme } from "../../core/theme";
-import { getFecha } from "../../helpers/Backed";
+import { getDate, getFecha } from "../../helpers/Backed";
 
 export const Graficas = () => {
   const [venta, setVenta] = useState([]);
   const [total, setTotal] = useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
 
+  const [datePicker, setDatePicker] = useState(false);
+
+  const [date, setDate] = useState(getDate());
+
   const onRefresh = React.useCallback(async () => {
     setRefreshing(true);
-    fetchData();
+    fecthOrdenes();
     setRefreshing(false);
   });
 
   const fecthOrdenes = async () => {
     const objRef = collection(db, "Venta");
-    const q = query(objRef, where("fecha", "==", getFecha()));
+    const q = query(objRef, where("fecha", "==", FechaBien(date)));
     const querySnapshot = await getDocs(q);
 
     const cuentas = [];
@@ -62,25 +69,68 @@ export const Graficas = () => {
     console.log(venta);
   }, []);
 
+  function onDateSelected(event, value) {
+    setDate(value);
+    setDatePicker(false);
+    fecthOrdenes();
+  }
+
+  const FechaBien = (date) => {
+    var dateObj = date;
+    var month = dateObj.getUTCMonth() + 1; //months from 1-12
+    var day = dateObj.getUTCDate();
+    var year = dateObj.getUTCFullYear();
+
+    return year + "/" + month + "/" + day;
+  };
+
+  const forceRemount = () => {
+    fecthOrdenes();
+  };
+
   return (
     <View style={styles.container}>
       <HeaderOnly descripcion={"Reporte ventas"} />
-      <View style={styles.child}>
+      <View
+        style={styles.child}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+        }
+      >
         <View style={styles.venta}>
           <Text style={{ fontWeight: "bold", letterSpacing: 1, fontSize: 16 }}>
-            Venta de hoy:{" "}
+            Venta de hoy:
           </Text>
-          <Text style={{ fontSize: 16, fontWeight: "450" }}>{getFecha()}</Text>
+
+          <TouchableOpacity
+            style={styles.fecha}
+            onPress={() => setDatePicker(true)}
+          >
+            <Text>{FechaBien(date)}</Text>
+          </TouchableOpacity>
+
+          {datePicker && (
+            <RNDateTimePicker
+              value={date}
+              mode="date"
+              maximumDate={getDate()}
+              positiveButton={{ label: "OK", textColor: "green" }}
+              onChange={onDateSelected}
+            />
+          )}
         </View>
-        <View style={styles.total}>
-          <Text>$ {total}</Text>
-        </View>
+        <TouchableOpacity onPress={forceRemount}>
+          <View style={styles.total}>
+            <Text>$ {total}</Text>
+          </View>
+        </TouchableOpacity>
+
         <TouchableOpacity>
           <Text style={styles.link}>Ver detalles</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.botones}>
-        <Stack spacing={2} style={{ margin: 16 }}>
+        <Stack spacing={4} style={{ margin: 16 }}>
           <Button
             titleStyle={{ fontSize: 17, textAlign: "center" }}
             contentContainerStyle={{
@@ -92,17 +142,7 @@ export const Graficas = () => {
             color={theme.colors.primary}
             uppercase={false}
           />
-          <Button
-            titleStyle={{ fontSize: 17, textAlign: "center" }}
-            contentContainerStyle={{
-              height: 55,
-              width: 340,
-              textAlign: "center",
-            }}
-            title="Mensual"
-            color={theme.colors.primary}
-            uppercase={false}
-          />
+
           <Button
             titleStyle={{ fontSize: 17, textAlign: "center" }}
             contentContainerStyle={{
@@ -133,7 +173,7 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 30,
     borderTopLeftRadius: 30,
     padding: 15,
-    marginTop: -20,
+    marginTop: -50,
     // justifyContent: "center",
   },
   botones: {
@@ -164,6 +204,11 @@ const styles = StyleSheet.create({
   link: {
     textAlign: "right",
     marginRight: 20,
+    color: theme.colors.primary,
+  },
+  fecha: {
+    fontSize: 17,
+    marginLeft: 5,
     color: theme.colors.primary,
   },
 });

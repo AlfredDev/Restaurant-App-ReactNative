@@ -5,6 +5,7 @@ import { TablesScreen } from "../screens/TablesScreen";
 import { Account } from "../screens/TabScrens/Account";
 import { Graficas } from "../screens/TabScrens/Graficas";
 import { Configuracion } from "../screens/TabScrens/Configuracion";
+import { UserSetting } from "../screens/TabScrens/UserSetting";
 
 const Tab = createBottomTabNavigator();
 
@@ -21,8 +22,8 @@ export const GerenteNavigation = () => {
             iconName = focused ? "home" : "home-outline";
           } else if (rn === "Orden") {
             iconName = focused ? "ios-clipboard" : "ios-clipboard-outline";
-          } else if (rn === "Ajustes") {
-            iconName = focused ? "settings" : "settings-outline";
+          } else if (rn === "Usuario") {
+            iconName = focused ? "person" : "person-outline";
           } else if (rn === "Graficas") {
             iconName = focused ? "bar-chart" : "bar-chart-outline";
           }
@@ -48,9 +49,8 @@ export const GerenteNavigation = () => {
       })}
     >
       <Tab.Screen name="Mesas" component={TablesScreen} />
-      <Tab.Screen name="Orden" component={Account} />
       <Tab.Screen name="Graficas" component={Graficas} />
-      <Tab.Screen name="Ajustes" component={Configuracion} />
+      <Tab.Screen name="Usuario" component={UserSetting} />
     </Tab.Navigator>
   );
 };
