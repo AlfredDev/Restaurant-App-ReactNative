@@ -99,6 +99,7 @@ export const AddProducto = ({ navigation, route }) => {
                 borderColor="black"
                 value={Cantidad}
                 onChangeText={(value) => onInputChange("Cantidad", value)}
+                keyboardType="numeric"
               />
             </View>
 
@@ -111,6 +112,7 @@ export const AddProducto = ({ navigation, route }) => {
                 inputStyle={{ letterSpacing: 1 }}
                 value={Precio}
                 onChangeText={(value) => onInputChange("Precio", value)}
+                keyboardType="numeric"
               />
             </View>
           </View>

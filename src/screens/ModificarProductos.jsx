@@ -132,7 +132,7 @@ export const ModificarProductos = ({ navigation, route }) => {
                             color={theme.colors.primary}
                             value={ncantidad}
                             onChangeText={(value) => onInputChange("ncantidad", value)}
-                            
+                            keyboardType="numeric"
                         />
                     </View>
                     <View style={styles.content}>
@@ -146,7 +146,7 @@ export const ModificarProductos = ({ navigation, route }) => {
                             color={theme.colors.primary}
                             value={nprecio}
                             onChangeText={(value) => onInputChange("nprecio", value)}
-                            
+                            keyboardType="numeric"
                         />
                     </View>
                     

@@ -9,6 +9,5 @@ export const categorias = [
   "Botanas",
   "Postres",
   "Bebidas",
-  "Bar",
   "Infantil",
 ];

@@ -22,8 +22,8 @@ export const ModificarInsumos = ({ navigation, route }) => {
     const { insu } = route.params;
 
     const { onInputChange, ncantidad, nnombre } = useForm({
-        ncantidad: ncantidad,
-        nnombre: nnombre,
+        ncantidad: insu.cantidad,
+        nnombre: insu.nombre,
     });
 
     const goBack = () => {
@@ -54,7 +54,7 @@ export const ModificarInsumos = ({ navigation, route }) => {
     const changedInsumo = () => {
         const insum = {
             Id: insu.id,
-            Cantidad: ncantidad,
+            Cantidad: +ncantidad,
             Nombre: nnombre,
         };
 
@@ -130,7 +130,7 @@ export const ModificarInsumos = ({ navigation, route }) => {
                             color={theme.colors.primary}
                             value={ncantidad}
                             onChangeText={(value) => onInputChange("ncantidad", value)}
-                            
+                            keyboardType="numeric"
                         />
                     </View>
                     

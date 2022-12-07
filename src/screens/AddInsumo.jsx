@@ -89,6 +89,7 @@ export const AddInsumo = ({ navigation, route }) => {
                                 borderColor="black"
                                 value={Cantidad}
                                 onChangeText={(value) => onInputChange("Cantidad", value)}
+                                keyboardType="numeric"
                             />
                         </View>
                     </View>
