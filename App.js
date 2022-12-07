@@ -9,6 +9,7 @@ import { MesaCuenta } from "./src/screens/MesaCuenta";
 import { MesasConfig } from "./src/screens/MesasConfig";
 import { ModificaUsuario } from "./src/screens/ModificaUsuario";
 import { Ordenes } from "./src/screens/Ordenes";
+import { OrdenBarman } from "./src/screens/TabScrens/OrdenBarman";
 import { ImpCuenta } from "./src/screens/ImpCuenta";
 import { AddProducto } from "./src/screens/AddProducto";
 import { AddInsumo } from "./src/screens/AddInsumo";
@@ -41,6 +42,7 @@ export default function App() {
           <Stack.Screen name="AgregarUsuario" component={AgregarUsuario} />
           <Stack.Screen name="ModificarProductos" component={ModificarProductos} />
           <Stack.Screen name="ModificarInsumos" component={ModificarInsumos} />
+          <Stack.Screen name="OrdenBarman" component={OrdenBarman} />
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

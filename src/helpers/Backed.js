@@ -10,6 +10,12 @@ import {
   updateDoc,
   updateDocs,
   where,
+  ServerValue,
+  FieldValue,
+  increment,
+  updateData,
+  data,
+  update
 } from "firebase/firestore";
 import { db } from "../../database/firebase";
 
@@ -32,6 +38,19 @@ export const changeStatusOrder = async (tabla, cluausula1, cluausula2) => {
   const q = await getDocs(docRef);
   q.forEach((doc) => {
     updateDoc(doc.ref, { estatus: true });
+  });
+};
+
+export const changeCantidadBebidas = async (tabla, cluausula1, cluausula2,cant) => {
+  const docRef = query(
+    collection(db, tabla),
+    where(cluausula1, "==", cluausula2)
+  );
+  const q = await getDocs(docRef);
+  q.forEach((doc) => {
+    updateDoc(doc.ref, { Cantidad: increment(- cant) });
+   //updateData(doc.ref, { Cantidad: doc.data['Cantidad'] - cant });
+    
   });
 };
 

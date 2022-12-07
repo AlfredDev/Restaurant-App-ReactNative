@@ -3,6 +3,7 @@ import { UserContext } from "../hooks/UserContext";
 import { EncargadoNavigation } from "../Navigation/EncargadoNavigation";
 import { GerenteNavigation } from "../Navigation/GerenteNavigation";
 import { MeseroNavi } from "../Navigation/MeseroNavi";
+import { BarmanNavigation } from "../Navigation/BarmanNavigation";
 
 export const MainContainer = ({ navigation }) => {
   const { usuario } = useContext(UserContext);
@@ -16,7 +17,7 @@ export const MainContainer = ({ navigation }) => {
       ) : usuario.rol == "Encargado" ? (
         <EncargadoNavigation />
       ) : (
-        <MeseroNavi />
+        <BarmanNavigation />
       )}
     </>
   );

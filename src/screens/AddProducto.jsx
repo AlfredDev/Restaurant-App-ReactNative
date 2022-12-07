@@ -28,12 +28,21 @@ export const AddProducto = ({ navigation, route }) => {
   });
 
   const agregarProducto = () => {
+    const idp=  unicosId("P");
     const product = {
-      Id: unicosId("P"),
+      Id: idp,
     Producto: Producto,
-    Cantidad: Cantidad,
-    Precio: Precio,
+    Cantidad: + Cantidad,
+    Precio:  +Precio,
     };
+    const platillo = {
+      categoria: "Bebidas",
+      id: idp,
+      nombre: Producto,
+      tamaño: "orden",
+      precio: {orden:  +Precio}
+    };
+
     if (!Producto || !Cantidad || !Precio) {
       alert("Campos vacios");
     } else {
@@ -41,6 +50,7 @@ export const AddProducto = ({ navigation, route }) => {
         validarCantidad(Cantidad)&&
         validarPrecio(Precio)
       ){
+        addDocumento("Platillos",platillo);
         addDocumento("Productos", product);
         alert("Producto añadido");
         navigation.navigate("Productos");

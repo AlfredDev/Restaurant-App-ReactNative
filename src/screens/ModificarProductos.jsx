@@ -14,7 +14,7 @@ import { HeaderOnly } from "../components/HeaderOnly";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, TextInput, Stack } from "@react-native-material/core";
-import { actualizarCampo, deleteDocument } from "../helpers/Backed";
+import { actualizarCampo, deleteDocument, deleteDocWhere } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarPrecio, validarCantidad } from "../helpers/Validaciones";
 
@@ -22,9 +22,9 @@ export const ModificarProductos = ({ navigation, route }) => {
     const { product } = route.params;
 
     const { onInputChange, ncantidad, nprecio, nproducto } = useForm({
-        ncantidad: ncantidad,
-        nprecio: nprecio,
-        nproducto: nproducto,
+        ncantidad: product.cantidad.toString(),
+        nprecio: product.precio.toString(),
+        nproducto: product.producto,
     });
 
     const goBack = () => {
@@ -46,6 +46,7 @@ export const ModificarProductos = ({ navigation, route }) => {
     };
 
     const handleDelete = () => {
+        deleteDocWhere("Platillos","nombre",product.producto);
         deleteDocument("Productos", product.idDoc);
         goBack();
         alert("Producto Eliminado");
@@ -54,8 +55,8 @@ export const ModificarProductos = ({ navigation, route }) => {
     const changedProducto = () => {
         const prod = {
             Id: product.id,
-            Cantidad: ncantidad,
-            Precio: nprecio,
+            Cantidad: +ncantidad,
+            Precio: +nprecio,
             Producto: nproducto,
         };
 

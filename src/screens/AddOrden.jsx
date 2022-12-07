@@ -20,7 +20,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
 import { ProductPicker } from "../components/ProductPicker";
-import { addDocumento, generateUUID, uid } from "../helpers/Backed";
+import { addDocumento, generateUUID, uid, changeCantidadBebidas } from "../helpers/Backed";
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
@@ -31,7 +31,7 @@ export const AddOrden = ({ navigation, route }) => {
   const [count, setCount] = useState(1);
   const [platillo, setPlatillo] = useState([]);
   const [tamaño, setTamaño] = useState("Chico");
-  const tamaños =  ["Chico", "Mediano", "Grande","Orden"];
+  const tamaños = ["Chico", "Mediano", "Grande", "Orden"];
   const size = ["Orden"];
 
   const [objeto, setObjeto] = useState();
@@ -60,7 +60,10 @@ export const AddOrden = ({ navigation, route }) => {
       categoria: categoria,
       precio: 0,
     };
-    //console.log(orden);
+    console.log(orden.categoria);
+    console.log(orden.producto);
+    console.log(count);
+
     if (!orden.producto) {
       alert("Ingrese una producto");
       return;
@@ -70,7 +73,12 @@ export const AddOrden = ({ navigation, route }) => {
     console.log(orden);
 
     setOrdenes([orden, ...ordenes]); //Ingresando la orden que quiera
-    // console.log(ordenes);
+
+    if (orden.categoria == "Bebidas") {
+      changeCantidadBebidas("Productos", "Producto", orden.producto, count);
+      console.log("es bebida");
+    }
+
   };
 
   const getPrecio = (precios) => {
@@ -132,7 +140,7 @@ export const AddOrden = ({ navigation, route }) => {
         folio: generateUUID(),
         estatus: false,
       };
-
+    
       addDocumento("Orden", pedido);
       navigation.navigate("Orden", {
         mesa: mesa,
@@ -186,7 +194,7 @@ export const AddOrden = ({ navigation, route }) => {
               opciones={tamaños}
               selected={tamaño}
               setSelected={setTamaño}
-              
+
             />
           </View>
           <View style={styles.pickerContainer}>
