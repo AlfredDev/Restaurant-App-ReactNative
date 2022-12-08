@@ -14,6 +14,7 @@ import { ImpCuenta } from "./src/screens/ImpCuenta";
 import { AddProducto } from "./src/screens/AddProducto";
 import { AddInsumo } from "./src/screens/AddInsumo";
 import { AgregarUsuario } from "./src/screens/AgregarUsuario";
+import { SaleDaily } from "./src/screens/Graphs/SaleDaily";
 import { ModificarProductos } from "./src/screens/ModificarProductos";
 import { ModificarInsumos } from "./src/screens/ModificarInsumos";
 
@@ -40,6 +41,8 @@ export default function App() {
           <Stack.Screen name="AddProducto" component={AddProducto} />
           <Stack.Screen name="AddInsumo" component={AddInsumo} />
           <Stack.Screen name="AgregarUsuario" component={AgregarUsuario} />
+          <Stack.Screen name="VentaDiaria" component={SaleDaily} />
+
           <Stack.Screen name="ModificarProductos" component={ModificarProductos} />
           <Stack.Screen name="ModificarInsumos" component={ModificarInsumos} />
           <Stack.Screen name="OrdenBarman" component={OrdenBarman} />
