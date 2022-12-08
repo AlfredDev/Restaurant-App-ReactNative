@@ -104,7 +104,7 @@ export const getDate = () => {
   // var year = dateObj.getUTCFullYear();
   // console.log(new Date(Date.UTC(year, month, day)));
   // return new Date(Date.UTC(year, month, day));
-  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() , date.getUTCHours() - 1, date.getUTCMinutes(), date.getUTCSeconds()); 
 };
 
 
