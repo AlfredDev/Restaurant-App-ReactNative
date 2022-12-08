@@ -14,7 +14,7 @@ import { Button } from "@react-native-material/core";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
-import { addDocumento, generateUUID, uid,unicosId } from "../helpers/Backed";
+import { addDocIf, addDocumento, generateUUID, uid,unicosId } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarCantidad, validarPrecio } from "../helpers/Validaciones";
 
@@ -50,8 +50,9 @@ export const AddProducto = ({ navigation, route }) => {
         validarCantidad(Cantidad)&&
         validarPrecio(Precio)
       ){
-        addDocumento("Platillos",platillo);
-        addDocumento("Productos", product);
+        //addDocumento("Platillos",platillo);
+        //addDocIf("Productos","Producto","Pepsi");
+        //addDocumento("Productos", product);
         alert("Producto añadido");
         navigation.navigate("Productos");
       }

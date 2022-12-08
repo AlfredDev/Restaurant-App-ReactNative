@@ -15,7 +15,8 @@ import {
   increment,
   updateData,
   data,
-  update
+  update,
+  exists
 } from "firebase/firestore";
 import { db } from "../../database/firebase";
 
@@ -59,13 +60,24 @@ export const addDocumento = (tabla, objeto) => {
 
   addDoc(dbRef, objeto)
     .then((docRef) => {
-      console.log("Document has been added successfully");
+      console.log("Documento agregado exitosamente");
     })
     .catch((error) => {
       console.log(error);
     });
 };
 
+export const addDocIf = async (tabla, cluausula1, cluausula2,objeto) => {
+  const docRef = query(
+    collection(db, tabla),
+    where(cluausula1, "==", cluausula2)
+  );
+  const q = await getDocs(docRef);
+
+  q.forEach((doc) => {
+    deleteDoc(doc.ref);
+  });
+};
 //Elimina por el id decumento
 
 export async function deleteDocument(tabla, id) {
