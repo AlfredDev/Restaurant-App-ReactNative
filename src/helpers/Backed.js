@@ -90,7 +90,7 @@ export function generateUUID() {
 export const getFecha = () => {
   var dateObj = new Date();
   var month = dateObj.getUTCMonth() + 1; //months from 1-12
-  var day = dateObj.getUTCDate();
+  var day = dateObj.getUTCDate() - 1;
   var year = dateObj.getUTCFullYear();
 
   return year + "/" + month + "/" + day;
@@ -98,12 +98,13 @@ export const getFecha = () => {
 
 
 export const getDate = () => {
-  var dateObj = new Date();
-  var month = dateObj.getUTCMonth() + 1; //months from 1-12
-  var day = dateObj.getUTCDate();
-  var year = dateObj.getUTCFullYear();
-
-  return new Date(year, month, day);
+  var date = new Date();
+  // var month = dateObj.getUTCMonth() + 1; //months from 1-12
+  // var day = dateObj.getUTCDate();
+  // var year = dateObj.getUTCFullYear();
+  // console.log(new Date(Date.UTC(year, month, day)));
+  // return new Date(Date.UTC(year, month, day));
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() - 1, date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds()); 
 };
 
 

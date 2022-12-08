@@ -141,10 +141,12 @@ export const Ordenes = ({ navigation, route }) => {
   const getFecha = () => {
     var dateObj = new Date();
     var month = dateObj.getUTCMonth() + 1; //months from 1-12
-    var day = dateObj.getUTCDate();
+    var day = dateObj.getUTCDate() - 1;
     var year = dateObj.getUTCFullYear();
 
-    return  year + "/" + month + "/" + day;
+  return  year + "/" + month + "/" + day;
+
+    // return new Date(fecha);
   };
 
   const despideMesa = () => {
@@ -164,6 +166,7 @@ export const Ordenes = ({ navigation, route }) => {
     navigation.navigate("MesaCuenta", {
       mesa: table,
     });
+    // alert(getFecha())
   };
 
   return (

@@ -16,7 +16,7 @@ import { HeaderOnly } from "../../components/HeaderOnly";
 import { theme } from "../../core/theme";
 import { getDate, getFecha } from "../../helpers/Backed";
 
-export const Graficas = () => {
+export const Graficas = ({navigation}) => {
   const [venta, setVenta] = useState([]);
   const [total, setTotal] = useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -125,7 +125,7 @@ export const Graficas = () => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('VentaDiaria')}>
           <Text style={styles.link}>Ver detalles</Text>
         </TouchableOpacity>
       </View>
