@@ -16,7 +16,7 @@ import { HeaderOnly } from "../../components/HeaderOnly";
 import { theme } from "../../core/theme";
 import { getDate, getFecha } from "../../helpers/Backed";
 
-export const Graficas = ({navigation}) => {
+export const Graficas = ({ navigation }) => {
   const [venta, setVenta] = useState([]);
   const [total, setTotal] = useState(0);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -125,7 +125,11 @@ export const Graficas = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('VentaDiaria')}>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate("VentaDiaria", {
+            venta: venta,
+          });
+        }}>
           <Text style={styles.link}>Ver detalles</Text>
         </TouchableOpacity>
       </View>
@@ -141,6 +145,7 @@ export const Graficas = ({navigation}) => {
             title="Semanal"
             color={theme.colors.primary}
             uppercase={false}
+            onPress={() => navigation.navigate("VentaSemanal")}
           />
 
           <Button
@@ -153,6 +158,7 @@ export const Graficas = ({navigation}) => {
             title="Anual"
             color={theme.colors.primary}
             uppercase={false}
+            onPress={() => navigation.navigate("VentaAnual")}
           />
         </Stack>
       </View>
@@ -207,8 +213,14 @@ const styles = StyleSheet.create({
     color: theme.colors.primary,
   },
   fecha: {
-    fontSize: 17,
     marginLeft: 5,
     color: theme.colors.primary,
+    backgroundColor: '#EEEDDE',
+    height: 30,
+    alignItems: "center",
+    justifyContent: "center",
+    width: 180,
+    borderRadius: 5,
+    borderWidth: 2
   },
 });
