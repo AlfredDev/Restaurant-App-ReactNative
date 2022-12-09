@@ -125,7 +125,11 @@ export const Graficas = ({navigation}) => {
           </View>
         </TouchableOpacity>
 
-        <TouchableOpacity onPress={() => navigation.navigate('VentaDiaria')}>
+        <TouchableOpacity onPress={() => {
+           navigation.navigate("VentaDiaria", {
+            venta: venta,
+          });
+        }}>
           <Text style={styles.link}>Ver detalles</Text>
         </TouchableOpacity>
       </View>

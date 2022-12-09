@@ -1,15 +1,17 @@
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import React, { useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBlue } from '../../components/HeaderBlue';
+import { VentaDiariaItem } from '../../components/VentaDiariaItem';
 import { theme } from '../../core/theme';
 import { getDate } from '../../helpers/Backed';
 
-export const SaleDaily = ({ navigation }) => {
+export const SaleDaily = ({ navigation, route }) => {
     const [datePicker, setDatePicker] = useState(false);
+    const { venta } = route.params;
 
     const [date, setDate] = useState(getDate());
-
+    // const  [total,set]
 
     const goHome = () => {
         navigation.goBack();
@@ -19,6 +21,19 @@ export const SaleDaily = ({ navigation }) => {
         setDate(value);
         setDatePicker(false);
         fecthOrdenes();
+    }
+
+    const total = () => {
+        let to = 0;
+
+        venta.forEach((o) => {
+            to += o.total;
+
+        });
+
+        console.log(to);
+
+        return to;
     }
 
     const FechaBien = (date) => {
@@ -57,19 +72,38 @@ export const SaleDaily = ({ navigation }) => {
                     )}
                 </View>
 
-                <View style={styles.table}>
-                    <View style= {{flex:2,alignItems:'center'}}>
-                        <Text>Cliente</Text>
+                <ScrollView style={{ flex: 4 }}>
+                    <View style={styles.table}>
+                        <View style={{ flex: 2, alignItems: 'center' }}>
+                            <Text>Cliente</Text>
+                        </View>
+                        <View style={{ flex: 1, borderLeftWidth: 2, height: 20, justifyContent: 'center' }}>
+                            <Text style={{ textAlign: 'center' }}> Mesa</Text>
+                        </View>
+                        <View style={{ flex: 1.5, borderLeftWidth: 2, height: 20 }}>
+                            <Text style={{ textAlign: 'center' }}> Venta</Text>
+                        </View>
                     </View>
-                    <View  style= {{flex:1,borderLeftWidth:2,height:20,justifyContent:'center'}}>
-                        <Text style= {{textAlign:'center'}}> Mesa</Text>
-                    </View>
-                    <View  style= {{flex:1.5 ,borderLeftWidth:2,height:20}}>
-                        <Text style= {{textAlign:'center'}}> Venta</Text>
+
+                    {venta.map((venta) => (
+                        <VentaDiariaItem key={venta.id} venta={venta.total} cliente={venta.cliente} mesa={venta.mesa} />
+
+                    ))}
+                </ScrollView>
+
+
+
+                <View style={styles.bottom}>
+                    <Text style={{ fontSize: 17 }}>Venta Total:</Text>
+                    <View style={styles.total}>
+                        <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                            $ {total()}
+                        </Text>
                     </View>
                 </View>
 
             </View>
+
         </View>
     )
 }
@@ -83,12 +117,12 @@ const styles = StyleSheet.create({
         // paddingTop: 10,
     },
     child: {
-        flex: 3.5,
+        flex: 5,
         backgroundColor: theme.colors.text,
         borderTopEndRadius: 30,
         borderTopLeftRadius: 30,
         padding: 15,
-        marginTop: -50,
+        marginTop: -10,
         // justifyContent: "center",
     },
     venta: {
@@ -103,13 +137,27 @@ const styles = StyleSheet.create({
         marginLeft: 5,
         color: theme.colors.primary,
     },
-    table:{
+    table: {
         display: "flex",
         flexDirection: "row",
         alignItems: "center",
         // justifyContent:'space-around',
-        borderWidth:1.3,
-        height:30,
-        backgroundColor:'#D8D2CB'
+        borderWidth: 1.3,
+        height: 30,
+        backgroundColor: '#D8D2CB',
+    },
+    bottom: {
+        flex: .3,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    total: {
+        backgroundColor: '#D8D2CB',
+        width: '90%',
+        height: '40%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        borderWidth: 1
     }
 });
