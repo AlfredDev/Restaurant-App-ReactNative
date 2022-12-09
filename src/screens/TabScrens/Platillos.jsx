@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react";
 import { PlatilloItem } from "../../components/PlatilloItem";
 import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "../../../database/firebase";
-import { SearchProduct } from "../../components/SearchProduct";
+import { SearchPlatillo } from "../../components/SearchPlatillo";
 
 export const Platillos = ({ navigation }) => {
   const [plats, setPlatillos] = useState([]);
@@ -43,16 +43,16 @@ export const Platillos = ({ navigation }) => {
       const {
         id,
         nombre,
-        precio,
-        //categoria,
+        //precio,
+        categoria,
         //tamaño,
         idDoc,
       } = doc.data();
       platillos.push({
         id: id,
         nombre: nombre,
-        precio: precio,
-        //categoria: categoria,
+        //precio: precio,
+        categoria: categoria,
         //tamaño: tamaño,
         idDoc: doc.id,
       });
@@ -69,18 +69,21 @@ export const Platillos = ({ navigation }) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <HeaderOnly descripcion={"Platillos"} />
+      <HeaderOnly descripcion={"Inventario"} subtitle={"Platillos"} />
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.search}>
-          
-
-
+        <SearchPlatillo
+           plats={plats}
+           setPlatillos={setPlatillos}
+           table={table}
+           navigation={navigation}
+          />
         </View>
         <View style={styles.list}>
           <View style={styles.header}>
             <View
               style={{
-                width: "12%",
+                width: "20%",
                 height: 29,
                 justifyContent: "center",
                 alignItems: "center",
@@ -100,7 +103,22 @@ export const Platillos = ({ navigation }) => {
             </View>
             <View
               style={{
-                width: "35%",
+                width: "30%",
+                borderLeftWidth: 1,
+                height: 29,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <Text
+                style={{ padding: 4, fontWeight: "bold", letterSpacing: 1 }}
+              >
+                Categoria
+              </Text>
+            </View>
+            <View
+              style={{
+                width: "50%",
                 borderLeftWidth: 1,
                 height: 29,
                 justifyContent: "center",
@@ -113,21 +131,6 @@ export const Platillos = ({ navigation }) => {
                 Nombre
               </Text>
             </View>
-            <View
-              style={{
-                width: "23%",
-                borderLeftWidth: 1,
-                height: 29,
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
-              <Text
-                style={{ padding: 4, fontWeight: "bold", letterSpacing: 1 }}
-              >
-                precio
-              </Text>
-            </View>
             
           </View>
 
@@ -136,10 +139,17 @@ export const Platillos = ({ navigation }) => {
               <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
             }
           >
-            
-
-
-
+            {plats.map((pro) => (
+              // pro.precio.forEach() mandar como arreglo 
+              <PlatilloItem
+                id={pro.id}
+                nombre={pro.nombre}
+                categoria={pro.categoria}
+                key={pro.idDoc}
+                plat={pro}
+                navigation={navigation}
+              />
+            ))}
 
 
           </ScrollView>

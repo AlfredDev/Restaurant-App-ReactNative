@@ -1,7 +1,7 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const PlatilloItem = ({ id,nombre,precio }) => {
+export const PlatilloItem = ({ id,nombre,categoria }) => {
   
 
   return (
@@ -10,11 +10,11 @@ export const PlatilloItem = ({ id,nombre,precio }) => {
         <View style={styles.id}>
           <Text>{id}</Text>
         </View>
-        <View style={styles.producto}>
-          <Text>{nombre}</Text>
+        <View style={styles.categoria}>
+          <Text>{categoria}</Text>
         </View>
-        <View style={styles.precio}>
-          <Text>$ {precio}.00</Text>
+        <View style={styles.nombre}>
+          <Text>{nombre}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -24,7 +24,7 @@ export const PlatilloItem = ({ id,nombre,precio }) => {
 const styles = StyleSheet.create({
   item: {
     width: "95%",
-    height: 30,
+    height: 40,
     marginLeft: 10,
     marginTop: 2,
     borderWidth: 1,
@@ -32,28 +32,21 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   id: {
-    width: "12%",
+    width: "20%",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
     
   },
-  producto: {
-    width: "35%",
+  categoria: {
+    width: "30%",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
     borderLeftWidth: 1,
   },
-  cantidad: {
-    width: "23%",
-    textAlign: "center",
-    justifyContent: "center",
-    alignItems: "center",
-    borderLeftWidth: 1,
-  },
-  precio: {
-    width: "18%",
+  nombre: {
+    width: "50%",
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",

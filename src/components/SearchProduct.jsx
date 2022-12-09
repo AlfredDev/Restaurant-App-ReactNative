@@ -18,7 +18,7 @@ export const SearchProduct = ({ products, setProductos, table }) => {
         elemento.id
           .toString()
           .toLowerCase()
-          .includes(terminoBusqueda.toLowerCase()) 
+          .includes(terminoBusqueda.toLowerCase())
        
       ) {
         return elemento;
