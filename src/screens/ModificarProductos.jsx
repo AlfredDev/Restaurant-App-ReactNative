@@ -14,7 +14,7 @@ import { HeaderOnly } from "../components/HeaderOnly";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, TextInput, Stack } from "@react-native-material/core";
-import { actualizarCampo, deleteDocument, deleteDocWhere } from "../helpers/Backed";
+import { updateCampIf, deleteDocument, deleteDocWhere } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarPrecio, validarCantidad } from "../helpers/Validaciones";
 
@@ -68,9 +68,10 @@ export const ModificarProductos = ({ navigation, route }) => {
                 validarCantidad(ncantidad)&&
                 validarPrecio(nprecio)
             ) {
-                actualizarCampo(prod, "Productos", product.idDoc);
+                updateCampIf("Productos","Producto",nproducto, prod,product.idDoc,"Producto")
+                //actualizarCampo(prod, "Productos", product.idDoc);
                 navigation.navigate("Productos");
-                alert("Producto actualizado");
+                //alert("Producto actualizado");
             }
         }
     };

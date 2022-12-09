@@ -13,7 +13,7 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, TextInput, Stack } from "@react-native-material/core";
-import { actualizarCampo, deleteDocument } from "../helpers/Backed";
+import { actualizarCampo, deleteDocument, updateCampIf } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre } from "../helpers/Validaciones";
 
@@ -70,8 +70,10 @@ export const ModificaUsuario = ({ navigation, route }) => {
         validarUsuario(Nusuario) &&
         validarContraseña(contraseña)
       ) {
-        actualizarCampo(user, "Trabajadores", usuario.idDoc);
-        alert("Usuario actualizado");
+        updateCampIf("Trabajadores","usuario",Nusuario, user,usuario.idDoc,"Usuario");
+        goBack();
+        //actualizarCampo(user, "Trabajadores", usuario.idDoc);
+        //alert("Usuario actualizado");
       }
     }
   };

@@ -14,13 +14,13 @@ import { Button } from "@react-native-material/core";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
-import { addDocIf, addDocumento, generateUUID, uid,unicosId } from "../helpers/Backed";
+import { addDocIf, addDocumento, generateUUID, uid, unicosId, checking } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarCantidad, validarPrecio } from "../helpers/Validaciones";
 
 export const AddProducto = ({ navigation, route }) => {
 
-  const { onInputChange, Id,Producto,Cantidad,Precio} = useForm({
+  const { onInputChange, Id, Producto, Cantidad, Precio } = useForm({
     Id: Id,
     Producto: Producto,
     Cantidad: Cantidad,
@@ -28,38 +28,34 @@ export const AddProducto = ({ navigation, route }) => {
   });
 
   const agregarProducto = () => {
-    const idp=  unicosId("P");
+    const idp = unicosId("P");
     const product = {
       Id: idp,
-    Producto: Producto,
-    Cantidad: + Cantidad,
-    Precio:  +Precio,
+      Producto: Producto,
+      Cantidad: + Cantidad,
+      Precio: +Precio,
     };
     const platillo = {
       categoria: "Bebidas",
       id: idp,
       nombre: Producto,
       tamaño: "orden",
-      precio: {orden:  +Precio}
+      precio: { orden: +Precio }
     };
 
     if (!Producto || !Cantidad || !Precio) {
       alert("Campos vacios");
     } else {
-      if(
-        validarCantidad(Cantidad)&&
+      if (
+        validarCantidad(Cantidad) &&
         validarPrecio(Precio)
-      ){
-        //addDocumento("Platillos",platillo);
-        //addDocIf("Productos","Producto","Pepsi");
-        //addDocumento("Productos", product);
-        alert("Producto añadido");
+      ) {
+        addDocIf("Productos", "Producto", product.Producto, product,"Producto")
         navigation.navigate("Productos");
       }
-      
     }
   };
- 
+
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -80,7 +76,7 @@ export const AddProducto = ({ navigation, route }) => {
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <Stack>
           <View style={{ paddingTop: 10, spacing: 20 }}>
-            
+
             <View style={styles.pickerContainer}>
               <Text style={styles.text}>Nombre:</Text>
               <TextInput style={styles.inputs}
@@ -121,7 +117,7 @@ export const AddProducto = ({ navigation, route }) => {
 
         <Stack>
           <View style={styles.botnes}>
-            <Button 
+            <Button
               titleStyle={{ fontSize: 17 }}
               contentContainerStyle={{ height: 50 }}
               title="Agregar Producto"
@@ -133,7 +129,7 @@ export const AddProducto = ({ navigation, route }) => {
             />
           </View>
           <View style={styles.botnes}>
-            <Button 
+            <Button
               titleStyle={{ fontSize: 17 }}
               contentContainerStyle={{ height: 50 }}
               title="Cancelar"

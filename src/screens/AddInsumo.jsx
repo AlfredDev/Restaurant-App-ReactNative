@@ -15,7 +15,7 @@ import { Button } from "@react-native-material/core";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
 import { async } from "@firebase/util";
-import { addDocumento, generateUUID, uid, unicoId } from "../helpers/Backed";
+import { addDocumento, generateUUID, uid, unicoId,addDocIf } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña, validarCorreo, validarNum, validarUsuario, validarNombre, validarCantidad } from "../helpers/Validaciones";
 
@@ -37,8 +37,9 @@ export const AddInsumo = ({ navigation, route }) => {
             alert("Campos vacios");
         } else {
             if(validarCantidad(Cantidad)){
-                addDocumento("Insumos", insum);
-                alert("Insumo añadido");
+                //addDocumento("Insumos", insum);
+                addDocIf("Insumos","Nombre",insum.Nombre,insum,"Insumo");
+                //alert("Insumo añadido");
                 navigation.navigate("Insumos");
             }
             

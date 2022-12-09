@@ -152,6 +152,7 @@ export const Productos = ({ navigation }) => {
             }
           >
             {products.map((pro) => (
+              // pro.precio.forEach() mandar como arreglo 
               <ProductItem
                 id={pro.id}
                 producto={pro.producto}

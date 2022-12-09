@@ -43,9 +43,8 @@ export const Login = ({ navigation }) => {
       where("usuario", "==", user),
       where("contraseña", "==", password)
     );
-
     const querySnapshot = await getDocs(q);
-
+ 
     if (!querySnapshot.empty) {
       querySnapshot.forEach((doc) => {
         // console.log(doc.data());

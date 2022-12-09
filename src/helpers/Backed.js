@@ -31,6 +31,27 @@ export const actualizarCampo = (objeto, tabla, idDoc) => {
       console.log(error);
     });
 };
+
+export const updateCampIf = async (tabla,argumento1,argumento2,objeto,idDoc,cat) => {
+  const docRef = doc(db, tabla, idDoc);
+  const userRef = collection(db, tabla);
+  const q = query(
+    userRef,
+    where(argumento1, "==", argumento2)
+    //where("contraseña", "==", password)
+  );
+  const querySnapshot = await getDocs(q);
+
+  if (!querySnapshot.empty) {
+    querySnapshot.forEach((doc) => {
+      alert(cat+ " ya existente.");
+    });
+  } else {
+    //updateDoc(docRef, { estatus: true })
+    setDoc(docRef, objeto);
+    alert(cat + " actualizado.");
+  }
+};
 export const changeStatusOrder = async (tabla, cluausula1, cluausula2) => {
   const docRef = query(
     collection(db, tabla),
@@ -67,17 +88,25 @@ export const addDocumento = (tabla, objeto) => {
     });
 };
 
-export const addDocIf = async (tabla, cluausula1, cluausula2,objeto) => {
-  const docRef = query(
-    collection(db, tabla),
-    where(cluausula1, "==", cluausula2)
+export const addDocIf = async (tabla,argumento1,argumento2,objeto,cat) => {
+  const userRef = collection(db, tabla);
+  const q = query(
+    userRef,
+    where(argumento1, "==", argumento2)
+    //where("contraseña", "==", password)
   );
-  const q = await getDocs(docRef);
+  const querySnapshot = await getDocs(q);
 
-  q.forEach((doc) => {
-    deleteDoc(doc.ref);
-  });
+  if (!querySnapshot.empty) {
+    querySnapshot.forEach((doc) => {
+      alert(cat+ " ya existente.");
+    });
+  } else {
+    addDoc(userRef, objeto)
+    alert(cat + " añadido.");
+  }
 };
+
 //Elimina por el id decumento
 
 export async function deleteDocument(tabla, id) {

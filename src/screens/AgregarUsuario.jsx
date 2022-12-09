@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, View } from "react-native";
 import { HeaderBlue } from "../components";
 import { theme } from "../core/theme";
-import { addDocumento } from "../helpers/Backed";
+import { addDocumento,addDocIf } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { validarContraseña,validarCorreo,validarNum,validarUsuario,validarNombre } from "../helpers/Validaciones";
 
@@ -49,8 +49,9 @@ export const AgregarUsuario = ({ navigation }) => {
           correo: correo,
           idEmpleado: Math.floor(Math.random() * 4000 + Math.random() * 180),
         };
-        addDocumento("Trabajadores", newUser);
-        alert("Nuevo usuario agregado");
+        addDocIf("Trabajadores","usuario",newUser.usuario,newUser,"Usuario");
+        //addDocumento("Trabajadores", newUser);
+        //alert("Nuevo usuario agregado");
         goBack();
       } 
       }else {
@@ -101,6 +102,7 @@ export const AgregarUsuario = ({ navigation }) => {
               color={theme.colors.secondary}
               value={celular}
               onChangeText={(value) => onInputChange("celular", value)}
+              keyboardType="numeric"
             />
             <TextInput
               label="Correo"
