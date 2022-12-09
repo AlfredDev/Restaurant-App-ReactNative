@@ -17,6 +17,8 @@ import { AgregarUsuario } from "./src/screens/AgregarUsuario";
 import { SaleDaily } from "./src/screens/Graphs/SaleDaily";
 import { ModificarProductos } from "./src/screens/ModificarProductos";
 import { ModificarInsumos } from "./src/screens/ModificarInsumos";
+import { SemanalScreen } from "./src/screens/Graphs/SemanalScreen";
+import { AnualScreen } from "./src/screens/Graphs/AnualScreen";
 
 
 const Stack = createNativeStackNavigator();
@@ -46,6 +48,10 @@ export default function App() {
           <Stack.Screen name="ModificarProductos" component={ModificarProductos} />
           <Stack.Screen name="ModificarInsumos" component={ModificarInsumos} />
           <Stack.Screen name="OrdenBarman" component={OrdenBarman} />
+          <Stack.Screen name="VentaSemanal" component={SemanalScreen} />
+          <Stack.Screen name="VentaAnual" component={AnualScreen} />
+
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserProvider>

@@ -31,7 +31,7 @@ export const SaleDaily = ({ navigation, route }) => {
 
         });
 
-        console.log(to);
+        // console.log(to);
 
         return to;
     }
@@ -133,9 +133,15 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     fecha: {
-        fontSize: 17,
         marginLeft: 5,
         color: theme.colors.primary,
+        backgroundColor: '#EEEDDD',
+        height: 30,
+        alignItems: "center",
+        justifyContent: "center",
+        width: 180,
+        borderRadius: 5,
+        borderWidth:2
     },
     table: {
         display: "flex",
