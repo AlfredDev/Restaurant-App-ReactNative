@@ -1,7 +1,8 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View,ScrollView } from "react-native";
 import { theme } from "../core/theme";
 import { Checkbox } from "react-native-paper";
 import { Stack } from "@react-native-material/core";
+
 import {
   collection,
   deleteDoc,
@@ -71,10 +72,16 @@ export const OrdenesListBar = ({ fk_cuenta_id, estatus, folio, fk_mesa_id, pedid
               //marginLeft: 10,
             }}
           >
+              
+           { pedidos.map(function(element){
+            if(element.categoria.toString() == "Bebidas"){
+              return `Bebida: ${element.producto} Cantidad: ${element.cantidad}\n`;
+            }
+    return `No hay bebidas`;
+})
+          }
             
             
-            Folio: {pedidos.map((number) =>
-  <Text>{number}</Text>)}
           </Text>
           <Checkbox
             status={estatus ? "checked" : "unchecked"}
@@ -106,14 +113,17 @@ const styles = StyleSheet.create({
     width: "98%",
     //marginLeft: 10,
     //marginRight: 10,
-    height: 60,
+    height: "auto",
     borderRadius: 10,
     opacity: 0.6,
     paddingLeft: 10,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     marginTop: 10,
     justifyContent: "space-around",
+    overflow: "scroll",
+    flex: 1,
+    
     //alignContent: "space-around",
   },
   checkboxe: {
@@ -121,14 +131,15 @@ const styles = StyleSheet.create({
     width: "98%",
     //marginLeft: 10,
     //marginRight: 10,
-    height: 60,
+    height: "auto",
     borderRadius: 10,
     opacity: 0.6,
     paddingLeft: 10,
-    flexDirection: "row",
+    flexDirection: "column",
     alignItems: "center",
     marginTop: 10,
     justifyContent: "space-around",
+    flex: 1,
     //alignContent: "space-around",
   },
 });

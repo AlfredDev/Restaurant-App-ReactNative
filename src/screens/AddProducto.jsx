@@ -35,7 +35,7 @@ export const AddProducto = ({ navigation, route }) => {
       Cantidad: + Cantidad,
       Precio: +Precio,
     };
-    const platillo = {
+    const produ = {
       categoria: "Bebidas",
       id: idp,
       nombre: Producto,
@@ -51,6 +51,7 @@ export const AddProducto = ({ navigation, route }) => {
         validarPrecio(Precio)
       ) {
         addDocIf("Productos", "Producto", product.Producto, product,"Producto")
+        addDocIf("Platillos", "nombre", product.Producto, produ,"Producto")
         navigation.navigate("Productos");
       }
     }
