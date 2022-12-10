@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Text,
   View,
+  RefreshControl
 } from "react-native";
 import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
@@ -37,6 +38,14 @@ export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta, orden } = route.params;
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    fetchData();
+    setRefreshing(false);
+  });
 
   const { usuario } = useContext(UserContext);
 
@@ -206,7 +215,12 @@ export const Ordenes = ({ navigation, route }) => {
           >
             Órdenes
           </Text>
-          <ScrollView stickyHeaderIndices={[1]}>
+
+          <ScrollView stickyHeaderIndices={[1]}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          >
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
                 {ordenes.map((op) => (
