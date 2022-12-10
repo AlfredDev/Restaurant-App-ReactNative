@@ -10,7 +10,6 @@ export const SearchPlatillo = ({ plats, setPlatillos, table }) => {
     const filtrar = (terminoBusqueda) => {
         var resultadosBusqueda = table.filter((elemento) => {
             if (
-              
                 
                 elemento.nombre
                     .toString()

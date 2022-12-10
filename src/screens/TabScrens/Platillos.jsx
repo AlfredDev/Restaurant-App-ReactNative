@@ -163,7 +163,7 @@ export const Platillos = ({ navigation }) => {
              height={50}
              color={theme.colors.primary}
              uppercase={false}
-             //onPress={() => navigation.navigate("AddProducto")}
+             onPress={() => navigation.navigate("AddPlatillo")}
 
           />
           

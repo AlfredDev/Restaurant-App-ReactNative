@@ -1,11 +1,16 @@
 import React from "react";
 import { Text, TouchableOpacity, View, StyleSheet } from "react-native";
 
-export const PlatilloItem = ({ id,nombre,categoria }) => {
-  
+export const PlatilloItem = ({ navigation, plat, id,nombre,categoria }) => {
+  const modificaPlatillo = () => {
+    navigation.navigate("ModificarPlatillo", {
+      plat: plat,
+    });
+  };
 
   return (
-    <TouchableOpacity >
+    
+      <TouchableOpacity onPress={modificaPlatillo}>
       <View style={styles.item}>
         <View style={styles.id}>
           <Text>{id}</Text>
