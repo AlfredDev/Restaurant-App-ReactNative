@@ -11,7 +11,6 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
-import { CuentaRepre } from "../components/CuentaRepre";
 import { OrdenItem } from "../components/OrdenItem";
 import { useEffect, useState, useContext } from "react";
 import {
@@ -32,6 +31,7 @@ import {
 } from "../helpers/Backed";
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { async } from "@firebase/util";
+import moment from "moment/moment";
 
 export const Ordenes = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta, orden } = route.params;
@@ -144,10 +144,18 @@ export const Ordenes = ({ navigation, route }) => {
     var day = dateObj.getUTCDate();
     var year = dateObj.getUTCFullYear();
 
-  return  year + "/" + month + "/" + day;
+    return year + "/" + month + "/" + day;
 
     // return new Date(fecha);
   };
+
+  const momentDate = () => {
+    var date = moment();
+
+    var currentDate = date.format('D/MM/YYYY');
+    return currentDate;
+  }
+
 
   const despideMesa = () => {
     const tiket = {
@@ -166,7 +174,8 @@ export const Ordenes = ({ navigation, route }) => {
     navigation.navigate("MesaCuenta", {
       mesa: table,
     });
-    // alert(getFecha())
+    // alert(momentDate());
+    // console.log(momentDate ());
   };
 
   return (
