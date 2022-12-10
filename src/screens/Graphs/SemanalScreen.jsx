@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBlue } from '../../components'
 import { theme } from '../../core/theme'
@@ -8,10 +8,44 @@ import { getDate } from '../../helpers/Backed';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { TableSales } from '../../components/TableSales';
 import { Button } from '@react-native-material/core';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '../../../database/firebase';
 
 export const SemanalScreen = ({ navigation }) => {
     const [date, setDate] = useState(getDate());
     const [datePicker, setDatePicker] = useState(false);
+    const [Venta, setVenta] = useState([]);
+    const fecthOrdenes = async () => {
+        const q = query(collection(db, "Venta"));
+        const querySnapshot = await getDocs(q);
+
+        const cuentas = [];
+        // const pedido = [];
+
+        querySnapshot.forEach((doc) => {
+            const { cliente, fecha, id, mesa, total } = doc.data();
+            let date  = new Date(fecha);
+            let cuenta = {
+                cliente: cliente,
+                fecha: date,
+                id: id,
+                mesa: mesa,
+                total: total,
+            };
+
+            // pedido.push(pedidos);
+            cuentas.push(cuenta);
+        });
+        setVenta(cuentas);
+
+        let t = 0;
+    };
+
+    useEffect(() => {
+        fecthOrdenes();
+        console.log(Venta);
+    }, [])
+    
 
     const goHome = () => {
         navigation.goBack();
