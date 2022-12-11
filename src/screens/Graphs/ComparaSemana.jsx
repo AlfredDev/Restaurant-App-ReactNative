@@ -1,95 +1,22 @@
+import RNDateTimePicker from '@react-native-community/datetimepicker'
 import React, { useEffect, useState } from 'react'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBlue } from '../../components'
 import { theme } from '../../core/theme'
-import * as Animatable from "react-native-animatable";
-import { DatePicker } from '../../components/DatePicker';
-import { getDate, getFecha } from '../../helpers/Backed';
-import RNDateTimePicker from '@react-native-community/datetimepicker';
-import { TableSales } from '../../components/TableSales';
-import { Button } from '@react-native-material/core';
+import { getDate } from '../../helpers/Backed'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
 
-export const SemanalScreen = ({ navigation }) => {
+export const ComparaSemana = ({ navigation }) => {
     const [date, setDate] = useState(getDate());
     const [datePicker, setDatePicker] = useState(false);
     const [Venta, setVenta] = useState([]);
     const [semana, setSemana] = useState([]);
     const [total, setTotal] = useState();
 
-
-
-
-    const days = [
-        {
-            id: 0,
-            dia: 'Lunes',
-            total: 0
-        },
-        {
-            id: 1,
-            dia: 'Martes',
-            total: 0
-        },
-        {
-            id: 2,
-            dia: 'Miercoles',
-            total: 0
-        },
-        {
-            id: 3,
-            dia: 'Jueves',
-            total: 0
-        },
-        {
-            id: 4,
-            dia: 'Viernes',
-            total: 0
-        },
-        {
-            id: 5,
-            dia: 'Sabado',
-            total: 0
-        },
-        {
-            id: 6,
-            dia: 'Domingo',
-            total: 0
-        },
-    ];
-    const [dias, setDias] = useState(days);
-
-
-    const calcularValor = () => {
-        semana.forEach((se) => {
-            var day = se.fecha.getDay();
-
-            if (day === 1) {
-                days[0].total += se.total;
-            }
-            if (day === 2) {
-                days[1].total += se.total;
-            }
-            if (day === 3) {
-                days[2].total += se.total;
-            }
-            if (day === 4) {
-                days[3].total += se.total;
-            }
-            if (day === 5) {
-                days[4].total += se.total;
-            }
-            if (day === 6) {
-                days[5].total += se.total;
-            }
-            if (day === 0) {
-                days[6].total += se.total;
-            }
-        })
-        setDias(days);
+    const goHome = () => {
+        navigation.goBack();
     }
-
 
     const fecthOrdenes = async () => {
         const q = query(collection(db, "Venta"));
@@ -119,14 +46,9 @@ export const SemanalScreen = ({ navigation }) => {
 
     useEffect(() => {
         fecthOrdenes();
-        // console.log(Venta);
-        alert('Para actualizar mas rapido presione el total');
-    }, [])
-
-
-    useEffect(() => {
-        porSemana();
+        // console.log(semana);}
         calcularTotal();
+        semanaAñoPasado();
     }, [])
 
     const porSemana = async () => {
@@ -139,18 +61,22 @@ export const SemanalScreen = ({ navigation }) => {
         setSemana(resultProductData);
     }
 
-    const calcularTotal = () => {
-        let total = 0;
-        semana.forEach(a => {
-            total += a.total;
-        })
-        setTotal(total);
-        calcularValor();
-    }
+    const [pasada, setPasada] = useState([]);
 
+    const semanaAñoPasado = () => {
+        let d = date;
+        var year = d.getFullYear();
+        var month = d.getMonth();
+        var day = d.getDate();
+        var c = new Date(year - 1, month, day);
+        var HaceUnaSemana = new Date(c - (24 * 60 * 60 * 1000) * 7);
 
-    const goHome = () => {
-        navigation.goBack();
+        var resultProductData = Venta.filter(a => {
+            var dates = new Date(a.fecha);
+            return (dates >= HaceUnaSemana && dates <= c);
+        });
+
+        setPasada(resultProductData);
     }
 
 
@@ -159,9 +85,6 @@ export const SemanalScreen = ({ navigation }) => {
         setDatePicker(false);
         // fecthOrdenes();
         porSemana();
-        calcularTotal();
-        calcularValor();
-
     }
 
     const FechaBien = (date) => {
@@ -173,11 +96,30 @@ export const SemanalScreen = ({ navigation }) => {
         return year + "/" + month + "/" + day;
     };
 
+    const calcularTotal = () => {
+        let total = 0;
+        semana.forEach(a => {
+            total += a.total;
+        })
+        setTotal(total);
+        calcularTotalPasado();
+    }
+
+    const [tpasado, setTpasado] = useState();
+    const calcularTotalPasado = () => {
+        let total = 0;
+        pasada.forEach(a => {
+            total += a.total;
+        })
+        setTpasado(total);
+    }
+
     return (
         <View style={styles.container}
         >
             <HeaderBlue description={'Venta Semanal'} goHome={goHome} />
-            <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
+
+            <View style={styles.formContainer}>
                 <View style={styles.fecha}>
                     <View style={styles.venta}>
                         <Text style={{ fontWeight: "bold", letterSpacing: 1, fontSize: 17 }}>
@@ -202,36 +144,30 @@ export const SemanalScreen = ({ navigation }) => {
                         )}
                     </View>
                 </View>
-                <View style={styles.tabla}>
-                    <TableSales fecha={'Dia'} semana={dias} />
+                <View style={styles.grafica}>
+
+
                 </View>
                 <View style={styles.butones}>
                     <View style={styles.bottom}>
-                        <Text style={{ fontSize: 17 }}>Venta Total:</Text>
+                        <Text style={{ fontSize: 17 }}>Venta semana seleccionada:</Text>
                         <TouchableOpacity style={styles.total} onPress={calcularTotal}>
                             <Text style={{ textAlign: 'center', fontSize: 16 }}>
                                 ${total}
                             </Text>
                         </TouchableOpacity>
                     </View>
-                    <Button
-                        titleStyle={{ fontSize: 17 }}
-                        contentContainerStyle={{ height: 50, }}
-                        title="Comparar Semana"
-                        width={347}
-                        height={60}
-                        color={theme.colors.primary}
-                        uppercase={false}
-                        borderRadius={15}
-                        style={{ marginBottom: 10 }}
-                        onPress={() => {
-                            navigation.navigate("ComparaSemana");
-                        }}
-                    />
+                    <View style={styles.bottom}>
+                        <Text style={{ fontSize: 17 }}>Venta semana del año anterior:</Text>
+                        <TouchableOpacity style={styles.total} >
+                            <Text style={{ textAlign: 'center', fontSize: 16 }}>
+                                ${tpasado}
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
                 </View>
-            </Animatable.View>
-
-        </View>
+            </View>
+        </View >
     )
 }
 
@@ -254,6 +190,16 @@ const styles = StyleSheet.create({
         // justifyContent: 'center',
         paddingTop: 15,
     },
+    grafica: {
+        flex: 4
+    },
+    butones: {
+        flex: 2,
+        // backgroundColor: theme.colors.error
+        alignItems: "center",
+        justifyContent: "center",
+    },
+
     fecha: {
         flex: .8,
         // padding: ,
@@ -261,18 +207,6 @@ const styles = StyleSheet.create({
         alignItems: "center",
         justifyContent: "center",
         flexDirection: "row",
-    },
-
-
-    tabla: {
-        flex: 4,
-        // backgroundColor: theme.colors.primary,
-    },
-    butones: {
-        flex: 2,
-        // backgroundColor: theme.colors.error
-        alignItems: "center",
-        justifyContent: "center",
     },
     venta: {
         flexDirection: "row",
@@ -303,8 +237,8 @@ const styles = StyleSheet.create({
         height: '40%',
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 10,
+        // marginTop: 10,
         borderWidth: 1,
-        marginBottom: 10,
+        // marginBottom: 10,
     },
-})
+});
