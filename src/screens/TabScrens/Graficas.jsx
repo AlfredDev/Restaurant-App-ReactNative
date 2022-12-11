@@ -66,7 +66,7 @@ export const Graficas = ({ navigation }) => {
 
   useEffect(() => {
     fecthOrdenes();
-    console.log(venta);
+    // console.log(venta);
   }, []);
 
   function onDateSelected(event, value) {

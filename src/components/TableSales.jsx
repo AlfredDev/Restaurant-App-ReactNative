@@ -1,9 +1,10 @@
-import React from 'react'
 import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
 import { ItemSale } from './ItemSale';
 
-export const TableSales = ({ fecha }) => {
+export const TableSales = ({ fecha, semana }) => {
+
+
     return (
 
         <View>
@@ -15,9 +16,15 @@ export const TableSales = ({ fecha }) => {
                     <Text style={{ textAlign: 'center' }}> Venta</Text>
                 </View>
             </View>
-            <ScrollView>
-                <ItemSale dia={'Lunes'} venta={'150'} />
-                <ItemSale dia={'Lunes'} venta={'150'} />
+            <ScrollView
+
+            >
+
+                {semana.map((dia) => (
+                    <ItemSale dia={dia.dia} venta={dia.total} key={dia.id} />
+
+                ))}
+
             </ScrollView>
         </View>
     )

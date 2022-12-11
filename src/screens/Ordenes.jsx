@@ -13,7 +13,7 @@ import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
 import { OrdenItem } from "../components/OrdenItem";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useCallback } from "react";
 import {
   collection,
   deleteDoc,
@@ -39,9 +39,9 @@ export const Ordenes = ({ navigation, route }) => {
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const onRefresh = React.useCallback(async () => {
+  const onRefresh = useCallback(async () => {
     setRefreshing(true);
     fetchData();
     setRefreshing(false);
@@ -217,9 +217,9 @@ export const Ordenes = ({ navigation, route }) => {
           </Text>
 
           <ScrollView stickyHeaderIndices={[1]}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
           >
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>

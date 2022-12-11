@@ -57,6 +57,7 @@ export const SaleDaily = ({ navigation, route }) => {
                     <TouchableOpacity
                         style={styles.fecha}
                         onPress={() => setDatePicker(true)}
+                        
                     >
                         <Text>{FechaBien(date)}</Text>
                     </TouchableOpacity>

@@ -4,7 +4,7 @@ import { HeaderBlue } from '../../components'
 import { theme } from '../../core/theme'
 import * as Animatable from "react-native-animatable";
 import { DatePicker } from '../../components/DatePicker';
-import { getDate } from '../../helpers/Backed';
+import { getDate, getFecha } from '../../helpers/Backed';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { TableSales } from '../../components/TableSales';
 import { Button } from '@react-native-material/core';
@@ -15,6 +15,82 @@ export const SemanalScreen = ({ navigation }) => {
     const [date, setDate] = useState(getDate());
     const [datePicker, setDatePicker] = useState(false);
     const [Venta, setVenta] = useState([]);
+    const [semana, setSemana] = useState([]);
+    const [total, setTotal] = useState();
+
+
+
+
+    const days = [
+        {
+            id: 0,
+            dia: 'Lunes',
+            total: 0
+        },
+        {
+            id: 1,
+            dia: 'Martes',
+            total: 0
+        },
+        {
+            id: 2,
+            dia: 'Miercoles',
+            total: 0
+        },
+        {
+            id: 3,
+            dia: 'Jueves',
+            total: 0
+        },
+        {
+            id: 4,
+            dia: 'Viernes',
+            total: 0
+        },
+        {
+            id: 5,
+            dia: 'Sabado',
+            total: 0
+        },
+        {
+            id: 6,
+            dia: 'Domingo',
+            total: 0
+        },
+    ];
+    const [dias, setDias] = useState(days);
+
+
+    const calcularValor = () => {
+        semana.forEach((se) => {
+            var day = se.fecha.getDay();
+
+            if (day === 1) {
+                days[0].total += se.total;
+            }
+            if (day === 2) {
+                days[1].total += se.total;
+            }
+            if (day === 3) {
+                days[2].total += se.total;
+            }
+            if (day === 4) {
+                days[3].total += se.total;
+            }
+            if (day === 5) {
+                days[4].total += se.total;
+            }
+            if (day === 6) {
+                days[5].total += se.total;
+            }
+            if (day === 0) {
+                days[6].total += se.total;
+            }
+        })
+        setDias(days);
+    }
+
+
     const fecthOrdenes = async () => {
         const q = query(collection(db, "Venta"));
         const querySnapshot = await getDocs(q);
@@ -24,7 +100,7 @@ export const SemanalScreen = ({ navigation }) => {
 
         querySnapshot.forEach((doc) => {
             const { cliente, fecha, id, mesa, total } = doc.data();
-            let date  = new Date(fecha);
+            let date = new Date(fecha);
             let cuenta = {
                 cliente: cliente,
                 fecha: date,
@@ -43,19 +119,49 @@ export const SemanalScreen = ({ navigation }) => {
 
     useEffect(() => {
         fecthOrdenes();
-        console.log(Venta);
+        // console.log(Venta);
+        alert('Para actualizar mas rapido presione el total');
     }, [])
-    
+
+
+    useEffect(() => {
+        porSemana();
+        calcularTotal();
+    }, [])
+
+    const porSemana = async () => {
+        var HaceUnaSemana = new Date(date - (24 * 60 * 60 * 1000) * 7);
+        var resultProductData = Venta.filter(a => {
+            var dates = new Date(a.fecha);
+            return (dates >= HaceUnaSemana && dates <= date);
+        });
+        // console.log(resultProductData);
+        setSemana(resultProductData);
+    }
+
+    const calcularTotal = () => {
+        let total = 0;
+        semana.forEach(a => {
+            total += a.total;
+        })
+        setTotal(total);
+        calcularValor();
+    }
+
 
     const goHome = () => {
         navigation.goBack();
     }
 
 
-    function onDateSelected(event, value) {
+    async function onDateSelected(event, value) {
         setDate(value);
         setDatePicker(false);
-        fecthOrdenes();
+        // fecthOrdenes();
+        porSemana();
+        calcularTotal();
+        calcularValor();
+
     }
 
     const FechaBien = (date) => {
@@ -97,16 +203,16 @@ export const SemanalScreen = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.tabla}>
-                    <TableSales fecha={'Dia'} />
+                    <TableSales fecha={'Dia'} semana={dias} />
                 </View>
                 <View style={styles.butones}>
                     <View style={styles.bottom}>
                         <Text style={{ fontSize: 17 }}>Venta Total:</Text>
-                        <View style={styles.total}>
+                        <TouchableOpacity style={styles.total} onPress={calcularTotal}>
                             <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                                $150
+                                ${total}
                             </Text>
-                        </View>
+                        </TouchableOpacity>
                     </View>
                     <Button
                         titleStyle={{ fontSize: 17 }}
