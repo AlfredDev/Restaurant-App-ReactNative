@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { ScrollView, StyleSheet, Text } from "react-native";
+import { ScrollView, StyleSheet, Text,RefreshControl } from "react-native";
 import { View } from "react-native-animatable";
 import { Header } from "../../components/Header";
 import { Button, Stack } from "@react-native-material/core";
@@ -22,6 +22,14 @@ export const Account = ({ navigation }) => {
   // const [checked, setChecked] = React.useState(false);
   const [orden, setOrdenes] = useState([]);
   const { ordenes } = useContext(UserContext);
+
+  const [refreshing, setRefreshing] = React.useState(false);
+
+  const onRefresh = React.useCallback(async () => {
+    setRefreshing(true);
+    fetchData();
+    setRefreshing(false);
+  });
 
   async function fetchData() {
     const q = query(collection(db, "Orden"), orderBy("fk_mesa_id"));
@@ -49,7 +57,10 @@ export const Account = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <Header titulo={"Órdenes"} />
-      <ScrollView stickyHeaderIndices={[1]}>
+      <ScrollView stickyHeaderIndices={[1]}
+      refreshControl={
+        <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+      }>
         <View style={styles.container}>
           <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
             {orden.map((op) => (

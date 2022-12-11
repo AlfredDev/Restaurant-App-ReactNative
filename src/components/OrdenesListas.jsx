@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View, RefreshControl} from "react-native";
 import { theme } from "../core/theme";
 import { Checkbox } from "react-native-paper";
 import { Stack } from "@react-native-material/core";
@@ -71,12 +71,7 @@ export const OrdenesListas = ({ fk_cuenta_id, estatus, folio, fk_mesa_id }) => {
           >
             Folio: {folio}
           </Text>
-          <Checkbox
-            status={estatus ? "checked" : "unchecked"}
-            onPress={() => {
-              cancelar();
-            }}
-          />
+          
         </View>
       </Stack>
     </TouchableOpacity>

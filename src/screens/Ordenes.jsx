@@ -216,11 +216,7 @@ export const Ordenes = ({ navigation, route }) => {
             Órdenes
           </Text>
 
-          <ScrollView stickyHeaderIndices={[1]}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          >
+          <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
                 {ordenes.map((op) => (
