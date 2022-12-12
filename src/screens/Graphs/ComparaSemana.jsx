@@ -6,6 +6,8 @@ import { theme } from '../../core/theme'
 import { currencyFormat, getDate } from '../../helpers/Backed'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
+import { Button } from '@react-native-material/core'
+import { Linking } from 'react-native'
 
 export const ComparaSemana = ({ navigation }) => {
     const [date, setDate] = useState(getDate());
@@ -100,6 +102,9 @@ export const ComparaSemana = ({ navigation }) => {
         return year + "/" + month + "/" + day;
     };
 
+
+
+
     const calcularTotal = () => {
         let total = 0;
         semana.forEach(a => {
@@ -149,7 +154,9 @@ export const ComparaSemana = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.grafica}>
-
+                    <Button title={'Comparar semamanas'} onPress = {() => {
+                        Linking.openURL('https://6396ad12add2562f16f5be76--marvelous-kangaroo-889e4d.netlify.app/')
+                    }}/>
 
                 </View>
                 <View style={styles.butones}>
@@ -245,15 +252,15 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         // marginBottom: 10,
         shadowColor: "#000",
-    alignItems: "center",
+        alignItems: "center",
 
-    shadowOffset: {
-      width: 0,
-      height: 6,
-    },
-    shadowOpacity: 0.39,
-    shadowRadius: 8.3,
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.3,
 
-    elevation: 13,
+        elevation: 13,
     },
 });
