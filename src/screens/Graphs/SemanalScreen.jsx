@@ -4,7 +4,7 @@ import { HeaderBlue } from '../../components'
 import { theme } from '../../core/theme'
 import * as Animatable from "react-native-animatable";
 import { DatePicker } from '../../components/DatePicker';
-import { getDate, getFecha } from '../../helpers/Backed';
+import { currencyFormat, getDate, getFecha } from '../../helpers/Backed';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { TableSales } from '../../components/TableSales';
 import { Button } from '@react-native-material/core';
@@ -144,7 +144,7 @@ export const SemanalScreen = ({ navigation }) => {
         semana.forEach(a => {
             total += a.total;
         })
-        setTotal(total);
+        setTotal(currencyFormat(total));
         calcularValor();
     }
 
@@ -210,7 +210,7 @@ export const SemanalScreen = ({ navigation }) => {
                         <Text style={{ fontSize: 17 }}>Venta Total:</Text>
                         <TouchableOpacity style={styles.total} onPress={calcularTotal}>
                             <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                                ${total}
+                                {total}
                             </Text>
                         </TouchableOpacity>
                     </View>

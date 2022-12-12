@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { HeaderBlue } from '../../components'
 import { theme } from '../../core/theme'
-import { getDate } from '../../helpers/Backed'
+import { currencyFormat, getDate } from '../../helpers/Backed'
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
 
@@ -48,7 +48,7 @@ export const ComparaSemana = ({ navigation }) => {
         fecthOrdenes();
         // console.log(semana);}
         calcularTotal();
-        semanaAñoPasado();
+        // semanaAñoPasado();
     }, [])
 
     const porSemana = async () => {
@@ -77,6 +77,9 @@ export const ComparaSemana = ({ navigation }) => {
         });
 
         setPasada(resultProductData);
+        if (resultProductData.length == 0) {
+            alert('No hay ventas en la semana ' + FechaBien(c));
+        }
     }
 
 
@@ -85,6 +88,7 @@ export const ComparaSemana = ({ navigation }) => {
         setDatePicker(false);
         // fecthOrdenes();
         porSemana();
+        semanaAñoPasado();
     }
 
     const FechaBien = (date) => {
@@ -101,7 +105,7 @@ export const ComparaSemana = ({ navigation }) => {
         semana.forEach(a => {
             total += a.total;
         })
-        setTotal(total);
+        setTotal(currencyFormat(total));
         calcularTotalPasado();
     }
 
@@ -111,7 +115,7 @@ export const ComparaSemana = ({ navigation }) => {
         pasada.forEach(a => {
             total += a.total;
         })
-        setTpasado(total);
+        setTpasado(currencyFormat(total));
     }
 
     return (
@@ -153,7 +157,7 @@ export const ComparaSemana = ({ navigation }) => {
                         <Text style={{ fontSize: 17 }}>Venta semana seleccionada:</Text>
                         <TouchableOpacity style={styles.total} onPress={calcularTotal}>
                             <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                                ${total}
+                                {total}
                             </Text>
                         </TouchableOpacity>
                     </View>
@@ -161,7 +165,7 @@ export const ComparaSemana = ({ navigation }) => {
                         <Text style={{ fontSize: 17 }}>Venta semana del año anterior:</Text>
                         <TouchableOpacity style={styles.total} >
                             <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                                ${tpasado}
+                                {tpasado}
                             </Text>
                         </TouchableOpacity>
                     </View>

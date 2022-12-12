@@ -14,7 +14,7 @@ import {
 import { db } from "../../../database/firebase";
 import { HeaderOnly } from "../../components/HeaderOnly";
 import { theme } from "../../core/theme";
-import { getDate, getFecha } from "../../helpers/Backed";
+import { currencyFormat, getDate, getFecha } from "../../helpers/Backed";
 
 export const Graficas = ({ navigation }) => {
   const [venta, setVenta] = useState([]);
@@ -61,7 +61,7 @@ export const Graficas = ({ navigation }) => {
       t += obj.total;
     });
 
-    setTotal(t);
+    setTotal(currencyFormat(t));
   };
 
   useEffect(() => {
@@ -121,7 +121,7 @@ export const Graficas = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={forceRemount}>
           <View style={styles.total}>
-            <Text>$ {total}</Text>
+            <Text>{total}</Text>
           </View>
         </TouchableOpacity>
 

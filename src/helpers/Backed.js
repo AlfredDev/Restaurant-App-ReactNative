@@ -32,7 +32,13 @@ export const actualizarCampo = (objeto, tabla, idDoc) => {
     });
 };
 
-export const updateCampIf = async (tabla,argumento1,argumento2,objeto,idDoc,cat) => {
+export function currencyFormat(num) {
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
+
+
+
+export const updateCampIf = async (tabla, argumento1, argumento2, objeto, idDoc, cat) => {
   const docRef = doc(db, tabla, idDoc);
   const userRef = collection(db, tabla);
   const q = query(
@@ -44,7 +50,7 @@ export const updateCampIf = async (tabla,argumento1,argumento2,objeto,idDoc,cat)
 
   if (!querySnapshot.empty) {
     querySnapshot.forEach((doc) => {
-      alert(cat+ " ya existente.");
+      alert(cat + " ya existente.");
     });
   } else {
     //updateDoc(docRef, { estatus: true })
@@ -63,7 +69,7 @@ export const changeStatusOrder = async (tabla, cluausula1, cluausula2) => {
   });
 };
 
-export const changeCantidadBebidas = async (tabla, cluausula1, cluausula2,cant) => {
+export const changeCantidadBebidas = async (tabla, cluausula1, cluausula2, cant) => {
   const docRef = query(
     collection(db, tabla),
     where(cluausula1, "==", cluausula2)
@@ -71,8 +77,8 @@ export const changeCantidadBebidas = async (tabla, cluausula1, cluausula2,cant) 
   const q = await getDocs(docRef);
   q.forEach((doc) => {
     updateDoc(doc.ref, { Cantidad: increment(- cant) });
-   //updateData(doc.ref, { Cantidad: doc.data['Cantidad'] - cant });
-    
+    //updateData(doc.ref, { Cantidad: doc.data['Cantidad'] - cant });
+
   });
 };
 
@@ -88,7 +94,7 @@ export const addDocumento = (tabla, objeto) => {
     });
 };
 
-export const addDocIf = async (tabla,argumento1,argumento2,objeto,cat) => {
+export const addDocIf = async (tabla, argumento1, argumento2, objeto, cat) => {
   const userRef = collection(db, tabla);
   const q = query(
     userRef,
@@ -99,7 +105,7 @@ export const addDocIf = async (tabla,argumento1,argumento2,objeto,cat) => {
 
   if (!querySnapshot.empty) {
     querySnapshot.forEach((doc) => {
-      alert(cat+ " ya existente.");
+      alert(cat + " ya existente.");
     });
   } else {
     addDoc(userRef, objeto)
@@ -164,7 +170,7 @@ export const getDate = () => {
   // var year = dateObj.getUTCFullYear();
   // console.log(new Date(Date.UTC(year, month, day)));
   // return new Date(Date.UTC(year, month, day));
-  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate() , date.getUTCHours() - 1, date.getUTCMinutes(), date.getUTCSeconds()); 
+  return new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours() - 1, date.getUTCMinutes(), date.getUTCSeconds());
 };
 
 
@@ -183,11 +189,11 @@ export const getDate = () => {
 // }
 
 export function unicoId(prefix) {
-  var id = + Math.floor(Math.random() * 1000000 ) + Math.floor(Math.random() * 500);
+  var id = + Math.floor(Math.random() * 1000000) + Math.floor(Math.random() * 500);
   return prefix ? prefix + id : id;
 };
 
 export function unicosId(prefix) {
-  var id = + Math.floor(Math.random() * 1000 );
+  var id = + Math.floor(Math.random() * 1000);
   return prefix ? prefix + id : id;
 };

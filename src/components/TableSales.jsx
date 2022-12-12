@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
+import { currencyFormat } from '../helpers/Backed';
 import { ItemSale } from './ItemSale';
 
 export const TableSales = ({ fecha, semana }) => {
@@ -21,7 +22,7 @@ export const TableSales = ({ fecha, semana }) => {
             >
 
                 {semana.map((dia) => (
-                    <ItemSale dia={dia.dia} venta={dia.total} key={dia.id} />
+                    <ItemSale dia={dia.dia} venta={currencyFormat(dia.total)} key={dia.id} />
 
                 ))}
 
