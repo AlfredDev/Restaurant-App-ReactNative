@@ -4,7 +4,7 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { HeaderBlue } from '../../components/HeaderBlue';
 import { VentaDiariaItem } from '../../components/VentaDiariaItem';
 import { theme } from '../../core/theme';
-import { getDate } from '../../helpers/Backed';
+import { currencyFormat, getDate } from '../../helpers/Backed';
 
 export const SaleDaily = ({ navigation, route }) => {
     const [datePicker, setDatePicker] = useState(false);
@@ -32,6 +32,7 @@ export const SaleDaily = ({ navigation, route }) => {
         });
 
         // console.log(to);
+        to = currencyFormat(to);
 
         return to;
     }
@@ -57,6 +58,7 @@ export const SaleDaily = ({ navigation, route }) => {
                     <TouchableOpacity
                         style={styles.fecha}
                         onPress={() => setDatePicker(true)}
+
                     >
                         <Text>{FechaBien(date)}</Text>
                     </TouchableOpacity>
@@ -97,7 +99,7 @@ export const SaleDaily = ({ navigation, route }) => {
                     <Text style={{ fontSize: 17 }}>Venta Total:</Text>
                     <View style={styles.total}>
                         <Text style={{ textAlign: 'center', fontSize: 16 }}>
-                            $ {total()}
+                            {total()}
                         </Text>
                     </View>
                 </View>
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: 180,
         borderRadius: 5,
-        borderWidth:2
+        borderWidth: 2
     },
     table: {
         display: "flex",

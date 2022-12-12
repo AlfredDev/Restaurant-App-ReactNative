@@ -21,6 +21,7 @@ import { ModificarPlatillo } from "./src/screens/ModificarPlatillo";
 import { ModificarInsumos } from "./src/screens/ModificarInsumos";
 import { SemanalScreen } from "./src/screens/Graphs/SemanalScreen";
 import { AnualScreen } from "./src/screens/Graphs/AnualScreen";
+import { ComparaSemana } from "./src/screens/Graphs/ComparaSemana";
 
 
 const Stack = createNativeStackNavigator();
@@ -53,6 +54,7 @@ export default function App() {
           <Stack.Screen name="OrdenBarman" component={OrdenBarman} />
           <Stack.Screen name="VentaSemanal" component={SemanalScreen} />
           <Stack.Screen name="VentaAnual" component={AnualScreen} />
+          <Stack.Screen name="ComparaSemana" component={ComparaSemana} />
 
 
         </Stack.Navigator>

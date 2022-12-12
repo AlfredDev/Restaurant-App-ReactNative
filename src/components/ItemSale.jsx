@@ -9,7 +9,7 @@ export const ItemSale = ({ dia, venta }) => {
             </View>
 
             <View style={{ flex: 1.5, height: 20 }}>
-                <Text style={{ textAlign: 'center' }}> ${venta}</Text>
+                <Text style={{ textAlign: 'center' }}> {venta}</Text>
             </View>
         </View>)
 }

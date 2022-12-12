@@ -14,7 +14,7 @@ import {
 import { db } from "../../../database/firebase";
 import { HeaderOnly } from "../../components/HeaderOnly";
 import { theme } from "../../core/theme";
-import { getDate, getFecha } from "../../helpers/Backed";
+import { currencyFormat, getDate, getFecha } from "../../helpers/Backed";
 
 export const Graficas = ({ navigation }) => {
   const [venta, setVenta] = useState([]);
@@ -61,12 +61,12 @@ export const Graficas = ({ navigation }) => {
       t += obj.total;
     });
 
-    setTotal(t);
+    setTotal(currencyFormat(t));
   };
 
   useEffect(() => {
     fecthOrdenes();
-    console.log(venta);
+    // console.log(venta);
   }, []);
 
   function onDateSelected(event, value) {
@@ -121,7 +121,7 @@ export const Graficas = ({ navigation }) => {
         </View>
         <TouchableOpacity onPress={forceRemount}>
           <View style={styles.total}>
-            <Text>$ {total}</Text>
+            <Text>{total}</Text>
           </View>
         </TouchableOpacity>
 
@@ -206,6 +206,17 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderRadius: 5,
+    shadowColor: "#000",
+    alignItems: "center",
+
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.39,
+    shadowRadius: 8.3,
+
+    elevation: 13,
   },
   link: {
     textAlign: "right",
