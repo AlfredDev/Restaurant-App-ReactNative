@@ -25,7 +25,7 @@ import { useContext } from "react";
 
 export const MesasConfig = ({ route, navigation }) => {
   const { mesa } = route.params;
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
   const { usuario } = useContext(UserContext);
 
   const {
