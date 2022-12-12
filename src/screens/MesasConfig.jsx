@@ -19,11 +19,14 @@ import { Checkbox } from "react-native-paper";
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { useForm } from "../hooks/useForm";
 import { HeaderBlue } from "../components/HeaderBlue";
+import { UserContext } from "../hooks/UserContext";
+import { useContext } from "react";
 // import Ionicons from "react-native-vector-icons/Ionicons";
 
 export const MesasConfig = ({ route, navigation }) => {
   const { mesa } = route.params;
   const [checked, setChecked] = React.useState(true);
+  const { usuario } = useContext(UserContext);
 
   const {
     onInputChange,
@@ -75,6 +78,9 @@ export const MesasConfig = ({ route, navigation }) => {
   };
 
   const config = () => {
+
+
+
     if (validar()) {
       if (checked) {
         table.Libre = false;
@@ -108,6 +114,15 @@ export const MesasConfig = ({ route, navigation }) => {
       }
     }
   };
+
+  const isGerente = () => {
+    if(usuario.rol == 'Gerente'){
+      return true;
+    }
+
+    return false;
+  }
+
 
   function handleBackButtonClick() {
     navigation.goBack();
@@ -258,6 +273,7 @@ export const MesasConfig = ({ route, navigation }) => {
               <View style={styles.checkbox}>
                 <Checkbox
                   //style={{ width: "98%"  }}
+                  disabled = {isGerente()}
                   status={checked ? "checked" : "unchecked"}
                   onPress={() => {
                     setChecked(true);
@@ -291,7 +307,7 @@ export const MesasConfig = ({ route, navigation }) => {
           ) : (
             <Stack
               spacing={20}
-              style={[{ margin: 5 }, { marginTop: 10 }, { marginRight: 5 },{alignItems: "center"}]}
+              style={[{ margin: 5 }, { marginTop: 10 }, { marginRight: 5 }, { alignItems: "center" }]}
             >
               <Button
                 titleStyle={{ fontSize: 17 }}
