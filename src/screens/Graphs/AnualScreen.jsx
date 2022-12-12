@@ -7,6 +7,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { getDate } from '../../helpers/Backed';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { db } from '../../../database/firebase';
+import { TableSales } from '../../components/TableSales';
 
 export const AnualScreen = ({ navigation }) => {
     const [date, setDate] = useState(getDate());
@@ -22,6 +23,8 @@ export const AnualScreen = ({ navigation }) => {
         // fecthOrdenes();
         filtrarAño();
         getTotalAnual();
+        totales();
+
     }
 
     const FechaBien = (date) => {
@@ -79,12 +82,13 @@ export const AnualScreen = ({ navigation }) => {
 
         var resultProductData = Venta.filter(a => {
             var dates = a.fecha.getUTCFullYear();
-            console.log(dates);
+            // console.log(dates);
             return (dates == años);
         });
 
         // console.log(resultProductData);
         setEventaAño(resultProductData);
+      
     }
 
     const [total, setTotal] = useState();
@@ -97,11 +101,135 @@ export const AnualScreen = ({ navigation }) => {
 
 
         setTotal(currencyFormat(total));
+        totales();
     }
     function currencyFormat(num) {
         return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-     }
-  
+    }
+
+    const months = [
+        {
+            id: 1,
+            dia: 'Enero',
+            total: 0
+        },
+        {
+            id: 2,
+            dia: 'Febrero',
+            total: 0
+        },
+        {
+            id: 3,
+            dia: 'Marzo',
+            total: 0
+        },
+        {
+            id: 4,
+            dia: 'Abril',
+            total: 0
+        },
+        {
+            id: 5,
+            dia: 'Mayo',
+            total: 0
+        },
+        {
+            id: 6,
+            dia: 'Junio',
+            total: 0
+        },
+        {
+            id: 7,
+            dia: 'Julio',
+            total: 0
+        },
+        {
+            id: 8,
+            dia: 'Agosto',
+            total: 0
+        },
+        {
+            id: 9,
+            dia: 'Septiembre',
+            total: 0
+        },
+        {
+            id: 10,
+            dia: 'Octubre',
+            total: 0
+        },
+        {
+            id: 11,
+            dia: 'Noviembre',
+            total: 0
+        },
+        {
+            id: 12,
+            dia: 'Diciembre',
+            total: 0
+        },
+    ];
+
+
+    const [meses, setMeses] = useState(months);
+
+
+    const totales = () => {
+        ventaAño.forEach(m => {
+            var mes = m.fecha.getMonth();
+            if (mes == 0) {
+                months[0].total += m.total;
+
+            }
+            if (mes == 1) {
+                months[1].total += m.total;
+
+            }
+            if (mes == 2) {
+                months[2].total += m.total;
+
+            }
+            if (mes == 3) {
+                months[3].total += m.total;
+
+            }
+            if (mes == 4) {
+                months[4].total += m.total;
+
+            }
+            if (mes == 5) {
+                months[5].total += m.total;
+
+            }
+            if (mes == 6) {
+                months[6].total += m.total;
+
+            }
+            if (mes == 7) {
+                months[7].total += m.total;
+
+            }
+            if (mes == 8) {
+                months[8].total += m.total;
+
+            }
+            if (mes == 9) {
+                months[9].total += m.total;
+
+            }
+            if (mes == 10) {
+                months[10].total += m.total;
+
+            }
+            if (mes == 11) {
+                months[11].total += m.total;
+
+            }
+
+        })
+        setMeses(months);
+    }
+
 
     return (
         <View style={styles.container}
@@ -134,7 +262,7 @@ export const AnualScreen = ({ navigation }) => {
                     </View>
                 </View>
                 <View style={styles.tabla}>
-
+                    <TableSales fecha={'Mes'} semana={meses} />
                 </View>
                 <View style={styles.butones}>
                     <View style={styles.bottom}>
@@ -166,6 +294,7 @@ const styles = StyleSheet.create({
         borderTopEndRadius: 30,
         borderTopLeftRadius: 30,
         // paddingTop: 5,
+        padding: 15,
     },
     fecha: {
         flex: .8,
@@ -173,11 +302,11 @@ const styles = StyleSheet.create({
     },
     tabla: {
         flex: 4,
-        backgroundColor: theme.colors.primary,
+        // backgroundColor: theme.colors.primary,
     },
     butones: {
         flex: 1,
-        backgroundColor: theme.colors.error
+        // backgroundColor: theme.colors.error
     },
     fecha: {
         flex: .8,
@@ -219,5 +348,16 @@ const styles = StyleSheet.create({
         // marginTop: 10,
         borderWidth: 1,
         // marginBottom: 10,
+        shadowColor: "#000",
+        alignItems: "center",
+
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.39,
+        shadowRadius: 8.3,
+
+        elevation: 13,
     },
 })
