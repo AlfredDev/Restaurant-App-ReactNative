@@ -107,6 +107,8 @@ export const addDocIf = async (tabla,argumento1,argumento2,objeto,cat) => {
   }
 };
 
+
+
 //Elimina por el id decumento
 
 export async function deleteDocument(tabla, id) {

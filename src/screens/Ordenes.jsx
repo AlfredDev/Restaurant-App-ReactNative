@@ -5,8 +5,7 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  View,
-  RefreshControl
+  View
 } from "react-native";
 import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
@@ -39,13 +38,7 @@ export const Ordenes = ({ navigation, route }) => {
   const [ordenes, setOrdenes] = useState([]);
   const [total, setTotal] = useState(0);
 
-  const [refreshing, setRefreshing] = React.useState(false);
-
-  const onRefresh = React.useCallback(async () => {
-    setRefreshing(true);
-    fetchData();
-    setRefreshing(false);
-  });
+  
 
   const { usuario } = useContext(UserContext);
 
@@ -180,6 +173,7 @@ export const Ordenes = ({ navigation, route }) => {
     //console.log(cuenta.id);
     //console.log(ordenes.estatus)
     deleteDocWhere("Orden", "fk_cuenta_id", cuenta.id);
+    
     navigation.navigate("MesaCuenta", {
       mesa: table,
     });

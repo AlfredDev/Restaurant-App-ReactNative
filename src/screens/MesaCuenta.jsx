@@ -16,12 +16,43 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { useEffect, useState } from "react";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
-import { deleteDocWhere,actualizarCampo } from "../helpers/Backed";
+import { deleteDocWhere, actualizarCampo, exist } from "../helpers/Backed";
 export const MesaCuenta = ({ route, navigation }) => {
   const { mesa } = route.params;
-
+  //var bandera ="";
   const [cuenta, setCuenta] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const exist = async (tabla, argumento1, argumento2) => {
+    const userRef = collection(db, tabla);
+    const q = query(
+      userRef,
+      where(argumento1, "==", argumento2)
+
+    );
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        //   return bandera = "true";
+        alert("Liquidar cuenta");
+      });
+    } else {
+      actualizarCampo(table, "Mesa", mesa.idDoc);
+      deleteDocWhere("Cliente", "mesa_id", mesa.id);
+      deleteDocWhere("Cuenta_cliente", "fk_mesa_id", mesa.id);
+
+      navigation.reset({
+        index: 0,
+        routes: [{ name: "MainContainer" }],
+      });
+      //return bandera = "false";
+      //addDoc(userRef, objeto)
+      //alert(cat + " añadido.");
+    }
+  };
+
+
 
   const table = {
     Description: mesa.Description,
@@ -30,22 +61,13 @@ export const MesaCuenta = ({ route, navigation }) => {
     id: mesa.id,
     reservada: mesa.reservada,
   };
-   
+
 
   const cancelar = () => {
     table.reservada = false;
     table.Estatus = "Libre";
     table.Libre = true;
-    //console.log(mesa.idDoc);
-    //console.log(mesa.id);
-    actualizarCampo(table, "Mesa", mesa.idDoc);
-    deleteDocWhere("Cliente","mesa_id",mesa.id);
-    deleteDocWhere("Cuenta_cliente","fk_mesa_id",mesa.id);
-   
-    navigation.reset({
-      index: 0,
-      routes: [{ name: "MainContainer" }],
-    });
+    exist("Orden", "fk_mesa_id", mesa.id);
   };
 
 
@@ -145,7 +167,7 @@ export const MesaCuenta = ({ route, navigation }) => {
                   })
                 }
               />
-              
+
             </View>
             <View style={styles.scroll}>
               <Button
@@ -155,21 +177,21 @@ export const MesaCuenta = ({ route, navigation }) => {
                 width={250}
                 color={"#D8D2CB"}
                 uppercase={false}
-                onPress={() => cancelar() }
+                onPress={() => cancelar()}
               />
-              
+
             </View>
           </ScrollView>
         </View>
 
-      
+
 
         <View style={styles.button_section}>
           <Text style={styles.text}>Consumo Minimo: $650.00</Text>
           <Text style={styles.text}>Total:</Text>
           <Text style={styles.text}>Diferencia:</Text>
         </View>
-        
+
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -184,7 +206,7 @@ const styles = StyleSheet.create({
     padding: 20,
     justifyContent: "center",
     alignItems: "center",
-    
+
   },
   container: {
     flex: 1,
