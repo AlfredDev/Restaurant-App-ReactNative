@@ -26,6 +26,7 @@ import {
 } from "../helpers/Backed";
 import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
 import { async } from "@firebase/util";
+import { ImpCuentaList } from "../components/ImpCuentaList";
 
 export const ImpCuenta = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta, orden } = route.params;
@@ -137,7 +138,7 @@ export const ImpCuenta = ({ navigation, route }) => {
           <ScrollView stickyHeaderIndices={[1]}>
             <View style={styles.orderContainer}>
               <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-              <OrderLIst ordenes={pedid} />
+              <ImpCuentaList ordenes={pedid} />
               </Stack>
               
             </View>
