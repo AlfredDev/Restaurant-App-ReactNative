@@ -1,15 +1,36 @@
 import React from "react";
+import { useState } from "react";
+import { useEffect } from "react";
 import { ScrollView, StyleSheet, Text, View } from "react-native";
-import { generateUUID } from "../helpers/Backed";
+import { currencyFormat, generateUUID } from "../helpers/Backed";
+import { DetalleItem } from "./DetalleItem";
 import { PedidoItem } from "./PedidoItem";
 
 export const OrderLIst = ({ ordenes }) => {
   // const tableHead = ["Producto,Tamaño,Cantidad,Descripcion"];
 
+  useEffect(() => {
+    ordena();
+  }, [ordenes])
+
+
+  const [detalle, setDetalle] = useState([]);
+
+  const ordena = () => {
+    const data = [];
+    ordenes.forEach(or => {
+      or.forEach(sub => {
+        data.push(sub);
+      })
+    })
+    setDetalle(data);
+  }
+
+
   return (
     <>
-      <View style={styles.head}>
-        <View>
+      <View style={styles.table}>
+        <View style={styles.row}>
           <Text style={styles.txt}>Producto</Text>
         </View>
         <View style={styles.row}>
@@ -19,20 +40,16 @@ export const OrderLIst = ({ ordenes }) => {
           <Text style={styles.txt}>Cantidad</Text>
         </View>
         <View style={styles.row}>
-          <Text style={styles.txt}>Descripción</Text>
+          <Text style={styles.txt}>Total</Text>
         </View>
       </View>
       <ScrollView>
         <View style={styles.com}>
-          {ordenes.map((o) => (
-            <PedidoItem
-              producto={o.producto}
-              tamaño={o.tamaño}
-              cantidad={o.cantidad}
-              descripcion={o.descripcion}
-              key={generateUUID()}
-            />
-          ))}
+          {
+            detalle.map((or) => (
+              <DetalleItem producto={or.producto} cantidad = {or.cantidad} tamaño = {or.tamaño} precio = {currencyFormat(or.precio)}/>
+            ))
+          }
         </View>
       </ScrollView>
     </>
@@ -40,18 +57,14 @@ export const OrderLIst = ({ ordenes }) => {
 };
 
 const styles = StyleSheet.create({
-  head: {
-    backgroundColor: "#D8D2CB",
+  table: {
+    display: "flex",
     flexDirection: "row",
-    marginTop: 10,
     alignItems: "center",
-    justifyContent: "space-between",
+    // justifyContent:'space-around',
+    borderWidth: 1.3,
     height: 30,
-    borderWidth: 1,
-    // borderColor: "#D8D2CB",
-    padding: 5,
-    width: "90%",
-    margin: 0,
+    backgroundColor: '#D8D2CB',
   },
   row: {
     borderLeftColor: "black",
@@ -59,13 +72,14 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
   txt: {
     textAlign: "center",
     marginLeft: 9,
   },
-  com: {
-    justifyContent: "center",
-    alignItems: "center",
-  },
+  // com: {
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  // },
 });

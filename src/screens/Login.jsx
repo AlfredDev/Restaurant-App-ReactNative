@@ -26,7 +26,7 @@ import { UserContext } from "../hooks/UserContext";
 
 export const Login = ({ navigation }) => {
   const { onInputChange, user, password } = useForm({
-    user: "chipule",
+    user: "dario",
     password: "admin",
   });
 

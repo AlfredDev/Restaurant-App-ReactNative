@@ -1,6 +1,7 @@
 import {
   BackHandler,
   KeyboardAvoidingView,
+  RefreshControl,
   ScrollView,
   StatusBar,
   StyleSheet,
