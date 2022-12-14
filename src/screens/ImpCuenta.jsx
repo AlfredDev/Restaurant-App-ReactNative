@@ -11,22 +11,12 @@ import { HeaderBlue } from "../components/HeaderBlue";
 import { theme } from "../core/theme";
 import * as Animatable from "react-native-animatable";
 import { Button, Stack } from "@react-native-material/core";
-import { CuentaRepre } from "../components/CuentaRepre";
-import { OrdenItem } from "../components/OrdenItem";
 import { OrderLIst } from "../components/OrderLIst";
-import { useEffect, useState, useContext } from "react";
-import { collection, deleteDoc, getDocs, query, where, doc, orderBy } from "firebase/firestore";
+import { useEffect, useState, } from "react";
+import { collection, getDocs, query, where, doc, orderBy } from "firebase/firestore";
 import { db } from "../../database/firebase";
-import { PedidoItem } from "../components/PedidoItem";
-import { UserContext } from "../hooks/UserContext";
-import {
-  deleteDocument,
-  deleteDocWhere,
-  generateUUID,
-} from "../helpers/Backed";
-import { actualizarCampo, addDocumento, uid } from "../helpers/Backed";
-import { async } from "@firebase/util";
-import { ImpCuentaList } from "../components/ImpCuentaList";
+import { currencyFormat } from "../helpers/Backed";
+
 
 export const ImpCuenta = ({ navigation, route }) => {
   const { ItemId, mesa, cuenta, orden } = route.params;
@@ -42,8 +32,7 @@ export const ImpCuenta = ({ navigation, route }) => {
 
   useEffect(() => {
     fecthOrdenes();
-    
-    //console.log(ordenes);
+
     //onsole.log(total);
   }, [ordenes]);
 
@@ -59,6 +48,12 @@ export const ImpCuenta = ({ navigation, route }) => {
 
   // const [pedidos, setPedidos] = useState();
 
+  const getIva = () => {
+    return (total * 10) / 100;
+
+  }
+
+
   const fecthOrdenes = async () => {
     const objRef = collection(db, "Orden");
     const q = query(
@@ -69,12 +64,12 @@ export const ImpCuenta = ({ navigation, route }) => {
     const querySnapshot = await getDocs(q);
 
     const cuentas = [];
-    const si = [];
+    const totales = [];
 
     querySnapshot.forEach((doc) => {
       const { estatus, fk_mesa_id, fk_cuenta_id, folio, pedidos } = doc.data();
-      const pedi={
-        pedidos:pedidos,
+      const pedi = {
+        pedidos: pedidos,
       };
       let cuenta = {
         fk_cuenta_id: fk_cuenta_id,
@@ -83,28 +78,27 @@ export const ImpCuenta = ({ navigation, route }) => {
         pedidos: pedidos,
         // estatus:estatus,
       };
-      si  == pedi;
       // pedido.push(pedidos);
       cuentas.push(cuenta);
       //console.log(cuenta);
       //console.log(pedi);
-      
+      totales.push(pedidos);
     });
-    
-    setPedi(si);
+
+    setPedi(totales);
     setOrdenes(cuentas);
     let total = 0;
     ordenes.forEach((o) => {
       o.pedidos.forEach((to) => {
-        
+
         total += to.precio;
 
       });
     });
-    setTotal(total);  
-    //console.log(pedidos.producto);
+    setTotal(total);
+    // console.log(pedid);
   };
-  
+
 
   return (
     <KeyboardAvoidingView
@@ -136,20 +130,8 @@ export const ImpCuenta = ({ navigation, route }) => {
             Alimentos y bebidas
           </Text>
           <ScrollView stickyHeaderIndices={[1]}>
-            <View style={styles.orderContainer}>
-              <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
-              <ImpCuentaList ordenes={pedid} />
-              </Stack>
-              
-            </View>
-            
-            <View style={styles.botones}>
-              <Stack spacing={10} style={[{ margin: 16 }, { marginTop: 10 }]}>
+            <OrderLIst ordenes={pedid} />
 
-
-              </Stack>
-            </View>
-            
           </ScrollView>
         </View>
         <View style={styles.butom}>
@@ -164,7 +146,33 @@ export const ImpCuenta = ({ navigation, route }) => {
 
             }}
           >
-            Total: $ {total}
+            SubTotal: {currencyFormat(total)}
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              marginRight: 30,
+              marginBottom: 4,
+              fontSize: 25,
+              fontWeight: "bold",
+              opacity: 0.7,
+
+            }}
+          >
+            IVA(10%): {currencyFormat(getIva())}
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              marginRight: 30,
+              marginBottom: 4,
+              fontSize: 25,
+              fontWeight: "bold",
+              opacity: 0.7,
+
+            }}
+          >
+            Total: {currencyFormat(total + getIva())}
           </Text>
           <Stack
             spacing={10}
@@ -194,7 +202,7 @@ export const ImpCuenta = ({ navigation, route }) => {
 
           </Stack>
         </View>
-        
+
       </Animatable.View>
     </KeyboardAvoidingView>
   );
@@ -206,6 +214,7 @@ const styles = StyleSheet.create({
     // padding: 10,
     backgroundColor: theme.colors.secondary,
     paddingTop: 10,
+    width: '100%'
   },
   formContainer: {
     flex: 5,
@@ -213,10 +222,16 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 30,
     borderTopLeftRadius: 30,
     paddingTop: 10,
+    alignItems: "center",
+    justifyContent: "center",
+    width: '100%'
+
   },
   opciones: {
     // backgroundColor: theme.colors.secondary,
     flex: 3,
+    width: '90%'
+
   },
   botones: {
     backgroundColor: theme.colors.secondary,
@@ -231,4 +246,5 @@ const styles = StyleSheet.create({
 
     // backgroundColor: theme.colors.secondary,
   },
+
 });

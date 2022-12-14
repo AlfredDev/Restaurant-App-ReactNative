@@ -27,7 +27,40 @@ export const MesasConfig = ({ route, navigation }) => {
   const { mesa } = route.params;
   const [checked, setChecked] = React.useState(false);
   const { usuario } = useContext(UserContext);
+  const [client, setClien] = React.useState([]);
+ 
+  useEffect(() => {
+    fetchData();
+    }, []);
 
+  
+
+  async function fetchData() {
+    const q = query(collection(db, "Cliente"), orderBy("mesa_id"));
+    const querySnapshot = await getDocs(q);
+    const clien = [];
+    querySnapshot.forEach((doc) => {
+      const {
+        adultos,
+        mesa_id,
+        niños,
+        hombre,
+        idDoc,
+      } = doc.data();
+      clien.push({
+        adultos: adultos,
+        mesa_id: mesa_id,
+        niños: niños,
+        hombre: hombre,
+        idDoc: doc.id,
+      });
+    });
+    setClien(clien);
+    setTable(clien);
+    console.log(clien);
+   
+  };
+  
   const {
     onInputChange,
     nombre,
@@ -36,9 +69,11 @@ export const MesasConfig = ({ route, navigation }) => {
   } = useForm({
     nombre: nombre,
     adultos: adultos,
-    niños: niños,
+    niños: adultos,
     mesa_id: mesa.id,
   });
+
+  
 
   const cliente = {
     nombre: nombre,
