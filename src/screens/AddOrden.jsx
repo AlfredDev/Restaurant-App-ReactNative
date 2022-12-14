@@ -18,9 +18,11 @@ import { BtnIncrement } from "../components/BtnIncrement";
 import { categorias } from "../helpers/Categorias";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../database/firebase";
-import { async } from "@firebase/util";
 import { ProductPicker } from "../components/ProductPicker";
 import { addDocumento, generateUUID, uid, changeCantidadBebidas } from "../helpers/Backed";
+import { ListaOrdenes } from "../components/ListaOrdenes";
+
+
 
 export const AddOrden = ({ navigation, route }) => {
   const { mesa, cuenta } = route.params;
@@ -140,7 +142,7 @@ export const AddOrden = ({ navigation, route }) => {
         folio: generateUUID(),
         estatus: false,
       };
-    
+
       addDocumento("Orden", pedido);
       navigation.navigate("Orden", {
         mesa: mesa,
@@ -150,6 +152,9 @@ export const AddOrden = ({ navigation, route }) => {
       alert("Agrege una orden primero");
     }
   };
+
+
+
 
   return (
     <KeyboardAvoidingView
@@ -237,7 +242,7 @@ export const AddOrden = ({ navigation, route }) => {
             />
           </View>
         </View>
-        <OrderLIst ordenes={ordenes} />
+        <ListaOrdenes ordenes={ordenes} />
         <Button
           titleStyle={{ fontSize: 17 }}
           contentContainerStyle={{ height: 50 }}

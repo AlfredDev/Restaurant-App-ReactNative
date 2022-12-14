@@ -10,7 +10,7 @@ const Tab = createBottomTabNavigator();
 export const BarmanNavigation = () => {
   return (
     <Tab.Navigator
-      initialRouteName={"Mesas"}
+      initialRouteName={"Orden"}
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
@@ -44,7 +44,6 @@ export const BarmanNavigation = () => {
         ],
       })}
     >
-      <Tab.Screen name="Mesas" component={TablesScreen} />
       <Tab.Screen name="Orden" component={OrdenBarman} />
       <Tab.Screen name="Usuario" component={UserSetting} />
     </Tab.Navigator>
