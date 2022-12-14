@@ -12,16 +12,16 @@ export const ProductItem = ({ navigation, product, id, producto, cantidad, preci
   return (
     <TouchableOpacity onPress={modificaProducto}>
       <View style={styles.item}>
-        <View style={styles.id}>
+        <View style={cantidad < 3 ? styles.idP:styles.id}>
           <Text>{id}</Text>
         </View>
-        <View style={styles.producto}>
+        <View style={cantidad < 3 ?styles.productoP:styles.producto}>
           <Text>{producto}</Text>
         </View>
-        <View style={styles.cantidad}>
+        <View style={cantidad < 3 ?styles.cantidadP:styles.cantidad}>
           <Text>{cantidad}</Text>
         </View>
-        <View style={styles.precio}>
+        <View style={cantidad < 3 ?styles.precioP:styles.precio}>
           <Text>$ {precio}</Text>
         </View>
       </View>
@@ -66,5 +66,38 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderLeftWidth: 1,
+  },
+
+  idP: {
+    width: "12%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:"#FF3366",
+    
+  },
+  productoP: {
+    width: "35%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    backgroundColor:"#FF3366",
+  },
+  cantidadP: {
+    width: "23%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    backgroundColor:"#FF3366",
+  },
+  precioP: {
+    width: "18%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    backgroundColor:"#FF3366",
   },
 });

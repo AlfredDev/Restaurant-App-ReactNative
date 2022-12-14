@@ -162,6 +162,20 @@ export const Insumos = ({ navigation }) => {
 
           />
           
+          
+        </View>
+        <View style={styles.botones}>
+        <Button
+             titleStyle={{ fontSize: 17 }}
+             contentContainerStyle={{ height: 50 }}
+             title="Insumos por comprar"
+             width="90%"
+             height={50}
+             color={theme.colors.primary}
+             uppercase={false}
+             onPress={() => navigation.navigate("DownInsumos")}
+
+          />
         </View>
       </Animatable.View>
     </KeyboardAvoidingView>

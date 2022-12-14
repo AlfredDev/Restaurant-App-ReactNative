@@ -11,13 +11,13 @@ export const InsumoItem = ({ navigation, insu, id,nombre,cantidad}) => {
   return (
     <TouchableOpacity onPress={modificaInsumo}>
       <View style={styles.item}>
-        <View style={styles.id}>
+        <View style={cantidad <=3 ? styles.idP: styles.id}>
           <Text>{id}</Text>
         </View>
-        <View style={styles.producto}>
+        <View style={cantidad <=3 ? styles.productoP: styles.producto}>
           <Text>{nombre}</Text>
         </View>
-        <View style={styles.cantidad}>
+        <View style={cantidad <=3 ?styles.cantidadP: styles.cantidad}>
           <Text>{cantidad}</Text>
         </View>
       </View>
@@ -55,6 +55,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderLeftWidth: 1,
+    
+  },
+  idP: {
+    width: "25%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor:"#FF3366",
+    
+  },
+  productoP: {
+    width: "50%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    backgroundColor:"#FF3366",
+  },
+  cantidadP: {
+    width: "25%",
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    borderLeftWidth: 1,
+    backgroundColor:"#FF3366",
   },
   
 });

@@ -22,6 +22,8 @@ import { ModificarInsumos } from "./src/screens/ModificarInsumos";
 import { SemanalScreen } from "./src/screens/Graphs/SemanalScreen";
 import { AnualScreen } from "./src/screens/Graphs/AnualScreen";
 import { ComparaSemana } from "./src/screens/Graphs/ComparaSemana";
+import { DownInsumos } from "./src/screens/DownInsumos";
+import { DownProductos } from "./src/screens/DownProductos";
 
 
 const Stack = createNativeStackNavigator();
@@ -55,6 +57,8 @@ export default function App() {
           <Stack.Screen name="VentaSemanal" component={SemanalScreen} />
           <Stack.Screen name="VentaAnual" component={AnualScreen} />
           <Stack.Screen name="ComparaSemana" component={ComparaSemana} />
+          <Stack.Screen name="DownInsumos" component={DownInsumos} />
+          <Stack.Screen name="DownProductos" component={DownProductos} />
 
 
         </Stack.Navigator>

@@ -58,7 +58,7 @@ export const Productos = ({ navigation }) => {
     setProductos(productos);
     setTable(productos);
     console.log(productos);
-   
+
   }
 
   return (
@@ -71,10 +71,10 @@ export const Productos = ({ navigation }) => {
       <Animatable.View animation="fadeInLeft" style={styles.formContainer}>
         <View style={styles.search}>
           <SearchProduct
-           products={products}
-           setProductos={setProductos}
-           table={table}
-           navigation={navigation}
+            products={products}
+            setProductos={setProductos}
+            table={table}
+            navigation={navigation}
           />
         </View>
         <View style={styles.list}>
@@ -167,17 +167,33 @@ export const Productos = ({ navigation }) => {
         </View>
         <View style={styles.botones}>
           <Button
-             titleStyle={{ fontSize: 17 }}
-             contentContainerStyle={{ height: 50 }}
-             title="Agregar Producto"
-             width="90%"
-             height={50}
-             color={theme.colors.primary}
-             uppercase={false}
-             onPress={() => navigation.navigate("AddProducto")}
+            titleStyle={{ fontSize: 17 }}
+            contentContainerStyle={{ height: 50 }}
+            title="Agregar Producto"
+            width="90%"
+            height={50}
+            color={theme.colors.primary}
+            uppercase={false}
+            onPress={() => navigation.navigate("AddProducto")}
 
           />
-          
+
+
+        </View>
+
+        <View style={styles.botones}>
+
+          <Button
+            titleStyle={{ fontSize: 17 }}
+            contentContainerStyle={{ height: 50 }}
+            title="Productos por comprar"
+            width="90%"
+            height={50}
+            color={theme.colors.primary}
+            uppercase={false}
+            onPress={() => navigation.navigate("DownProductos")}
+
+          />
         </View>
       </Animatable.View>
     </KeyboardAvoidingView>
